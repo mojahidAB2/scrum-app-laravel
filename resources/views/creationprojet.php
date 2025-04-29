@@ -49,9 +49,6 @@
 
 <button type="submit">Créer le projet</button> 
 <button type="submit">Créer le projet</button> 
-<button type="submit">Créer le projet</button>
-<button type="submit">Créer le projet</button>
-<button type="submit">Créer le projet</button>
 </form> 
 </div>
     
