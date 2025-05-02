@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('backlog', function (Blueprint $table) {
+        Schema::create('backlogs', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('project_id'); // ID du projet associé
             $table->string('titre'); // Titre de la tâche
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('backlog');
+        Schema::dropIfExists('backlogs');
     }
 };
