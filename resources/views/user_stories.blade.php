@@ -141,7 +141,7 @@
                     <td>{{ $story->je_veux }}</td>
                     <td>{{ $story->afin_de }}</td>
                     <td>
-                        <button class="btn btn-edit" onclick="toggleEditForm({{ $story->id }})">✏️ Modifier</button>
+                        <button class="btn btn-edit" onclick="toggleEditForm({{ $story->id }})"> Modifier</button>
 
                         <form method="POST" action="/user-stories/{{ $story->id }}" onsubmit="return confirm('Tu es sûr de vouloir supprimer cette User Story ?');" style="display:inline">
                             @csrf
