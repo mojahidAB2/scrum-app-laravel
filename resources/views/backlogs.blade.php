@@ -101,7 +101,7 @@
 </head>
 <body>
 
-    <h2>➕ Ajouter une tâche au Backlog</h2>
+    <h2> Ajouter une tâche au Backlog</h2>
 
     <form action="/backlogs" method="POST">
         @csrf
@@ -132,10 +132,10 @@
         <label>Date d'échéance</label>
         <input type="date" name="date_echeance">
 
-        <button type="submit">✅ Enregistrer</button>
+        <button type="submit">Enregistrer</button>
     </form>
 
-    <h3>🔎 Filtrer les tâches</h3>
+    <h3> Filtrer les tâches</h3>
 
     <form method="GET" action="/backlogs-view" style="margin-bottom: 30px;">
         <label>Priorité:</label>
@@ -161,10 +161,10 @@
             <option value="desc" {{ request('sort') == 'desc' ? 'selected' : '' }}>Date ↓</option>
         </select>
 
-        <button type="submit">🔍 Appliquer</button>
+        <button type="submit"> Appliquer</button>
     </form>
 
-    <h2>📋 Liste des Backlogs</h2>
+    <h2> Liste des Backlogs</h2>
 
     <table>
         <thead>
@@ -193,7 +193,7 @@
                         <form method="POST" action="/backlogs/{{ $task->id }}" onsubmit="return confirm('Supprimer cette tâche ?');" style="display:inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-delete">🗑️ Supprimer</button>
+                            <button type="submit" class="btn btn-delete"> Supprimer</button>
                         </form>
                     </td>
                 </tr>
@@ -228,7 +228,7 @@
                             <label>Date d'échéance</label>
                             <input type="date" name="date_echeance" value="{{ $task->date_echeance }}">
 
-                            <button type="submit" class="btn btn-edit">💾 Enregistrer</button>
+                            <button type="submit" class="btn btn-edit">Enregistrer</button>
                         </form>
                     </td>
                 </tr>
