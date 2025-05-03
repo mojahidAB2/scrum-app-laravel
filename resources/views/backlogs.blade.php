@@ -188,7 +188,7 @@
                     <td>{{ $task->statut }}</td>
                     <td>{{ $task->date_echeance }}</td>
                     <td>
-                        <button class="btn btn-edit" onclick="toggleEditForm({{ $task->id }})">✏️ Modifier</button>
+                        <button class="btn btn-edit" onclick="toggleEditForm({{ $task->id }})"> Modifier</button>
 
                         <form method="POST" action="/backlogs/{{ $task->id }}" onsubmit="return confirm('Supprimer cette tâche ?');" style="display:inline">
                             @csrf
