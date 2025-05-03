@@ -96,7 +96,7 @@
 </head>
 <body>
 
-    <h2>➕ Ajouter une nouvelle User Story</h2>
+    <h2> Ajouter une nouvelle User Story</h2>
 
     <form action="/user-stories" method="POST">
         @csrf
@@ -116,10 +116,10 @@
         <label>Afin de...</label>
         <input type="text" name="afin_de" required>
 
-        <button type="submit">✅ Enregistrer</button>
+        <button type="submit"> Enregistrer</button>
     </form>
 
-    <h2>📋 Liste des User Stories</h2>
+    <h2> Liste des User Stories</h2>
 
     <table>
         <thead>
@@ -146,12 +146,12 @@
                         <form method="POST" action="/user-stories/{{ $story->id }}" onsubmit="return confirm('Tu es sûr de vouloir supprimer cette User Story ?');" style="display:inline">
                             @csrf
                             @method('DELETE')
-                            <button type="submit" class="btn btn-delete">🗑️ Supprimer</button>
+                            <button type="submit" class="btn btn-delete"> Supprimer</button>
                         </form>
                     </td>
                 </tr>
 
-                <!-- 🛠️ Formulaire de modification -->
+                <!--  Formulaire de modification -->
                 <tr id="edit-form-{{ $story->id }}" style="display: none; background-color: #fff5f5;">
                     <td colspan="6">
                         <form method="POST" action="/user-stories/{{ $story->id }}">
@@ -170,7 +170,7 @@
                             <label>Afin de</label>
                             <input type="text" name="afin_de" value="{{ $story->afin_de }}" required>
 
-                            <button type="submit" class="btn btn-edit">💾 Enregistrer</button>
+                            <button type="submit" class="btn btn-edit"> Enregistrer</button>
                         </form>
                     </td>
                 </tr>
