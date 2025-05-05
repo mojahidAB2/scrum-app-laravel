@@ -3,52 +3,102 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserStoryController;
 use App\Http\Controllers\BacklogController;
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\ProfileController;
 
-//  Route d'accueil (page par défaut quand on accède à "/")
+// ======================= PAGE D’ACCUEIL =======================
+
+// Page principale du site (welcome.blade.php)
 Route::get('/', function () {
-    return view('welcome'); // Vue située dans resources/views/welcome.blade.php
+    return view('welcome');
 });
 
-//  Route pour afficher toutes les User Stories dans une page Blade
+
+// ======================= TABLEAU DE BORD =======================
+
+// Page dashboard accessible uniquement aux utilisateurs authentifiés et vérifiés
+Route::get('/dashboard', function () {
+    return view('dashboard');
+})->middleware(['auth', 'verified'])->name('dashboard');
+
+
+// ======================= AUTHENTIFICATION =======================
+
+// Formulaire de connexion
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+
+// Traitement du login
+Route::post('/login', [LoginController::class, 'login']);
+
+// Déconnexion
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Formulaire d'inscription
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+
+// Traitement de l'inscription
+Route::post('/register', [RegisterController::class, 'register']);
+
+
+// ======================= PROFIL UTILISATEUR =======================
+
+// Routes protégées : uniquement accessibles aux utilisateurs connectés
+Route::middleware('auth')->group(function () {
+    // Page de modification du profil
+    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+
+    // Mise à jour du profil
+    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+
+    // Suppression du compte utilisateur
+    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+
+
+// ======================= USER STORIES (BLADE + API) =======================
+
+// Vue Blade pour lister les user stories
 Route::get('/user-stories-view', [UserStoryController::class, 'showAllView'])->name('user_stories.view');
 
-//  Route pour afficher toutes les Backlogs dans une page Blade
-Route::get('/backlogs-view', [BacklogController::class, 'showAllView'])->name('backlogs.view');
-
-
-//  ROUTES API pour les User Stories
-
-
-//  GET : Récupérer toutes les User Stories (en JSON)
+// API : Récupérer toutes les user stories (format JSON)
 Route::get('/user-stories', [UserStoryController::class, 'index']);
 
-//  POST : Ajouter une nouvelle User Story
+// API : Créer une nouvelle user story
 Route::post('/user-stories', [UserStoryController::class, 'store']);
 
-//  GET : Afficher une User Story spécifique
+// API : Voir une user story par son ID
 Route::get('/user-stories/{id}', [UserStoryController::class, 'show']);
 
-//  PUT : Modifier une User Story
+// API : Modifier une user story
 Route::put('/user-stories/{id}', [UserStoryController::class, 'update']);
 
-//  DELETE : Supprimer une User Story
+// API : Supprimer une user story
 Route::delete('/user-stories/{id}', [UserStoryController::class, 'destroy']);
 
 
+// ======================= BACKLOGS (BLADE + API) =======================
 
-//  ROUTES API pour les Backlogs
+// Vue Blade pour lister les tâches backlog
+Route::get('/backlogs-view', [BacklogController::class, 'showAllView'])->name('backlogs.view');
 
-//  GET : Récupérer tous les backlogs
+// API : Lister toutes les tâches backlog
 Route::get('/backlogs', [BacklogController::class, 'index']);
 
-//  POST : Ajouter un backlog
+// API : Ajouter une nouvelle tâche
 Route::post('/backlogs', [BacklogController::class, 'store']);
 
-//  GET : Afficher un backlog par ID
+// API : Voir une tâche par ID
 Route::get('/backlogs/{id}', [BacklogController::class, 'show']);
 
-//  PUT : Modifier un backlog
+// API : Modifier une tâche backlog
 Route::put('/backlogs/{id}', [BacklogController::class, 'update']);
 
-// DELETE : Supprimer un backlog
+// API : Supprimer une tâche backlog
 Route::delete('/backlogs/{id}', [BacklogController::class, 'destroy']);
+
+
+// ======================= ROUTES AUTO-GÉNÉRÉES (Laravel Breeze ou Jetstream) =======================
+
+// Ce fichier contient d’autres routes liées à l’authentification générées automatiquement
+require __DIR__.'/auth.php';
