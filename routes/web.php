@@ -1,5 +1,5 @@
-<?php
-
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserStoryController;
 use App\Http\Controllers\BacklogController;
@@ -102,3 +102,11 @@ Route::delete('/backlogs/{id}', [BacklogController::class, 'destroy']);
 
 // Ce fichier contient d’autres routes liées à l’authentification générées automatiquement
 require __DIR__.'/auth.php';
+// Authentification
+Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
+Route::post('/login', [LoginController::class, 'login']);
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+// Inscription
+Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
+Route::post('/register', [RegisterController::class, 'register']);
