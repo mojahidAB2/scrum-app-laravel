@@ -2,47 +2,49 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
+// Modèle User Laravel (authentification utilisateur)
+// use Illuminate\Contracts\Auth\MustVerifyEmail; // Décommenter si tu actives la vérification d'email
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 
+// Ce modèle représente un utilisateur de l'application
 class User extends Authenticatable
 {
-    /** @use HasFactory<\Database\Factories\UserFactory> */
+    // Traits pour activer la génération de données factices et les notifications
     use HasFactory, Notifiable;
 
     /**
-     * The attributes that are mass assignable.
+     *  Déclare les attributs qui peuvent être modifiés en masse (mass assignable)
      *
      * @var list<string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'name',      // Nom de l'utilisateur
+        'email',     // Adresse email
+        'password',  // Mot de passe (sera hashé)
     ];
 
     /**
-     * The attributes that should be hidden for serialization.
+     *  Attributs à cacher lorsqu'on sérialise l'utilisateur (ex: JSON)
      *
      * @var list<string>
      */
     protected $hidden = [
-        'password',
-        'remember_token',
+        'password',         // On ne veut jamais renvoyer le mot de passe brut
+        'remember_token',   // Jeton utilisé par Laravel pour "remember me"
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Définir les types des champs (casts) pour les transformer automatiquement
      *
      * @return array<string, string>
      */
     protected function casts(): array
     {
         return [
-            'email_verified_at' => 'datetime',
-            'password' => 'hashed',
+            'email_verified_at' => 'datetime', // Transforme ce champ en objet DateTime
+            'password' => 'hashed',            // Hash automatique du mot de passe (Laravel 10+)
         ];
     }
 }
