@@ -1,5 +1,5 @@
-use App\Http\Controllers\Auth\LoginController;
-use App\Http\Controllers\Auth\RegisterController;
+<?php
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserStoryController;
 use App\Http\Controllers\BacklogController;
@@ -35,10 +35,8 @@ Route::put('/user-stories/{id}', [UserStoryController::class, 'update']);
 Route::delete('/user-stories/{id}', [UserStoryController::class, 'destroy']);
 
 
-// ======================= BACKLOGS (BLADE + API) =======================
 
-// Vue Blade pour lister les tâches backlog
-Route::get('/backlogs-view', [BacklogController::class, 'showAllView'])->name('backlogs.view');
+//  ROUTES API pour les Backlogs
 
 //  GET : Récupérer tous les backlogs
 Route::get('/backlogs', [BacklogController::class, 'index']);
@@ -54,17 +52,3 @@ Route::put('/backlogs/{id}', [BacklogController::class, 'update']);
 
 // DELETE : Supprimer un backlog
 Route::delete('/backlogs/{id}', [BacklogController::class, 'destroy']);
-
-
-// ======================= ROUTES AUTO-GÉNÉRÉES (Laravel Breeze ou Jetstream) =======================
-
-// Ce fichier contient d’autres routes liées à l’authentification générées automatiquement
-require __DIR__.'/auth.php';
-// Authentification
-Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
-Route::post('/login', [LoginController::class, 'login']);
-Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
-
-// Inscription
-Route::get('/register', [RegisterController::class, 'showRegistrationForm'])->name('register');
-Route::post('/register', [RegisterController::class, 'register']);
