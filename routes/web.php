@@ -1,5 +1,5 @@
-<?php
-
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserStoryController;
 use App\Http\Controllers\BacklogController;
@@ -52,3 +52,9 @@ Route::put('/backlogs/{id}', [BacklogController::class, 'update']);
 
 // DELETE : Supprimer un backlog
 Route::delete('/backlogs/{id}', [BacklogController::class, 'destroy']);
+
+
+// ======================= ROUTES AUTO-GÉNÉRÉES (Laravel Breeze ou Jetstream) =======================
+
+// Ce fichier contient d’autres routes liées à l’authentification générées automatiquement
+require __DIR__.'/auth.php';
