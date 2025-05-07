@@ -56,3 +56,4 @@ public function destroy(Sprint $sprint)
                      ->with('success', 'Sprint supprimé avec succès');
 }
 }
+
