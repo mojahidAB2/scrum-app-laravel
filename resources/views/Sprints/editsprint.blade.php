@@ -1,4 +1,8 @@
+
 h1>Modifier le sprint : {{ $sprint->name }}</h1>
+
+<h1>Modifier le sprint : {{ $sprint->name }}</h1>
+
 
 <form action="{{ route('sprints.update', $sprint->id) }}" method="POST">
     @csrf

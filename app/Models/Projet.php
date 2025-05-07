@@ -21,3 +21,4 @@ class Projet extends Model
     return $this->hasMany(Sprint::class, 'project_id');
 }
 }
+

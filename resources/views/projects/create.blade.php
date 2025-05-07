@@ -39,5 +39,3 @@
     </div>
     <button type="submit">Créer le projet</button>
 </form>
-
-
