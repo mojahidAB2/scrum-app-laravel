@@ -47,4 +47,9 @@ class User extends Authenticatable
             'password' => 'hashed',            // Hash automatique du mot de passe (Laravel 10+)
         ];
     }
+    public function projets()
+{
+    return $this->belongsToMany(Projet::class, 'projet_user');
+}
+
 }
