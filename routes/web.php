@@ -48,6 +48,18 @@ Route::middleware('auth')->group(function () {
 });
 
 require __DIR__.'/auth.php';
+use App\Http\Controllers\BurndownChartController;
+use App\Http\Controllers\TaskController;
+
+Route::middleware(['auth'])->group(function () {
+    // autres routes...
+
+    Route::get('/kanban', [TaskController::class, 'kanban'])->name('kanban');
+    Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
+    Route::put('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
+});
+
+Route::get('/burndown-chart', [BurndownChartController::class, 'index'])->middleware(['auth']);
 
 //  Route d'accueil (page par défaut quand on accède à "/")
 Route::get('/', function () {
