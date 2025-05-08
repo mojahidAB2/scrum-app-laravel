@@ -1,5 +1,5 @@
 
-h1>Modifier le sprint : {{ $sprint->name }}</h1>
+
 
 <h1>Modifier le sprint : {{ $sprint->name }}</h1>
 
