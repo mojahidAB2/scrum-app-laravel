@@ -1,5 +1,5 @@
 
-<h1>createsprints.blade.php</h1>
+
 
 
 <h1>Créer un sprint pour le projet : {{ $project->name }}</h1>

@@ -115,7 +115,7 @@ Route::get('/', function () {
 });
 
 
-use App\Http\Controllers\ProjectController;
+
 
 Route::resource('projects', ProjectController::class);
 
@@ -125,7 +125,7 @@ Route::post('/projects/{id}/members', [ProjectController::class, 'updateMembers'
 
 
 
-use App\Http\Controllers\SprintController;
+
 
 Route::get('/projects/{project}/sprints/createsprints', [SprintController::class, 'create'])->name('sprints.createsprints');
 
