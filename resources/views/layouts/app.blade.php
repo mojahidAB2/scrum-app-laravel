@@ -10,6 +10,17 @@
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
+        <style>
+            .table th, .table td {
+                border: 1px solid orange;
+                text-align: center;
+            }
+            .table th {
+                background-color: #ffe0b2;
+                color: darkorange;
+            }
+        </style>
+
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -29,7 +40,8 @@
 
             <!-- Page Content -->
             <main>
-                {{ $slot }}
+                @yield('content')
+
             </main>
         </div>
     </body>

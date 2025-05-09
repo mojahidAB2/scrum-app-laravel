@@ -5,10 +5,18 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Projet;
 use App\Models\Sprint;
-
+use Illuminate\View\View;
+use Illuminate\Http\RedirectResponse;
 
 class SprintController extends Controller
 {
+    public function index(): View
+    {
+        $sprints = Sprint::with('projet')->get();
+        return view('sprints.index', compact('sprints'));
+    }
+
+
     public function create($projectId)
     {
         $project = Projet::findOrFail($projectId);
