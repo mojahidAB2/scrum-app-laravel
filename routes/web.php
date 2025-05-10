@@ -55,6 +55,7 @@ Route::delete('/sprints/{sprint}', [SprintController::class, 'destroy'])->name('
 // ==================== KANBAN & TÂCHES ====================
 Route::middleware(['auth'])->group(function () {
     Route::get('/kanban', [TaskController::class, 'kanban'])->name('kanban');
+    Route::get('/tasks', [TaskController::class, 'index'])->name('tasks.index');
     Route::post('/tasks', [TaskController::class, 'store'])->name('tasks.store');
     Route::put('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
 });
@@ -64,23 +65,21 @@ Route::get('/burndown-chart', [BurndownChartController::class, 'index'])->middle
 
 // ==================== USER STORIES - VUES ====================
 Route::get('/user-stories-view', [UserStoryController::class, 'showAllView'])->name('user_stories.view');
+Route::get('/user-stories/create', [UserStoryController::class, 'create'])->name('user_stories.create');
+Route::post('/user-stories/store', [UserStoryController::class, 'store'])->name('user_stories.store');
+Route::get('/user-stories/{id}/edit', [UserStoryController::class, 'edit'])->name('user_stories.edit');
+Route::post('/user-stories/{id}/update', [UserStoryController::class, 'update'])->name('user_stories.update');
+Route::post('/user-stories/{id}/delete', [UserStoryController::class, 'destroy'])->name('user_stories.destroy');
 
 // ==================== BACKLOGS - VUES ====================
 Route::get('/backlogs-view', [BacklogController::class, 'showAllView'])->name('backlogs.view');
+Route::get('/backlogs/create', [BacklogController::class, 'create'])->name('backlogs.create');
+Route::post('/backlogs/store', [BacklogController::class, 'store'])->name('backlogs.store');
+Route::get('/backlogs/{id}/edit', [BacklogController::class, 'edit'])->name('backlogs.edit');
+Route::post('/backlogs/{id}/update', [BacklogController::class, 'update'])->name('backlogs.update');
+Route::post('/backlogs/{id}/delete', [BacklogController::class, 'destroy'])->name('backlogs.destroy');
 
-// ==================== USER STORIES - API ====================
-Route::get('/user-stories', [UserStoryController::class, 'index']);
-Route::post('/user-stories', [UserStoryController::class, 'store']);
-Route::get('/user-stories/{id}', [UserStoryController::class, 'show']);
-Route::put('/user-stories/{id}', [UserStoryController::class, 'update']);
-Route::delete('/user-stories/{id}', [UserStoryController::class, 'destroy']);
 
-// ==================== BACKLOGS - API ====================
-Route::get('/backlogs', [BacklogController::class, 'index']);
-Route::post('/backlogs', [BacklogController::class, 'store']);
-Route::get('/backlogs/{id}', [BacklogController::class, 'show']);
-Route::put('/backlogs/{id}', [BacklogController::class, 'update']);
-Route::delete('/backlogs/{id}', [BacklogController::class, 'destroy']);
 // formulaire de création d’un sprint pour un projet donné
 Route::get('/projects/{project}/sprints/createsprint', [SprintController::class, 'create'])->name('sprints.create');
 

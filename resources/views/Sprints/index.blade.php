@@ -6,11 +6,18 @@
         <h2 class="text-orange fs-3 fw-bold">
              Liste des Sprints
         </h2>
-        <a href="{{ route('sprints.create', ['project' => $projet->id]) }}" class="btn btn-success">
-            + Ajouter un Sprint
-        </a>
 
+        @php
+            $firstProjectId = $sprints->first()?->projet->id ?? null;
+        @endphp
 
+        @if($firstProjectId)
+            <a href="{{ route('sprints.create', ['project' => $firstProjectId]) }}" class="btn btn-success">
+                + Ajouter un Sprint
+            </a>
+        @else
+            <div class="alert alert-warning">Aucun projet disponible pour créer un Sprint.</div>
+        @endif
     </div>
 
     <div class="table-responsive">

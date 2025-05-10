@@ -7,6 +7,11 @@ use App\Models\Task;
 
 class TaskController extends Controller
 {
+    public function index()
+{
+    $tasks = Task::with('sprint')->get();
+    return view('tasks.index', compact('tasks'));
+}
     public function kanban()
     {
         $tasks = Task::all()->groupBy('status');
