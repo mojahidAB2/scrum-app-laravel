@@ -76,6 +76,25 @@
         </tbody>
     </table>
 </div>
+<div>
 
+
+    <h2>{{ $story->titre }}</h2>
+
+<h4>Commentaires :</h4>
+@foreach($story->comments as $comment)
+    <div>
+        <strong>{{ $comment->user->name }} :</strong> {{ $comment->content }}
+        <small>{{ $comment->created_at->diffForHumans() }}</small>
+    </div>
+@endforeach
+
+<form action="{{ route('comments.store', ['type' => 'userstory', 'id' => $story->id]) }}" method="POST">
+    @csrf
+    <textarea name="content" rows="2" required></textarea>
+    <button type="submit">Commenter</button>
+</form>
+</div>
+</form>
 </body>
 </html>

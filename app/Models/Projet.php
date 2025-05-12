@@ -20,6 +20,27 @@ class Projet extends Model
 {
     return $this->hasMany(Sprint::class, 'project_id');
 }
-    
+ 
+
+
+
+  public function userStories()
+    {
+        return $this->hasMany(UserStory::class);
+    }
+
+    // Relation avec les tâches
+    public function tasks()
+    {
+        return $this->hasMany(Task::class);
+    }
+
+
+
+public function userss()
+{
+    return $this->belongsToMany(User::class, 'projet_user', 'projet_id', 'user_id');
+}
+
 }
 

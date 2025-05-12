@@ -17,4 +17,8 @@ class UserStory extends Model
         'je_veux',        // Ce que l'utilisateur veut faire (ex: "je veux m'inscrire")
         'afin_de',        // Objectif de l'action (ex: "afin d'accéder à mes projets")
     ];
+  public function comments()
+{
+    return $this->morphMany(Comment::class, 'commentable');
+}
 }

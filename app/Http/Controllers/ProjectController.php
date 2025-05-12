@@ -86,12 +86,12 @@ public function updateMembers(Request $request, $id)
         'users.*' => 'exists:users,id',
     ]);
 
-    $projet->users()->sync($request->users);
+    // Enregistre tous les utilisateurs sélectionnés
+    $projet->userss()->sync($request->users);
 
     return redirect()->route('projects.show', $projet->id)
-        ->with('success', 'Membres du projet mis à jour avec succès.');
+                     ->with('success', 'Membres mis à jour avec succès.');
 }
-
 
 
 
