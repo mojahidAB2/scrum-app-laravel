@@ -68,4 +68,9 @@ class UserStoryController extends Controller
 
         return redirect()->route('user_stories.view')->with('success', 'User Story supprimée avec succès.');
     }
+    public function comments()
+{
+    return $this->morphMany(Comment::class, 'commentable');
+}
+
 }

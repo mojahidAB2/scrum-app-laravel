@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Projet;
 use App\Models\Sprint;
+use App\Models\UserStory;
+use App\Models\Task;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 

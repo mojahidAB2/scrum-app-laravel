@@ -44,6 +44,7 @@
 </a>
 
 
+<a href="{{ route('sprints.create', $project->id) }}">Créer un sprint</a>
 
 <!-- Liste des Sprints -->
 <h2>Sprints associés</h2>
@@ -81,6 +82,24 @@
 @endforeach
 
     </div>
+    <div>
+      <h3>Membres du projet {{ $project->name }}</h3>
+<ul>
+    @foreach($project->userss as $user)
+        <li>{{ $user->name }}</li>
+    @endforeach
+</ul>
+
+    </div>
+
+
+<a href="{{ route('user_stories.view') }}" class="btn btn-secondary">Voir les User Stories</a>
+
+<a href="{{ route('backlogs.view') }}" class="btn btn-secondary">
+    Voir les Backlogs
+</a>
+<a href="{{ route('sprints.index', $project->id) }}">Voir les sprints</a>
+
 
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.0/dist/umd/popper.min.js"></script>

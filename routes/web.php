@@ -85,3 +85,59 @@ Route::get('/projects/{project}/sprints/createsprint', [SprintController::class,
 
 // formulaire de création d’un sprint pour un projet donné
 Route::get('/projects/{project}/sprints/createsprint', [SprintController::class, 'create'])->name('sprints.create');
+Route::get('/sprints/create', [SprintController::class, 'create'])->name('sprints.createsprints');
+
+
+Route::get('/user-stories', [UserStoryController::class, 'showAllView'])->name('user_stories.view');
+Route::get('/backlogs', [BacklogController::class, 'showAllView'])->name('backlogs.view');
+Route::get('/user-stories', [UserStoryController::class, 'showAllView'])->name('user_stories.view');
+
+
+use App\Http\Controllers\CommentController;
+
+Route::post('/comments/{type}/{id}', [CommentController::class, 'store'])->name('comments.store');
+Route::get('/tasks/{id}', [TaskController::class, 'show'])->name('tasks.show');
+
+
+
+
+
+
+
+
+
+
+
+
+
+Route::get('/projects/{project}/sprints/createsprints', [SprintController::class, 'create'])->name('sprints.createsprints');
+
+
+// Edition
+Route::get('/sprints/{sprint}/edit', [SprintController::class, 'edit'])->name('sprints.edit');
+
+Route::put('/sprints/{sprint}', [SprintController::class, 'update'])->name('sprints.update');
+
+// Suppression
+Route::delete('/sprints/{sprint}', [SprintController::class, 'destroy'])->name('sprints.destroy');
+
+
+
+Route::post('/projects/{project}/sprints', [SprintController::class, 'store'])->name('sprints.store');
+
+
+
+
+
+// Tâches (CRUD)
+Route::resource('tasks', TaskController::class);
+
+// Kanban
+Route::get('/kanban', [TaskController::class, 'kanban'])->name('tasks.kanban');
+
+// Mise à jour du statut (ex: via Kanban)
+Route::post('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
+
+// Ajout de commentaires (polymorphiques)
+Route::post('/comments/{type}/{id}', [CommentController::class, 'store'])->name('comments.store');
+Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
