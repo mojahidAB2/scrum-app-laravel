@@ -97,19 +97,6 @@ use App\Http\Controllers\CommentController;
 
 Route::post('/comments/{type}/{id}', [CommentController::class, 'store'])->name('comments.store');
 Route::get('/tasks/{id}', [TaskController::class, 'show'])->name('tasks.show');
-
-
-
-
-
-
-
-
-
-
-
-
-
 Route::get('/projects/{project}/sprints/createsprints', [SprintController::class, 'create'])->name('sprints.createsprints');
 
 
@@ -141,3 +128,10 @@ Route::post('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->na
 // Ajout de commentaires (polymorphiques)
 Route::post('/comments/{type}/{id}', [CommentController::class, 'store'])->name('comments.store');
 Route::put('/tasks/{task}', [TaskController::class, 'update'])->name('tasks.update');
+
+
+use App\Http\Controllers\DashboardController;
+
+Route::get('/dashboard', [DashboardController::class, 'index'])
+    ->middleware(['auth', 'verified'])
+    ->name('dashboard');
