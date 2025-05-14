@@ -5,88 +5,72 @@ namespace App\Http\Controllers;
 use App\Models\UserStory;
 use Illuminate\Http\Request;
 
-class UserStoryController extends Controller // Ce contrôleur gère toutes les opérations liées aux User Stories
+class UserStoryController extends Controller
 {
-    /**
-     * Affiche toutes les User Stories dans une vue Blade (interface web)
-     */
+    // ✅ Afficher toutes les user stories
     public function showAllView()
     {
-        $userStories = UserStory::all(); // Récupère toutes les User Stories
-        return view('user_stories', compact('userStories')); // Affiche la vue 'user_stories.blade.php' avec les données
+        $stories = UserStory::all();
+        return view('userstoryetbacklogs.user_stories', compact('stories'));
     }
 
-    /**
-     * API - Retourne toutes les User Stories en format JSON
-     */
-    public function index()
+    // ✅ Formulaire de création (optionnel si nécessaire)
+    public function create()
     {
-        $userStories = UserStory::all();
-        return response()->json($userStories);
+        return view('userstoryetbacklogs.create_user_story');
     }
 
-    /**
-     * API - Crée une nouvelle User Story
-     */
+    // ✅ Enregistrer une nouvelle User Story
     public function store(Request $request)
     {
-        // Valide les champs obligatoires
-        $validated = $request->validate([
-            'project_id'    => 'required|integer',
-            'titre'         => 'required|string|max:255',
-            'en_tant_que'   => 'required|string',
-            'je_veux'       => 'required|string',
-            'afin_de'       => 'required|string',
+        $request->validate([
+            'project_id'   => 'required|integer',
+            'titre'        => 'required|string',
+            'en_tant_que'  => 'required|string',
+            'je_veux'      => 'required|string',
+            'afin_de'      => 'required|string',
         ]);
 
-        // Crée une User Story avec les données validées
-        $userStory = UserStory::create($validated);
+        UserStory::create($request->all());
 
-        // Retourne la nouvelle User Story avec code 201 (Créé)
-        return response()->json($userStory, 201);
+        return redirect()->route('user_stories.view')->with('success', 'User Story ajoutée avec succès.');
     }
 
-    /**
-     * API - Affiche une User Story spécifique par ID
-     */
-    public function show($id)
+    // ✅ Formulaire d’édition
+    public function edit($id)
     {
-        $userStory = UserStory::findOrFail($id); // Si introuvable, renvoie 404 automatiquement
-        return response()->json($userStory);
+        $story = UserStory::findOrFail($id);
+        return view('userstoryetbacklogs.edit_user_story', compact('story'));
     }
 
-    /**
-     * API - Met à jour une User Story existante
-     */
+    // ✅ Mise à jour d'une User Story
     public function update(Request $request, $id)
     {
-        $userStory = UserStory::findOrFail($id); // Recherche la User Story
-
-        // Valide les nouvelles données
-        $validated = $request->validate([
-            'project_id'    => 'required|integer',
-            'titre'         => 'required|string|max:255',
-            'en_tant_que'   => 'required|string',
-            'je_veux'       => 'required|string',
-            'afin_de'       => 'required|string',
+        $request->validate([
+            'project_id'   => 'required|integer',
+            'titre'        => 'required|string',
+            'en_tant_que'  => 'required|string',
+            'je_veux'      => 'required|string',
+            'afin_de'      => 'required|string',
         ]);
 
-        // Met à jour la User Story
-        $userStory->update($validated);
+        $story = UserStory::findOrFail($id);
+        $story->update($request->all());
 
-        // Retourne la User Story mise à jour
-        return response()->json($userStory);
+        return redirect()->route('user_stories.view')->with('success', 'User Story mise à jour avec succès.');
     }
 
-    /**
-     * API - Supprime une User Story
-     */
+    // ✅ Supprimer une User Story
     public function destroy($id)
     {
-        $userStory = UserStory::findOrFail($id); // Recherche
-        $userStory->delete(); // Suppression
+        $story = UserStory::findOrFail($id);
+        $story->delete();
 
-        // Message de confirmation
-        return response()->json(['message' => 'User Story supprimée avec succès']);
+        return redirect()->route('user_stories.view')->with('success', 'User Story supprimée avec succès.');
     }
+    public function comments()
+{
+    return $this->morphMany(Comment::class, 'commentable');
+}
+
 }

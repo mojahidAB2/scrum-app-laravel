@@ -18,8 +18,13 @@ return new class extends Migration
             $table->text('en_tant_que'); // En tant que...
             $table->text('je_veux'); // Je veux...
             $table->text('afin_de'); // Afin de...
-            $table->timestamps(); // Horodatage de la création et de la mise à jour 
+            $table->timestamps(); // Horodatage de la création et de la mise à jour
         });
+        Schema::table('user_stories', function (Blueprint $table) {
+            $table->unsignedBigInteger('sprint_id')->nullable()->after('id');
+            $table->foreign('sprint_id')->references('id')->on('sprints')->onDelete('set null');
+        });
+
     }
 
     /**
