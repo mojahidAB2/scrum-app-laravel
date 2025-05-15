@@ -3,24 +3,25 @@
 namespace App\Http\Controllers;
 
 use App\Models\UserStory;
+use App\Models\Comment;
 use Illuminate\Http\Request;
 
 class UserStoryController extends Controller
 {
-    // ✅ Afficher toutes les user stories
+    // 🔹 Afficher toutes les User Stories (global)
     public function showAllView()
     {
         $stories = UserStory::all();
         return view('userstoryetbacklogs.user_stories', compact('stories'));
     }
 
-    // ✅ Formulaire de création (optionnel si nécessaire)
+    // 🔹 Formulaire de création
     public function create()
     {
         return view('userstoryetbacklogs.create_user_story');
     }
 
-    // ✅ Enregistrer une nouvelle User Story
+    // 🔹 Enregistrer une nouvelle User Story
     public function store(Request $request)
     {
         $request->validate([
@@ -36,14 +37,14 @@ class UserStoryController extends Controller
         return redirect()->route('user_stories.view')->with('success', 'User Story ajoutée avec succès.');
     }
 
-    // ✅ Formulaire d’édition
+    // 🔹 Formulaire d'édition
     public function edit($id)
     {
         $story = UserStory::findOrFail($id);
         return view('userstoryetbacklogs.edit_user_story', compact('story'));
     }
 
-    // ✅ Mise à jour d'une User Story
+    // 🔹 Mise à jour
     public function update(Request $request, $id)
     {
         $request->validate([
@@ -60,7 +61,7 @@ class UserStoryController extends Controller
         return redirect()->route('user_stories.view')->with('success', 'User Story mise à jour avec succès.');
     }
 
-    // ✅ Supprimer une User Story
+    // 🔹 Supprimer
     public function destroy($id)
     {
         $story = UserStory::findOrFail($id);
@@ -68,9 +69,17 @@ class UserStoryController extends Controller
 
         return redirect()->route('user_stories.view')->with('success', 'User Story supprimée avec succès.');
     }
-    public function comments()
-{
-    return $this->morphMany(Comment::class, 'commentable');
-}
 
+    // 🔹 Relation avec les commentaires (morphMany)
+    public function comments()
+    {
+        return $this->morphMany(Comment::class, 'commentable');
+    }
+
+    // 🔹 Afficher User Stories selon le projet sélectionné
+    public function byProject($projectId)
+    {
+        $stories = UserStory::where('project_id', $projectId)->get();
+        return view('userstoryetbacklogs.user_stories_by_project', compact('stories', 'projectId'));
+    }
 }

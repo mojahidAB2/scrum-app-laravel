@@ -1,108 +1,156 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Détails du projet</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-</head>
-<body>
-    <div class="container mt-5">
-        <h1>Détails du projet : {{ $project->name }}</h1>
+@extends('layouts.app')
 
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">Nom du projet : {{ $project->name }}</h5>
-                <p><strong>Description :</strong> {{ $project->description }}</p>
-                <p><strong>Scrum Master :</strong> {{ $project->scrum_master }}</p>
-                <p><strong>Date de début :</strong> {{ $project->start_date }}</p>
-                <p><strong>Date de fin :</strong> {{ $project->end_date }}</p>
-                
-            </div>
-        </div>
+@section('content')
+<div class="project-details-container">
+    <h2 class="title">Détails du projet : {{ $project->name }}</h2>
 
-        <a href="{{ route('projects.index') }}" class="btn btn-secondary mt-3">Retour à la liste</a>
-        <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-warning mt-3">Modifier le projet</a>
+    <div class="card-details">
+        <p><strong>Nom du projet :</strong> {{ $project->name }}</p>
+        <p><strong>Description :</strong> {{ $project->description }}</p>
+        <p><strong>Scrum Master :</strong> {{ $project->scrum_master }}</p>
+        <p><strong>Date de début :</strong> {{ $project->start_date }}</p>
+        <p><strong>Date de fin :</strong> {{ $project->end_date }}</p>
+    </div>
+
+    <div class="action-buttons">
+        <a href="{{ route('projects.index') }}" class="btn btn-gray">Retour</a>
+        <a href="{{ route('projects.edit', $project->id) }}" class="btn btn-yellow">Modifier</a>
         <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline;">
-            @csrf
-            @method('DELETE')
-            <button type="submit" class="btn btn-danger mt-3">Supprimer le projet</button>
+            @csrf @method('DELETE')
+            <button type="submit" class="btn btn-red">Supprimer</button>
         </form>
-        <a href="{{ route('projects.editMembers', $project->id) }}" class="btn btn-success">
-            Ajouter des membres à l'équipe
-        </a>
-        
+        <a href="{{ route('projects.editMembers', $project->id) }}" class="btn btn-green">Ajouter membres</a>
     </div>
 
+    <h3 class="sub-title">Sprints associés</h3>
+    @if($project->sprints && $project->sprints->count() > 0)
+        <ul class="sprint-list">
+            @foreach($project->sprints as $sprint)
+                <li>{{ $sprint->name }} ({{ $sprint->start_date }} → {{ $sprint->end_date }})</li>
+            @endforeach
+        </ul>
+    @else
+        <p class="text-muted">Aucun sprint associé pour ce projet.</p>
+    @endif
 
-    <div>
-        <h1>Projet : {{ $project->name }}</h1>
+    <h3 class="sub-title">Liens rapides</h3>
+<div class="quick-links">
+    <a href="{{ route('userstories.byProject', ['project' => $project->id]) }}" class="btn btn-dark">User Stories</a>
+    <a href="{{ route('backlogs.byProject', ['project' => $project->id]) }}" class="btn btn-dark">Backlogs</a>
+    <a href="{{ route('sprints.byProject', ['project' => $project->id]) }}" class="btn btn-dark">Sprints</a>
+    <a href="{{ route('projects.membersList', $project->id) }}" class="btn btn-info"> Voir les membres</a>
 
-<!-- Bouton Créer Sprint -->
-<a href="{{ route('sprints.createsprints', ['project' => $project->id]) }}" class="btn btn-primary">
-    Créer un sprint
-</a>
+</div>
 
+</div>
 
-<a href="{{ route('sprints.create', $project->id) }}">Créer un sprint</a>
+<style>
+body {
+    background-color: #1c1f2e;
+    color: #f0f0f0;
+    font-family: 'Segoe UI', sans-serif;
+}
 
-<!-- Liste des Sprints -->
-<h2>Sprints associés</h2>
+.project-details-container {
+    max-width: 950px;
+    margin: 40px auto;
+    background: #2a2d3e;
+    padding: 35px;
+    border-radius: 12px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+}
 
-<ul>
-@forelse($project->sprints as $sprint)
-    <li>
-        {{ $sprint->name }} : du {{ $sprint->start_date }} au {{ $sprint->end_date }}
-    </li>
-@empty
-    <li>Aucun sprint associé pour ce projet.</li>
-@endforelse
-</ul>
+.title {
+    font-size: 26px;
+    margin-bottom: 25px;
+    font-weight: 700;
+    color: #ffffff;
+    border-bottom: 2px solid #3a3f5c;
+    padding-bottom: 10px;
+}
 
-    </div>
+.card-details p {
+    margin-bottom: 10px;
+    font-size: 16px;
+}
 
+.action-buttons {
+    margin: 25px 0;
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+}
 
-    <div>
-        @foreach($project->sprints as $sprint)
-    <li>
-        {{ $sprint->name }} : du {{ $sprint->start_date }} au {{ $sprint->end_date }}
+.btn {
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 14px;
+    border: none;
+    cursor: pointer;
+    text-decoration: none;
+    color: white;
+    transition: background 0.3s;
+}
 
-        <!-- Bouton Éditer -->
-        <a href="{{ route('sprints.edit', $sprint->id) }}" class="btn btn-primary">Modifier</a>
+.btn-yellow {
+    background-color: #f1c40f;
+    color: #222;
+}
 
+.btn-red {
+    background-color: #e74c3c;
+}
 
+.btn-green {
+    background-color: #27ae60;
+}
 
-        <!-- Formulaire Supprimer -->
-        <form action="{{ route('sprints.destroy', $sprint->id) }}" method="POST" style="display:inline">
-            @csrf
-            @method('DELETE')
-            <button type="submit" onclick="return confirm('Supprimer ce sprint ?')">Supprimer</button>
-        </form>
-    </li>
-@endforeach
+.btn-gray {
+    background-color: #7f8c8d;
+}
 
-    </div>
-    <div>
-      <h3>Membres du projet {{ $project->name }}</h3>
-<ul>
-    @foreach($project->userss as $user)
-        <li>{{ $user->name }}</li>
-    @endforeach
-</ul>
+.btn-dark {
+    background-color: #34495e;
+}
 
-    </div>
+.btn:hover {
+    opacity: 0.9;
+}
 
+.sub-title {
+    margin-top: 30px;
+    font-size: 20px;
+    font-weight: bold;
+    border-bottom: 1px solid #555;
+    padding-bottom: 6px;
+}
 
-<a href="{{ route('user_stories.view') }}" class="btn btn-secondary">Voir les User Stories</a>
+.sprint-list {
+    margin-top: 10px;
+    padding-left: 20px;
+}
 
-<a href="{{ route('backlogs.view') }}" class="btn btn-secondary">
-    Voir les Backlogs
-</a>
-<a href="{{ route('sprints.index', $project->id) }}">Voir les sprints</a>
+.text-muted {
+    color: #bbb;
+}
 
+.quick-links {
+    margin-top: 15px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+.btn-info {
+    background-color:  #34495e;
+    color: #fff;
+    border: none;
+    transition: 0.3s ease;
+}
 
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.0/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-</body>
-</html>
+.btn-info:hover {
+    background-color:  #34495e;
+}
+
+</style>
+@endsection

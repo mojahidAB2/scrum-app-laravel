@@ -11,7 +11,7 @@ class BacklogController extends Controller
     // 🔹 Afficher tous les backlogs
    public function showAllView()
 {
-    $backlogs = Backlog::with('userStory')->get(); 
+    $backlogs = Backlog::with('userStory')->get();
     $userStories = UserStory::all();
     return view('userstoryetbacklogs.backlogs', compact('backlogs', 'userStories'));
 }
@@ -75,4 +75,11 @@ class BacklogController extends Controller
 
         return redirect()->route('backlogs.view')->with('success', 'Backlog supprimé avec succès.');
     }
+   public function byProject($projectId)
+{
+    $backlogs = Backlog::where('project_id', $projectId)->with('userStory')->get();
+    return view('userstoryetbacklogs.backlogs_by_project', compact('backlogs', 'projectId'));
+}
+
+
 }
