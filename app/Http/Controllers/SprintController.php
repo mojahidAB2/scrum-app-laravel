@@ -65,5 +65,17 @@ public function destroy(Sprint $sprint)
     return redirect()->route('projects.show', $sprint->project_id)
                      ->with('success', 'Sprint supprimé avec succès');
 }
+// app/Http/Controllers/SprintController.php
+
+public function byProject($projectId)
+{
+    $sprints = Sprint::where('project_id', $projectId)->get();
+
+
+    return view('sprints.sprints_by_project', [
+        'sprints' => $sprints,
+        'projectId' => $projectId,
+    ]);
+}
 }
 

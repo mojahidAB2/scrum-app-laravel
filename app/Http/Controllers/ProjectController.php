@@ -71,10 +71,10 @@ class ProjectController extends Controller
     {
         $projet = Projet::findOrFail($id);
         $users = User::all();
-    
+
         return view('projects.members', compact('projet', 'users'));
     }
-    
+
 
 // Enregistrer les membres sélectionnés
 public function updateMembers(Request $request, $id)
@@ -93,6 +93,11 @@ public function updateMembers(Request $request, $id)
                      ->with('success', 'Membres mis à jour avec succès.');
 }
 
+public function membersList($id)
+{
+    $projet = Projet::with('users')->findOrFail($id);
+    return view('projects.members_list', compact('projet'));
+}
 
 
 }
