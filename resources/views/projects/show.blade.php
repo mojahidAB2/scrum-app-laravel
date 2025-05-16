@@ -39,7 +39,9 @@
     <a href="{{ route('backlogs.byProject', ['project' => $project->id]) }}" class="btn btn-dark">Backlogs</a>
     <a href="{{ route('sprints.byProject', ['project' => $project->id]) }}" class="btn btn-dark">Sprints</a>
     <a href="{{ route('projects.membersList', $project->id) }}" class="btn btn-info"> Voir les membres</a>
-
+    <a href="{{ route('burndown.index') }}" class="btn btn-info"> Burndown Chart</a>
+    <a href="{{ route('tasks.index') }}" class="btn btn-dark">Tâches</a>
+    <a href="{{ route('tasks.kanban') }}" class="btn btn-dark">Kanban</a>
 </div>
 
 </div>

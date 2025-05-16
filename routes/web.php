@@ -67,6 +67,7 @@ Route::resource('tasks', TaskController::class);
 Route::get('/kanban', [TaskController::class, 'kanban'])->name('tasks.kanban');
 Route::put('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
 Route::get('/tasks/{id}', [TaskController::class, 'show'])->name('tasks.show');
+Route::get('/burndown', [BurndownChartController::class, 'index'])->name('burndown.index');
 
 // ==================== COMMENTAIRES ====================
 Route::post('/comments/{type}/{id}', [CommentController::class, 'store'])->name('comments.store');
