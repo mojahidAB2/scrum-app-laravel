@@ -11,8 +11,8 @@ return new class extends Migration
      */
     public function up(): void
     {
-        
-            Schema::create('projets', function (Blueprint $table) {
+
+            Schema::create('projects', function (Blueprint $table) {
                 $table->id();
                 $table->string('name');
                 $table->text('description')->nullable();
@@ -24,8 +24,8 @@ return new class extends Migration
                 $table->text('main_goals')->nullable();
                 $table->timestamps(); // ajoute created_at et updated_at
             });
-        
-         
+
+
     }
 
     /**
@@ -33,6 +33,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('projets');
+       Schema::dropIfExists('projects');
+
     }
 };

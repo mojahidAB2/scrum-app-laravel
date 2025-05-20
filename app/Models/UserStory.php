@@ -23,6 +23,6 @@ class UserStory extends Model
     // 🔹 Relation avec Projet
     public function project()
     {
-        return $this->belongsTo(Projet::class, 'project_id');
+        return $this->belongsTo(Project::class, 'project_id');
     }
 }

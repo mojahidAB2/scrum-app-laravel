@@ -12,11 +12,11 @@ use App\Http\Controllers\{
     CommentController
 };
 
-// === ROUTE D'ACCUEIL ===
+// === ROUTE D'ACCUEIL APRÈS LOGIN ===
 Route::get('/', fn() => view('welcome'));
 
 // === DASHBOARD ===
-Route::get('/dashboard', [DashboardController::class, 'index'])->middleware(['auth', 'verified'])->name('dashboard');
+Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 // === PROFILE UTILISATEUR ===
 Route::middleware('auth')->group(function () {
@@ -27,15 +27,13 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-// ==================== PROJETS ====================
+// === PROJETS ===
 Route::resource('projects', ProjectController::class);
 Route::get('/projects/{id}/members', [ProjectController::class, 'editMembers'])->name('projects.editMembers');
 Route::post('/projects/{id}/members', [ProjectController::class, 'updateMembers'])->name('projects.updateMembers');
-Route::get('/projects/{id}/members-list', [ProjectController::class, 'membersList']);
 Route::get('/projects/{id}/members-list', [ProjectController::class, 'membersList'])->name('projects.membersList');
 
-
-// ==================== USER STORIES ====================
+// === USER STORIES ===
 Route::get('/user-stories', [UserStoryController::class, 'showAllView'])->name('user_stories.view');
 Route::get('/user-stories/create', [UserStoryController::class, 'create'])->name('user_stories.create');
 Route::post('/user-stories/store', [UserStoryController::class, 'store'])->name('user_stories.store');
@@ -44,7 +42,7 @@ Route::post('/user-stories/{id}/update', [UserStoryController::class, 'update'])
 Route::post('/user-stories/{id}/delete', [UserStoryController::class, 'destroy'])->name('user_stories.destroy');
 Route::get('/projects/{project}/user-stories', [UserStoryController::class, 'byProject'])->name('userstories.byProject');
 
-// ==================== BACKLOGS ====================
+// === BACKLOGS ===
 Route::get('/backlogs', [BacklogController::class, 'showAllView'])->name('backlogs.view');
 Route::get('/backlogs/create', [BacklogController::class, 'create'])->name('backlogs.create');
 Route::post('/backlogs/store', [BacklogController::class, 'store'])->name('backlogs.store');
@@ -53,24 +51,23 @@ Route::post('/backlogs/{id}/update', [BacklogController::class, 'update'])->name
 Route::post('/backlogs/{id}/delete', [BacklogController::class, 'destroy'])->name('backlogs.destroy');
 Route::get('/projects/{project}/backlogs', [BacklogController::class, 'byProject'])->name('backlogs.byProject');
 
-// ==================== SPRINTS ====================
+// === SPRINTS ===
 Route::get('/sprints', [SprintController::class, 'index'])->name('sprints.index');
-Route::get('/projects/{project}/sprints/createsprints', [SprintController::class, 'create'])->name('sprints.create');
+Route::get('/projects/{project}/sprints/create', [SprintController::class, 'create'])->name('sprints.create');
 Route::post('/projects/{project}/sprints', [SprintController::class, 'store'])->name('sprints.store');
 Route::get('/sprints/{sprint}/edit', [SprintController::class, 'edit'])->name('sprints.edit');
 Route::put('/sprints/{sprint}', [SprintController::class, 'update'])->name('sprints.update');
 Route::delete('/sprints/{sprint}', [SprintController::class, 'destroy'])->name('sprints.destroy');
 Route::get('/projects/{project}/sprints', [SprintController::class, 'byProject'])->name('sprints.byProject');
 
-// ==================== TÂCHES & KANBAN ====================
+// === TÂCHES & KANBAN ===
 Route::resource('tasks', TaskController::class);
 Route::get('/kanban', [TaskController::class, 'kanban'])->name('tasks.kanban');
 Route::put('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
 Route::get('/tasks/{id}', [TaskController::class, 'show'])->name('tasks.show');
-Route::get('/burndown', [BurndownChartController::class, 'index'])->name('burndown.index');
 
-// ==================== COMMENTAIRES ====================
+// === COMMENTAIRES ===
 Route::post('/comments/{type}/{id}', [CommentController::class, 'store'])->name('comments.store');
 
-// ==================== BURNDOWN CHART ====================
-Route::get('/burndown-chart', [BurndownChartController::class, 'index'])->middleware(['auth']);
+// === BURNDOWN CHART ===
+Route::get('/burndown-chart', [BurndownChartController::class, 'index'])->name('burndown.index');

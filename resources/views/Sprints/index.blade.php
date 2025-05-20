@@ -92,7 +92,7 @@
         @endphp
 
         @if($firstProjectId)
-            <a href="{{ route('sprints.create', ['project' => $firstProjectId]) }}" class="btn-add">Ajouter un Sprint</a>
+            <a href="{{ route('sprints.create', ['project' => $firstProjectId]) }}" class="btn-add">Ajouter un Sprint </a>
         @endif
     </div>
 

@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Projet;
+use App\Models\Project;
 use App\Models\User;
 
 class ProjectController extends Controller
 {
     public function index()
     {
-        $projects = Projet::all();
+        $projects = Project::all();
         return view('projects.index', compact('projects'));
     }
 
@@ -28,20 +28,20 @@ class ProjectController extends Controller
             'end_date' => 'required|date|after:start_date',
         ]);
 
-        projet::create($request->all());
+        project::create($request->all());
 
         return redirect()->route('projects.index');
     }
 
     public function show($id)
     {
-        $project = projet::findOrFail($id);
+        $project = project::findOrFail($id);
         return view('projects.show', compact('project'));
     }
 
     public function edit($id)
     {
-        $project = projet::findOrFail($id);
+        $project = project::findOrFail($id);
         return view('projects.edit', compact('project'));
     }
 
@@ -54,7 +54,7 @@ class ProjectController extends Controller
             'end_date' => 'required|date|after:start_date',
         ]);
 
-        $project = projet::findOrFail($id);
+        $project = project::findOrFail($id);
         $project->update($request->all());
 
         return redirect()->route('projects.index');
@@ -62,24 +62,24 @@ class ProjectController extends Controller
 
     public function destroy($id)
     {
-        $project = projet::findOrFail($id);
+        $project = project::findOrFail($id);
         $project->delete();
 
         return redirect()->route('projects.index');
     }
     public function editMembers($id)
     {
-        $projet = Projet::findOrFail($id);
+        $project = project::findOrFail($id);
         $users = User::all();
 
-        return view('projects.members', compact('projet', 'users'));
+        return view('projects.members', compact('project', 'users'));
     }
 
 
 // Enregistrer les membres sélectionnés
 public function updateMembers(Request $request, $id)
 {
-    $projet = Projet::findOrFail($id);
+    $project = project::findOrFail($id);
 
     $request->validate([
         'users' => 'required|array',
@@ -87,16 +87,16 @@ public function updateMembers(Request $request, $id)
     ]);
 
     // Enregistre tous les utilisateurs sélectionnés
-    $projet->userss()->sync($request->users);
+    $project->users()->sync($request->users);
 
-    return redirect()->route('projects.show', $projet->id)
+    return redirect()->route('projects.show', $project->id)
                      ->with('success', 'Membres mis à jour avec succès.');
 }
 
 public function membersList($id)
 {
-    $projet = Projet::with('users')->findOrFail($id);
-    return view('projects.members_list', compact('projet'));
+    $project = project::with('users')->findOrFail($id);
+    return view('projects.members_list', compact('project'));
 }
 
 

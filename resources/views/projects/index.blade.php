@@ -1,155 +1,61 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="project-list-container">
-    <h2 class="title">Liste des projets</h2>
+    <div class="max-w-7xl mx-auto py-10 px-4 sm:px-6 lg:px-8">
+        {{-- Titre principal --}}
+        <div class="mb-8 text-center">
+            <h1 class="text-3xl font-bold text-[#ba3dd1]">Liste des Projets</h1>
+            <p class="text-gray-500 mt-2">Gérez facilement vos projets Scrum</p>
+        </div>
 
-    <a href="{{ route('projects.create') }}" class="btn-add">Nouveau Projet</a>
+        {{-- Bouton Ajouter un projet --}}
+        <div class="flex justify-end mb-6">
+            <a href="{{ route('projects.create') }}"
+               class="bg-[#f18ac5] hover:bg-pink-500 text-white font-semibold py-2 px-4 rounded transition duration-300">
+                + Nouveau Projet
+            </a>
+        </div>
 
-    <div class="table-wrapper">
-        <table class="project-table">
-            <thead>
-                <tr>
-                    <th>Nom du projet</th>
-                    <th>Description</th>
-                    <th>Scrum Master</th>
-                    <th>Date de début</th>
-                    <th>Date de fin</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($projects as $project)
-                <tr>
-                    <td>{{ $project->name }}</td>
-                    <td>{{ $project->description }}</td>
-                    <td>{{ $project->scrum_master }}</td>
-                    <td>{{ $project->start_date }}</td>
-                    <td>{{ $project->end_date }}</td>
-                    <td class="action-btns">
-                        <a href="{{ route('projects.show', $project->id) }}" class="btn view">Voir</a>
-                        <a href="{{ route('projects.edit', $project->id) }}" class="btn edit">Modifier</a>
-                        <form action="{{ route('projects.destroy', $project->id) }}" method="POST" style="display:inline;">
-                            @csrf @method('DELETE')
-                            <button type="submit" class="btn delete" onclick="return confirm('Confirmer la suppression ?')">Supprimer</button>
-                        </form>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        {{-- Tableau des projets --}}
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">
+            <table class="min-w-full leading-normal">
+                <thead>
+                    <tr class="bg-[#ba3dd1] text-white text-left text-sm uppercase">
+                        <th class="px-6 py-3">Nom du projet</th>
+                        <th class="px-6 py-3">Description</th>
+                        <th class="px-6 py-3">Scrum Master</th>
+                        <th class="px-6 py-3">Date de début</th>
+                        <th class="px-6 py-3">Date de fin</th>
+                        <th class="px-6 py-3">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($projects as $project)
+                        <tr class="border-b border-gray-200 hover:bg-gray-50">
+                            <td class="px-6 py-4">{{ $project->name }}</td>
+                            <td class="px-6 py-4">{{ $project->description }}</td>
+                            <td class="px-6 py-4">{{ $project->scrum_master }}</td>
+                            <td class="px-6 py-4">{{ $project->start_date }}</td>
+                            <td class="px-6 py-4">{{ $project->end_date }}</td>
+                            <td class="px-6 py-4 flex gap-2">
+                                <a href="{{ route('projects.show', $project->id) }}"
+                                   class="bg-blue-500 hover:bg-blue-600 text-white py-1 px-3 rounded text-sm">Voir</a>
+                                <a href="{{ route('projects.edit', $project->id) }}"
+                                   class="bg-yellow-400 hover:bg-yellow-500 text-white py-1 px-3 rounded text-sm">Modifier</a>
+                                <form action="{{ route('projects.destroy', $project->id) }}" method="POST"
+                                      onsubmit="return confirm('Confirmer la suppression ?')">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit"
+                                            class="bg-red-500 hover:bg-red-600 text-white py-1 px-3 rounded text-sm">
+                                        Supprimer
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     </div>
-</div>
-
-<style>
-body {
-    background-color: #1c1f2e;
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    color: #eaeaea;
-}
-
-.project-list-container {
-    max-width: 1100px;
-    margin: 40px auto;
-    padding: 30px;
-    background-color: #252836;
-    border-radius: 12px;
-    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-}
-
-.title {
-    font-size: 26px;
-    font-weight: 700;
-    color: #ffffff;
-    margin-bottom: 25px;
-    border-bottom: 2px solid #3a3f5c;
-    padding-bottom: 10px;
-}
-
-.btn-add {
-    display: inline-block;
-    margin-bottom: 20px;
-    padding: 10px 18px;
-    background-color: #3498db;
-    color: white;
-    border-radius: 6px;
-    font-weight: 600;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-.btn-add:hover {
-    background-color: #2980b9;
-}
-
-.table-wrapper {
-    overflow-x: auto;
-}
-
-.project-table {
-    width: 100%;
-    border-collapse: collapse;
-    background-color: #2d3144;
-    border-radius: 8px;
-    overflow: hidden;
-}
-
-.project-table thead {
-    background-color: #3b3f56;
-}
-
-.project-table thead th {
-    padding: 14px;
-    color: #f2f2f2;
-    text-align: left;
-    font-size: 15px;
-    font-weight: bold;
-}
-
-.project-table tbody td {
-    padding: 14px;
-    border-bottom: 1px solid #44495c;
-    font-size: 14px;
-}
-
-.project-table tbody tr:hover {
-    background-color: #363b52;
-    transition: background-color 0.3s ease;
-}
-
-.action-btns {
-    display: flex;
-    gap: 8px;
-}
-
-.btn {
-    padding: 6px 12px;
-    border: none;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: bold;
-    cursor: pointer;
-    text-decoration: none;
-    transition: 0.3s ease;
-}
-
-.btn.view {
-    background-color: #3498db;
-    color: white;
-}
-
-.btn.edit {
-    background-color: #f1c40f;
-    color: #222;
-}
-
-.btn.delete {
-    background-color: #e74c3c;
-    color: white;
-}
-
-.btn:hover {
-    transform: translateY(-1px);
-    opacity: 0.9;
-}
-</style>
 @endsection
