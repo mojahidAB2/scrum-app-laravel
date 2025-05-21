@@ -1,7 +1,7 @@
 <x-app-layout>
     <x-slot name="header">
         <h2 class="text-2xl font-bold text-[#ba3dd1]">
-            🧠 Tableau de bord PredictiveMind
+             Tableau de bord PredictiveMind
         </h2>
     </x-slot>
 
@@ -9,19 +9,19 @@
 
         {{-- 🟪 Carte: Nombre de projets --}}
         <div class="bg-white rounded-xl shadow p-6 text-center transition hover:shadow-lg hover:scale-105 duration-200">
-            <h3 class="text-xl font-semibold text-[#f18ac5]">📁 Projets</h3>
+            <h3 class="text-xl font-semibold text-[#f18ac5]"> Projets</h3>
             <p class="text-3xl font-bold text-gray-800 mt-2">{{ $projectsCount }}</p>
         </div>
 
         {{-- 🟪 Carte: Nombre de tâches --}}
         <div class="bg-white rounded-xl shadow p-6 text-center transition hover:shadow-lg hover:scale-105 duration-200">
-            <h3 class="text-xl font-semibold text-[#f18ac5]">✅ Tâches Assignées</h3>
+            <h3 class="text-xl font-semibold text-[#f18ac5]"> Tâches Assignées</h3>
             <p class="text-3xl font-bold text-gray-800 mt-2">{{ $tasksCount }}</p>
         </div>
 
         {{-- 🟪 Carte: Sprints en cours --}}
         <div class="bg-white rounded-xl shadow p-6 text-center transition hover:shadow-lg hover:scale-105 duration-200">
-            <h3 class="text-xl font-semibold text-[#f18ac5]">🚀 Sprints en cours</h3>
+            <h3 class="text-xl font-semibold text-[#f18ac5]"> Sprints en cours</h3>
             <p class="text-3xl font-bold text-gray-800 mt-2">{{ $sprintsActifs }}</p>
         </div>
 

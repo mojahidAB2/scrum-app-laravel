@@ -3,7 +3,7 @@
 @section('content')
     <style>
         .title-color {
-            color: #ba3dd1;
+            color: #391e99;
         }
 
         .card {
