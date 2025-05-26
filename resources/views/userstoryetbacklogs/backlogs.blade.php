@@ -1,89 +1,90 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <title>Backlogs</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
-<body>
+@extends('layouts.app')
 
-<div class="container py-4">
+@section('content')
+<div class="max-w-7xl mx-auto px-6 py-10">
 
     {{-- ✅ Titre --}}
-    <h2 class="mb-4 text-center text-primary"> Liste des Backlogs</h2>
+    <h2 class="text-2xl font-bold text-center text-[#ba3dd1] mb-8">📋 Liste des Backlogs</h2>
 
     {{-- ➕ Formulaire d’ajout --}}
-    <div class="card mb-4 shadow-sm">
-        <div class="card-header bg-success text-white">Ajouter un nouveau Backlog</div>
-        <div class="card-body">
-            <form method="POST" action="{{ route('backlogs.store') }}">
-                @csrf
+    <div class="bg-white shadow-md rounded-lg p-6 mb-8">
+        <h3 class="text-lg font-semibold text-green-600 mb-4">Ajouter un nouveau Backlog</h3>
+        <form method="POST" action="{{ route('backlogs.store') }}">
+            @csrf
 
-                <div class="row mb-3">
-                    <div class="col-md-3">
-                        <label>Project ID</label>
-                        <input type="number" name="project_id" class="form-control" required>
-                    </div>
-                    <div class="col-md-4">
-                        <label>Titre</label>
-                        <input type="text" name="titre" class="form-control" required>
-                    </div>
-                    <div class="col-md-5">
-                        <label>Description</label>
-                        <input type="text" name="description" class="form-control" required>
-                    </div>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-4">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Project ID</label>
+                    <input type="number" name="project_id" class="w-full border border-gray-300 rounded px-3 py-2" required>
                 </div>
-
-                {{-- 🔽 Select User Story --}}
-                <div class="mb-3">
-                    <label for="user_story_id" class="form-label">Associer à une User Story</label>
-                    <select name="user_story_id" id="user_story_id" class="form-select">
-                        <option value="">-- Sélectionner --</option>
-                        @foreach ($userStories as $story)
-                            <option value="{{ $story->id }}">{{ $story->titre }}</option>
-                        @endforeach
-                    </select>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Titre</label>
+                    <input type="text" name="titre" class="w-full border border-gray-300 rounded px-3 py-2" required>
                 </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700">Description</label>
+                    <input type="text" name="description" class="w-full border border-gray-300 rounded px-3 py-2" required>
+                </div>
+            </div>
 
-                <button type="submit" class="btn btn-success">Enregistrer</button>
-            </form>
-        </div>
+            <div class="mb-4">
+                <label class="block text-sm font-medium text-gray-700">Associer à une User Story</label>
+                <select name="user_story_id" class="w-full border border-gray-300 rounded px-3 py-2">
+                    <option value="">-- Sélectionner --</option>
+                    @foreach ($userStories as $story)
+                        <option value="{{ $story->id }}">{{ $story->titre }}</option>
+                    @endforeach
+                </select>
+            </div>
+
+            <button type="submit"
+                class="bg-green-600 hover:bg-green-700 text-white px-6 py-2 rounded shadow">
+                 Enregistrer
+            </button>
+        </form>
     </div>
 
     {{-- 📄 Tableau des Backlogs --}}
-    <table class="table table-hover table-bordered shadow-sm">
-        <thead class="table-primary">
-            <tr class="text-center">
-                <th>ID</th>
-                <th>Project ID</th>
-                <th>User Story</th>
-                <th>Titre</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($backlogs as $backlog)
-                <tr class="text-center">
-                    <td>{{ $backlog->id }}</td>
-                    <td>{{ $backlog->project_id }}</td>
-                    <td>{{ $backlog->userStory->titre ?? '—' }}</td>
-                    <td>{{ $backlog->titre }}</td>
-                    <td>{{ $backlog->description }}</td>
-                    <td>
-                        <a href="{{ route('backlogs.edit', $backlog->id) }}" class="btn btn-warning btn-sm me-2">Modifier</a>
-
-                        <form method="POST" action="{{ route('backlogs.destroy', $backlog->id) }}" style="display:inline-block">
-                            @csrf
-                            <button class="btn btn-danger btn-sm" onclick="return confirm('Voulez-vous vraiment supprimer ce backlog ?')">Supprimer</button>
-                        </form>
-                    </td>
+    <div class="overflow-x-auto">
+        <table class="min-w-full text-sm text-center border rounded-lg shadow">
+            <thead class="bg-[#ba3dd1] text-white uppercase">
+                <tr>
+                    <th class="px-3 py-2">ID</th>
+                    <th class="px-3 py-2">Projet</th>
+                    <th class="px-3 py-2">User Story</th>
+                    <th class="px-3 py-2">Titre</th>
+                    <th class="px-3 py-2">Description</th>
+                    <th class="px-3 py-2">Actions</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($backlogs as $backlog)
+                    <tr class="bg-white border-b hover:bg-gray-50">
+                        <td class="px-3 py-2">{{ $backlog->id }}</td>
+                        <td class="px-3 py-2">{{ $backlog->project_id }}</td>
+                        <td class="px-3 py-2">{{ $backlog->userStory->titre ?? '—' }}</td>
+                        <td class="px-3 py-2">{{ $backlog->titre }}</td>
+                        <td class="px-3 py-2">{{ $backlog->description }}</td>
+                        <td class="px-3 py-2 space-x-2">
+                            <a href="{{ route('backlogs.edit', $backlog->id) }}"
+                               class="bg-yellow-400 hover:bg-yellow-500 text-black px-3 py-1 rounded text-sm">
+                                Modifier
+                            </a>
+
+                            <form method="POST" action="{{ route('backlogs.destroy', $backlog->id) }}" class="inline-block"
+                                  onsubmit="return confirm('Voulez-vous vraiment supprimer ce backlog ?');">
+                                @csrf
+                                @method('DELETE')
+                                <button class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm">
+                                     Supprimer
+                                </button>
+                            </form>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    </div>
 
 </div>
-
-</body>
-</html>
+@endsection

@@ -3,7 +3,7 @@
         {{-- Projets --}}
         <div class="bg-gradient-to-r from-blue-500 to-blue-700 text-white rounded-xl p-4 shadow-md">
             <div class="text-sm uppercase">📁 Projets</div>
-            <div class="text-3xl font-bold mt-2">{{ \App\Models\Projet::count() }}</div>
+            <div class="text-3xl font-bold mt-2">{{ \App\Models\Project::count() }}</div>
         </div>
 
         {{-- Tâches --}}

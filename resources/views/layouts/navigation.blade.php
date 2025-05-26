@@ -1,40 +1,48 @@
-{{-- Barre de navigation principale --}}
-<nav class="bg-white border-b border-gray-100 shadow-sm">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
+<nav class="bg-[#4A249D] text-white shadow-md py-3 z-50 fixed top-0 left-0 w-full">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
 
-            {{-- Section gauche : logo + liens --}}
-            <div class="flex items-center gap-8">
-                <a href="{{ url('/') }}" class="flex items-center gap-2">
-                    <img src="{{ asset('logo.jpg') }}" alt="Logo PredictiveMind" class="h-10">
-                    <span class="text-blue-700 text-xl font-bold">PredictiveMind</span>
+        {{-- Logo + Accueil --}}
+        <div class="flex items-center gap-8">
+            <a href="{{ url('/') }}" class="flex items-center gap-3 group">
+                <img src="{{ asset('logo.jpg') }}" alt="logo" class="h-10 w-auto">
+     
+
+                <span class="text-bleu text-2xl font-extrabold drop-shadow-lg">
+                    PredictiveMind
+                </span>
+            </a>
+
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="{{ url('/') }}"
+                   class="{{ request()->is('/') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">
+                    Accueil
                 </a>
 
-                <div class="flex space-x-6 text-sm text-gray-700">
-                    <a href="{{ url('/') }}" class="{{ request()->is('/') ? 'text-blue-600 font-bold' : 'hover:text-blue-500' }}">Accueil</a>
-                    <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'text-blue-600 font-bold' : 'hover:text-blue-500' }}">Dashboard</a>
-                    <a href="{{ route('projects.index') }}" class="{{ request()->routeIs('projects.*') ? 'text-blue-600 font-bold' : 'hover:text-blue-500' }}">Projets</a>
-                    <a href="{{ route('sprints.index') }}" class="{{ request()->routeIs('sprints.*') ? 'text-blue-600 font-bold' : 'hover:text-blue-500' }}">Sprints</a>
-                    <a href="{{ route('user_stories.view') }}" class="{{ request()->routeIs('user_stories.*') ? 'text-blue-600 font-bold' : 'hover:text-blue-500' }}">User Stories</a>
-                    <a href="{{ route('backlogs.view') }}" class="{{ request()->routeIs('backlogs.*') ? 'text-blue-600 font-bold' : 'hover:text-blue-500' }}">Backlogs</a>
-                    <a href="{{ route('tasks.index') }}" class="{{ request()->routeIs('tasks.*') ? 'text-blue-600 font-bold' : 'hover:text-blue-500' }}">Tâches</a>
-                    <a href="{{ route('tasks.kanban') }}" class="{{ request()->routeIs('kanban.*') ? 'text-blue-600 font-bold' : 'hover:text-blue-500' }}">Kanban</a>
-                </div>
-            </div>
-
-            {{-- Section droite : menu utilisateur --}}
-            <div class="flex items-center space-x-4">
                 @auth
-                    <span class="text-sm text-gray-700">{{ Auth::user()->name }}</span>
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button class="text-sm text-red-600 hover:underline">Déconnexion</button>
-                    </form>
-                @else
-                    <a href="{{ route('login') }}" class="text-sm text-gray-700 hover:text-blue-600">Connexion</a>
-                    <a href="{{ route('register') }}" class="text-sm text-white bg-blue-600 px-3 py-1 rounded hover:bg-blue-700">S’inscrire</a>
+                    <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">Dashboard</a>
+                    <a href="{{ route('projects.index') }}" class="{{ request()->routeIs('projects.*') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">Projets</a>
+                    <a href="{{ route('sprints.index') }}" class="{{ request()->routeIs('sprints.*') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">Sprints</a>
+                    <a href="{{ route('user_stories.view') }}" class="{{ request()->routeIs('user_stories.*') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">User Stories</a>
+                    <a href="{{ route('backlogs.view') }}" class="{{ request()->routeIs('backlogs.*') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">Backlogs</a>
+                    <a href="{{ route('tasks.index') }}" class="{{ request()->routeIs('tasks.*') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">Tâches</a>
+                    <a href="{{ route('tasks.kanban') }}" class="{{ request()->routeIs('kanban.*') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">Kanban</a>
                 @endauth
             </div>
         </div>
+
+        {{-- Zone utilisateur --}}
+        <div class="flex items-center gap-4">
+            @auth
+                <span class="text-sm font-semibold">{{ Auth::user()->name }}</span>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="text-sm text-red-100 hover:underline transition">Déconnexion</button>
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="bg-wavy text-[#4A249D] px-4 py-2 rounded hover:bg-gray-200 transition">Connexion</a>
+                <a href="{{ route('register') }}" class="bg-yellow-300 text-black px-4 py-2 rounded hover:bg-yellow-400 transition">S’inscrire</a>
+            @endauth
+        </div>
+
     </div>
 </nav>

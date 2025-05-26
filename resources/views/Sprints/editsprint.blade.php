@@ -1,85 +1,37 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-    body {
-        background-color: #111827;
-        color: #e5e7eb;
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-    }
+<div class="max-w-2xl mx-auto mt-12 bg-gray-800 text-white rounded-xl shadow-lg p-8">
+    <h1 class="text-2xl font-bold text-yellow-400 mb-6">Modifier le sprint</h1>
 
-    .edit-container {
-        background-color: #1f2937;
-        border-radius: 12px;
-        padding: 30px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        margin-top: 50px;
-    }
-
-    .edit-title {
-        font-size: 24px;
-        font-weight: bold;
-        color: #fbbf24;
-        margin-bottom: 25px;
-    }
-
-    label {
-        font-weight: 500;
-        margin-bottom: 8px;
-        display: block;
-        color: #e5e7eb;
-    }
-
-    input[type="text"],
-    input[type="date"] {
-        width: 100%;
-        padding: 12px;
-        border-radius: 8px;
-        border: none;
-        background-color: #374151;
-        color: #fff;
-        margin-bottom: 20px;
-        font-size: 16px;
-    }
-
-    input:focus {
-        outline: none;
-        box-shadow: 0 0 0 2px #3b82f6;
-    }
-
-    .btn-update {
-        background-color: #10b981;
-        color: white;
-        border: none;
-        padding: 12px 20px;
-        border-radius: 6px;
-        font-weight: bold;
-        font-size: 16px;
-        transition: background-color 0.3s;
-    }
-
-    .btn-update:hover {
-        background-color: #059669;
-    }
-</style>
-
-<div class="container edit-container">
-    <h1 class="edit-title"> Modifier le sprint</h1>
-
-    <form action="{{ route('sprints.update', $sprint->id) }}" method="POST">
+    <form action="{{ route('sprints.update', $sprint->id) }}" method="POST" class="space-y-6">
         @csrf
         @method('PUT')
 
-        <label for="name">Nom du sprint</label>
-        <input type="text" name="name" id="name" value="{{ $sprint->name }}" required>
+        <div>
+            <label for="name" class="block text-sm font-medium text-gray-200 mb-1">Nom du sprint</label>
+            <input type="text" name="name" id="name" value="{{ $sprint->name }}" required
+                class="w-full rounded-md bg-gray-700 text-white border border-gray-600 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+        </div>
 
-        <label for="start_date">Date début</label>
-        <input type="date" name="start_date" id="start_date" value="{{ $sprint->start_date }}" required>
+        <div>
+            <label for="start_date" class="block text-sm font-medium text-gray-200 mb-1">Date début</label>
+            <input type="date" name="start_date" id="start_date" value="{{ $sprint->start_date }}" required
+                class="w-full rounded-md bg-gray-700 text-white border border-gray-600 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+        </div>
 
-        <label for="end_date">Date fin</label>
-        <input type="date" name="end_date" id="end_date" value="{{ $sprint->end_date }}" required>
+        <div>
+            <label for="end_date" class="block text-sm font-medium text-gray-200 mb-1">Date fin</label>
+            <input type="date" name="end_date" id="end_date" value="{{ $sprint->end_date }}" required
+                class="w-full rounded-md bg-gray-700 text-white border border-gray-600 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-green-500">
+        </div>
 
-        <button type="submit" class="btn-update"> Mettre à jour</button>
+        <div class="text-right">
+            <button type="submit"
+                class="bg-green-500 hover:bg-green-600 text-white font-semibold px-6 py-2 rounded-md transition duration-200">
+                Mettre à jour
+            </button>
+        </div>
     </form>
 </div>
 @endsection

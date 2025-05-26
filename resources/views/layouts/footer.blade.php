@@ -1,4 +1,4 @@
-<footer class="bg-[#ba3dd1] text-white mt-10 shadow-md">
+<footer class="bg-[#d5d8ad] text-white mt-10 shadow-md">
     <div class="max-w-7xl mx-auto px-6 py-8 grid grid-cols-1 md:grid-cols-3 gap-6">
 
         {{-- 🧠 Logo + Nom --}}
@@ -7,16 +7,7 @@
             <span class="text-xl font-bold">PredictiveMind</span>
         </div>
 
-        {{-- 🔗 Liens rapides --}}
-        <div>
-            <h4 class="text-lg font-semibold mb-3">Liens utiles</h4>
-            <ul class="space-y-1 text-sm">
-                <li><a href="{{ url('/') }}" class="hover:underline">Accueil</a></li>
-                <li><a href="{{ route('dashboard') }}" class="hover:underline">Dashboard</a></li>
-                <li><a href="{{ route('projects.index') }}" class="hover:underline">Projets</a></li>
-                <li><a href="{{ route('tasks.index') }}" class="hover:underline">Tâches</a></li>
-            </ul>
-        </div>
+
 
         {{-- 📬 Contact --}}
         <div>
@@ -27,7 +18,7 @@
     </div>
 
     {{-- © Copyright --}}
-    <div class="bg-[#f18ac5] text-center text-sm py-3">
+    <div class="bg-[#686a69] text-center text-sm py-3">
         © {{ date('Y') }} PredictiveMind. Tous droits réservés.
     </div>
 </footer>

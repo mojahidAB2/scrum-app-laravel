@@ -16,7 +16,10 @@ use App\Http\Controllers\{
 Route::get('/', fn() => view('welcome'));
 
 // === DASHBOARD ===
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+});
+
 
 // === PROFILE UTILISATEUR ===
 Route::middleware('auth')->group(function () {
@@ -27,11 +30,21 @@ Route::middleware('auth')->group(function () {
 
 require __DIR__.'/auth.php';
 
-// === PROJETS ===
-Route::resource('projects', ProjectController::class);
-Route::get('/projects/{id}/members', [ProjectController::class, 'editMembers'])->name('projects.editMembers');
-Route::post('/projects/{id}/members', [ProjectController::class, 'updateMembers'])->name('projects.updateMembers');
-Route::get('/projects/{id}/members-list', [ProjectController::class, 'membersList'])->name('projects.membersList');
+// === PROJECTS ===
+Route::middleware(['auth'])->group(function () {
+    // Routes RESTful : index, create, store, show, edit, update, destroy
+    Route::resource('projects', ProjectController::class);
+    // Édition des membres d’un projet
+    Route::get('/projects/{id}/members', [ProjectController::class, 'editMembers'])
+        ->name('projects.editMembers');
+    // Mise à jour des membres
+    Route::post('/projects/{id}/members', [ProjectController::class, 'updateMembers'])
+        ->name('projects.updateMembers');
+    // Liste des membres (ex: en AJAX)
+    Route::get('/projects/{id}/members-list', [ProjectController::class, 'membersList'])
+        ->name('projects.membersList');
+
+});
 
 // === USER STORIES ===
 Route::get('/user-stories', [UserStoryController::class, 'showAllView'])->name('user_stories.view');

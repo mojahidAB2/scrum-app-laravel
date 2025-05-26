@@ -9,30 +9,35 @@
             @csrf
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {{-- Nom du projet --}}
                 <div>
                     <label for="name" class="block text-sm font-medium text-gray-700">Nom du projet</label>
                     <input type="text" name="name" id="name" required
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#f18ac5] focus:border-[#f18ac5]">
                 </div>
 
+                {{-- Scrum Master --}}
                 <div>
                     <label for="scrum_master" class="block text-sm font-medium text-gray-700">Scrum Master</label>
                     <input type="text" name="scrum_master" id="scrum_master"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#f18ac5] focus:border-[#f18ac5]">
                 </div>
 
+                {{-- Date de début --}}
                 <div>
                     <label for="start_date" class="block text-sm font-medium text-gray-700">Date de début</label>
                     <input type="date" name="start_date" id="start_date" required
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#f18ac5] focus:border-[#f18ac5]">
                 </div>
 
+                {{-- Date de fin --}}
                 <div>
                     <label for="end_date" class="block text-sm font-medium text-gray-700">Date de fin</label>
                     <input type="date" name="end_date" id="end_date"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#f18ac5] focus:border-[#f18ac5]">
                 </div>
 
+                {{-- Description --}}
                 <div class="md:col-span-2">
                     <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
                     <textarea name="description" id="description" rows="4"
@@ -42,10 +47,12 @@
 
             <div class="mt-6">
                 <button type="submit"
-                    class="bg-[#ba3dd1] hover:bg-[#a92dc0] text-white font-semibold py-2 px-6 rounded-md shadow">
+                    class="bg-[#ba3dd1] hover:bg-[#a92dc0] text-white font-semibold py-2 px-6 rounded-md shadow transition duration-200">
                     Enregistrer
                 </button>
-                <a href="{{ route('projects.index') }}" class="ml-4 text-[#f18ac5] hover:underline">Annuler</a>
+                <a href="{{ route('projects.index') }}" class="ml-4 text-[#f18ac5] hover:underline transition">
+                    Annuler
+                </a>
             </div>
         </form>
     </div>

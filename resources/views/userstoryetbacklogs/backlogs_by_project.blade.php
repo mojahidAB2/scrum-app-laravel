@@ -1,110 +1,78 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-    body {
-        background-color: #111827;
-        color: #e5e7eb;
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-    }
-    .dashboard-container {
-        background-color: #1f2937;
-        border-radius: 12px;
-        padding: 30px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        margin-top: 40px;
-    }
-    .dashboard-title {
-        font-size: 28px;
-        font-weight: bold;
-        color: #fff;
-        margin-bottom: 25px;
-    }
-    .table-dark-custom {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-    .table-dark-custom thead {
-        background-color: #374151;
-    }
-    .table-dark-custom th, .table-dark-custom td {
-        padding: 14px 20px;
-        text-align: left;
-        border-bottom: 1px solid #4b5563;
-    }
-    .table-dark-custom tr:hover {
-        background-color: #2d3748;
-    }
-    .action-btn {
-        padding: 6px 12px;
-        border: none;
-        border-radius: 6px;
-        font-weight: 500;
-        color: #fff;
-        transition: 0.3s;
-    }
-    .btn-edit { background-color: #f59e0b; }
-    .btn-delete { background-color: #ef4444; }
-    .btn-back {
-        background-color: #3b82f6;
-        color: white;
-        border: none;
-        padding: 10px 18px;
-        border-radius: 6px;
-        margin-top: 20px;
-        display: inline-block;
-        transition: background-color 0.3s;
-    }
-    .btn-back:hover {
-        background-color: #2563eb;
-    }
-</style>
+<div class="max-w-7xl mx-auto px-4 py-10">
 
-<div class="container dashboard-container">
-    <div class="dashboard-title"> Backlogs du Projet #{{ $projectId }}</div>
+    {{-- Titre --}}
+    <h2 class="text-2xl font-bold text-white mb-6">
+        Backlogs du Projet #{{ $projectId }}
+    </h2>
 
+    {{-- Message si vide --}}
     @if ($backlogs->isEmpty())
-        <div class="alert alert-warning text-dark">Aucun backlog n'est associé à ce projet.</div>
+        <div class="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 rounded">
+            Aucun backlog n'est associé à ce projet.
+        </div>
     @else
-        <table class="table-dark-custom">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>User Story</th>
-                    <th>Titre</th>
-                    <th>Description</th>
-                    <th>Priorité</th>
-                    <th>Statut</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($backlogs as $backlog)
-                <tr>
-                    <td>{{ $backlog->id }}</td>
-                    <td>{{ $backlog->userStory->titre ?? '-' }}</td>
-                    <td>{{ $backlog->titre }}</td>
-                    <td>{{ $backlog->description }}</td>
-                    <td><span class="badge bg-warning text-dark">{{ ucfirst($backlog->priorite) }}</span></td>
-                    <td><span class="badge bg-secondary">{{ ucfirst($backlog->statut) }}</span></td>
-                    <td>
-    <div style="display: flex; gap: 10px; justify-content: center;">
-        <a href="{{ route('backlogs.edit', $backlog->id) }}" class="action-btn btn-edit">Modifier</a>
-        <form action="{{ route('backlogs.destroy', $backlog->id) }}" method="POST">
-            @csrf
-            @method('POST')
-            <button type="submit" class="action-btn btn-delete">Supprimer</button>
-        </form>
-    </div>
-</td>
-
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        {{-- Tableau --}}
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-gray-800 text-gray-100 rounded-lg overflow-hidden shadow">
+                <thead class="bg-gray-700 text-left text-sm uppercase">
+                    <tr>
+                        <th class="px-4 py-3">#</th>
+                        <th class="px-4 py-3">User Story</th>
+                        <th class="px-4 py-3">Titre</th>
+                        <th class="px-4 py-3">Description</th>
+                        <th class="px-4 py-3">Priorité</th>
+                        <th class="px-4 py-3">Statut</th>
+                        <th class="px-4 py-3 text-center">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($backlogs as $backlog)
+                        <tr class="border-b border-gray-600 hover:bg-gray-700">
+                            <td class="px-4 py-3">{{ $backlog->id }}</td>
+                            <td class="px-4 py-3">{{ $backlog->userStory->titre ?? '-' }}</td>
+                            <td class="px-4 py-3">{{ $backlog->titre }}</td>
+                            <td class="px-4 py-3">{{ $backlog->description }}</td>
+                            <td class="px-4 py-3">
+                                <span class="inline-block bg-yellow-400 text-black text-xs font-semibold px-2 py-1 rounded">
+                                    {{ ucfirst($backlog->priorite) }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3">
+                                <span class="inline-block bg-gray-500 text-white text-xs font-semibold px-2 py-1 rounded">
+                                    {{ ucfirst($backlog->statut) }}
+                                </span>
+                            </td>
+                            <td class="px-4 py-3 flex justify-center gap-2">
+                                <a href="{{ route('backlogs.edit', $backlog->id) }}"
+                                   class="bg-yellow-500 hover:bg-yellow-600 text-black px-3 py-1 rounded text-sm font-semibold">
+                                    Modifier
+                                </a>
+                                <form method="POST" action="{{ route('backlogs.destroy', $backlog->id) }}">
+                                    @csrf
+                                    @method('POST')
+                                    <button type="submit"
+                                            class="bg-red-500 hover:bg-red-600 text-white px-3 py-1 rounded text-sm font-semibold">
+                                        Supprimer
+                                    </button>
+                                </form>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     @endif
 
-    <a href="{{ route('projects.show', $projectId) }}" class="btn-back">Retour au projet</a>
+    {{-- Bouton retour --}}
+    <div class="mt-6">
+        <a href="{{ route('projects.show', $projectId) }}"
+           class="inline-block bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded font-medium">
+            Retour au projet
+        </a>
+    </div>
+
 </div>
 @endsection

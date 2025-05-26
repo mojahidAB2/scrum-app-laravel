@@ -1,10 +1,10 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mt-4">
-    <h2 class="text-light mb-4">📉 Burndown Chart - Dernier Sprint</h2>
+<div class="max-w-6xl mx-auto mt-10 px-4">
+    <h2 class="text-2xl font-bold text-white mb-6">📉 Burndown Chart - Dernier Sprint</h2>
 
-    <div class="bg-dark p-4 rounded shadow">
+    <div class="bg-gray-800 p-6 rounded-lg shadow-md">
         <canvas id="burndownChart" height="100"></canvas>
     </div>
 </div>
@@ -22,7 +22,7 @@
                 {
                     label: 'Idéal',
                     data: {!! json_encode($ideal) !!},
-                    borderColor: '#38bdf8',
+                    borderColor: '#38bdf8', // cyan-400
                     backgroundColor: '#38bdf8',
                     borderWidth: 2,
                     tension: 0.4,
@@ -31,7 +31,7 @@
                 {
                     label: 'Réalité',
                     data: {!! json_encode($actual) !!},
-                    borderColor: '#f87171',
+                    borderColor: '#f87171', // red-400
                     backgroundColor: '#f87171',
                     borderWidth: 2,
                     tension: 0.4,
@@ -47,23 +47,23 @@
                     title: {
                         display: true,
                         text: 'Tâches restantes',
-                        color: '#fff'
+                        color: '#f3f4f6' // gray-100
                     },
-                    ticks: { color: '#ccc' }
+                    ticks: { color: '#d1d5db' } // gray-300
                 },
                 x: {
                     title: {
                         display: true,
                         text: 'Dates',
-                        color: '#fff'
+                        color: '#f3f4f6'
                     },
-                    ticks: { color: '#ccc' }
+                    ticks: { color: '#d1d5db' }
                 }
             },
             plugins: {
                 legend: {
                     labels: {
-                        color: '#fff'
+                        color: '#f9fafb' // gray-50
                     }
                 }
             }

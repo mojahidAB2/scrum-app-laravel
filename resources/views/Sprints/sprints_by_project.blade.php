@@ -1,87 +1,46 @@
 @extends('layouts.app')
 
 @section('content')
-<style>
-    body {
-        background-color: #111827;
-        color: #e5e7eb;
-        font-family: 'Segoe UI', Tahoma, sans-serif;
-    }
-    .dashboard-container {
-        background-color: #1f2937;
-        border-radius: 12px;
-        padding: 30px;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-        margin-top: 40px;
-    }
-    .dashboard-title {
-        font-size: 24px;
-        font-weight: bold;
-        margin-bottom: 25px;
-        color: #fff;
-    }
-    .table-dark-custom {
-        width: 100%;
-        border-collapse: collapse;
-        margin-top: 20px;
-    }
-    .table-dark-custom thead {
-        background-color: #374151;
-    }
-    .table-dark-custom th, .table-dark-custom td {
-        padding: 14px 20px;
-        text-align: center;
-        border-bottom: 1px solid #4b5563;
-    }
-    .table-dark-custom tr:hover {
-        background-color: #2d3748;
-    }
-    .btn-back {
-        background-color: #3b82f6;
-        color: white;
-        border: none;
-        padding: 10px 18px;
-        border-radius: 6px;
-        margin-top: 25px;
-        display: inline-block;
-        transition: background-color 0.3s;
-        text-decoration: none;
-    }
-    .btn-back:hover {
-        background-color: #2563eb;
-    }
-</style>
 
-<div class="container dashboard-container">
-    <div class="dashboard-title"> Sprints du Projet {{ $projectId }}</div>
+<div class="max-w-7xl mx-auto mt-10 bg-gray-800 text-white rounded-xl shadow-lg p-8">
+
+    <h2 class="text-2xl font-bold mb-6 text-white">Sprints du Projet {{ $projectId }}</h2>
 
     @if ($sprints->isEmpty())
-        <div class="alert alert-warning text-dark">Aucun sprint disponible.</div>
+        <div class="bg-yellow-100 text-yellow-800 px-4 py-3 rounded mb-4 text-sm">
+            Aucun sprint disponible.
+        </div>
     @else
-        <table class="table-dark-custom">
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Nom</th>
-                    <th>Date début</th>
-                    <th>Date fin</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($sprints as $sprint)
-                <tr>
-                    <td>{{ $sprint->id }}</td>
-                    <td>{{ $sprint->name }}</td>
-                    <td>{{ $sprint->start_date }}</td>
-                    <td>{{ $sprint->end_date }}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+        <div class="overflow-x-auto">
+            <table class="min-w-full text-sm text-center border border-gray-700 rounded">
+                <thead class="bg-gray-700">
+                    <tr>
+                        <th class="px-4 py-3">ID</th>
+                        <th class="px-4 py-3">Nom</th>
+                        <th class="px-4 py-3">Date début</th>
+                        <th class="px-4 py-3">Date fin</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-gray-800 divide-y divide-gray-700">
+                    @foreach ($sprints as $sprint)
+                        <tr class="hover:bg-gray-700 transition">
+                            <td class="px-4 py-2">{{ $sprint->id }}</td>
+                            <td class="px-4 py-2">{{ $sprint->name }}</td>
+                            <td class="px-4 py-2">{{ $sprint->start_date }}</td>
+                            <td class="px-4 py-2">{{ $sprint->end_date }}</td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+        </div>
     @endif
 
-    <div class="text-start">
-        <a href="{{ route('projects.show', $projectId) }}" class="btn-back mt-4"> Retour au projet</a>
+    <div class="mt-6">
+        <a href="{{ route('projects.show', $projectId) }}"
+           class="inline-block bg-blue-500 hover:bg-blue-600 text-white font-semibold px-6 py-2 rounded">
+            Retour au projet
+        </a>
     </div>
 </div>
+
 @endsection
