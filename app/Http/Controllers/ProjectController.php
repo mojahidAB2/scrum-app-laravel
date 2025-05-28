@@ -26,6 +26,7 @@ class ProjectController extends Controller
             'scrum_master' => 'required|max:255',
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
+            
         ]);
 
         project::create($request->all());
@@ -98,7 +99,13 @@ public function membersList($id)
     $project = project::with('users')->findOrFail($id);
     return view('projects.members_list', compact('project'));
 }
+// ProjectController.php
 
+public function showw($id)
+{
+    $project = Project::with('members')->findOrFail($id);
+    return view('projects.show', compact('project'));
+}
 
 }
 
