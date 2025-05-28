@@ -15,7 +15,7 @@ return new class extends Migration
             $table->date('end_date');
 
             $table->foreignId('project_id')
-                  ->constrained('projects')
+                  ->constrained('projets')
                   ->onDelete('cascade');
 
             $table->timestamps();
