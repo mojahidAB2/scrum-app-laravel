@@ -1,48 +1,40 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="csrf-token" content="{{ csrf_token() }}">
+<html lang="fr">
+<head>
+    <!-- Encodage des caractères -->
+    <meta charset="UTF-8">
 
-        <title>{{ config('app.name', 'Laravel') }}</title>
+    <!-- Adaptation à tous les types d'écrans (responsive) -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-        <!-- Fonts -->
-        <link rel="preconnect" href="https://fonts.bunny.net">
-        <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
-        <style>
-            .table th, .table td {
-                border: 1px solid orange;
-                text-align: center;
-            }
-            .table th {
-                background-color: #ffe0b2;
-                color: darkorange;
-            }
-        </style>
+    <!-- Jeton CSRF pour sécuriser les formulaires -->
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
+    <!-- Titre de la page -->
+    <title>PredictiveMind</title>
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
-    </head>
-    <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigation')
+    <!-- 📦 Importation des fichiers CSS et JS via Vite -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
 
-            <!-- Page Heading -->
-            @isset($header)
-                <header class="bg-white shadow">
-                    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                        {{ $header }}
-                    </div>
-                </header>
-            @endisset
+    <!-- 🌟 Importation de Font Awesome pour les icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
 
-            <!-- Page Content -->
-            <main>
-                @yield('content')
+<body class="bg-white font-sans antialiased min-h-screen">
 
-            </main>
-        </div>
-    </body>
+    <!-- 🚀 Barre de navigation principale -->
+    @include('layouts.navigation')
+
+    <!-- 📄 Contenu principal de la page (avec un padding-top pour éviter que le contenu soit masqué par la navbar fixe) -->
+    <main class="pt-28">
+        @yield('content')
+    </main>
+
+    <!-- 🧩 Pied de page (footer) -->
+    @include('layouts.footer')
+
+    <!-- 🧠 Pile de scripts supplémentaires spécifiques à chaque page -->
+    @stack('scripts')
+
+</body>
 </html>

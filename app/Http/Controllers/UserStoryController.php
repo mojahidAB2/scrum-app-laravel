@@ -9,11 +9,12 @@ use Illuminate\Http\Request;
 class UserStoryController extends Controller
 {
     // 🔹 Afficher toutes les User Stories (global)
-    public function showAllView()
-    {
-        $stories = UserStory::all();
-        return view('userstoryetbacklogs.user_stories', compact('stories'));
-    }
+   public function showAllView()
+{
+    $stories = UserStory::with('comments.user')->get();
+    return view('userstoryetbacklogs.user_stories', compact('stories'));
+}
+
 
     // 🔹 Formulaire de création
     public function create()
@@ -70,12 +71,7 @@ class UserStoryController extends Controller
         return redirect()->route('user_stories.view')->with('success', 'User Story supprimée avec succès.');
     }
 
-    // 🔹 Relation avec les commentaires (morphMany)
-    public function comments()
-    {
-        return $this->morphMany(Comment::class, 'commentable');
-    }
-
+    
     // 🔹 Afficher User Stories selon le projet sélectionné
     public function byProject($projectId)
     {

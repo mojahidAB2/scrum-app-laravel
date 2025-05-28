@@ -1,48 +1,56 @@
-<section>
-    <header>
-        <h2 class="text-lg font-medium text-gray-900">
-            {{ __('Update Password') }}
-        </h2>
+@extends('layouts.app')
 
-        <p class="mt-1 text-sm text-gray-600">
-            {{ __('Ensure your account is using a long, random password to stay secure.') }}
-        </p>
-    </header>
+@section('content')
+<div class="max-w-xl mx-auto mt-10 bg-white p-6 rounded shadow">
+    <h2 class="text-xl font-bold text-gray-800 mb-2">Modifier le mot de passe</h2>
+    <p class="text-sm text-gray-600 mb-6">Assurez-vous d'utiliser un mot de passe fort et sécurisé.</p>
 
-    <form method="post" action="{{ route('password.update') }}" class="mt-6 space-y-6">
+    @if (session('status') === 'password-updated')
+        <div class="mb-4 text-green-600 text-sm font-semibold">
+            Mot de passe mis à jour avec succès.
+        </div>
+    @endif
+
+    <form method="POST" action="{{ route('password.update') }}">
         @csrf
-        @method('put')
+        @method('PUT')
 
-        <div>
-            <x-input-label for="update_password_current_password" :value="__('Current Password')" />
-            <x-text-input id="update_password_current_password" name="current_password" type="password" class="mt-1 block w-full" autocomplete="current-password" />
-            <x-input-error :messages="$errors->updatePassword->get('current_password')" class="mt-2" />
+        {{-- Mot de passe actuel --}}
+        <div class="mb-4">
+            <label for="current_password" class="block text-sm font-medium text-gray-700">Mot de passe actuel</label>
+            <input id="current_password" name="current_password" type="password" autocomplete="current-password"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#ba3dd1] focus:border-[#ba3dd1]">
+            @error('current_password')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div>
-            <x-input-label for="update_password_password" :value="__('New Password')" />
-            <x-text-input id="update_password_password" name="password" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password')" class="mt-2" />
+        {{-- Nouveau mot de passe --}}
+        <div class="mb-4">
+            <label for="password" class="block text-sm font-medium text-gray-700">Nouveau mot de passe</label>
+            <input id="password" name="password" type="password" autocomplete="new-password"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#ba3dd1] focus:border-[#ba3dd1]">
+            @error('password')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div>
-            <x-input-label for="update_password_password_confirmation" :value="__('Confirm Password')" />
-            <x-text-input id="update_password_password_confirmation" name="password_confirmation" type="password" class="mt-1 block w-full" autocomplete="new-password" />
-            <x-input-error :messages="$errors->updatePassword->get('password_confirmation')" class="mt-2" />
+        {{-- Confirmation du mot de passe --}}
+        <div class="mb-6">
+            <label for="password_confirmation" class="block text-sm font-medium text-gray-700">Confirmer le mot de passe</label>
+            <input id="password_confirmation" name="password_confirmation" type="password" autocomplete="new-password"
+                   class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#ba3dd1] focus:border-[#ba3dd1]">
+            @error('password_confirmation')
+                <p class="text-red-500 text-sm mt-1">{{ $message }}</p>
+            @enderror
         </div>
 
-        <div class="flex items-center gap-4">
-            <x-primary-button>{{ __('Save') }}</x-primary-button>
-
-            @if (session('status') === 'password-updated')
-                <p
-                    x-data="{ show: true }"
-                    x-show="show"
-                    x-transition
-                    x-init="setTimeout(() => show = false, 2000)"
-                    class="text-sm text-gray-600"
-                >{{ __('Saved.') }}</p>
-            @endif
+        <div class="flex justify-end">
+            <button type="submit"
+                    class="bg-[#ba3dd1] hover:bg-[#a72abc] text-white font-semibold py-2 px-6 rounded">
+                Enregistrer
+            </button>
         </div>
     </form>
-</section>
+</div>
+@endsection

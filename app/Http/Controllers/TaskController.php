@@ -18,11 +18,22 @@ class TaskController extends Controller
     }
 
     // Vue en mode Kanban
-    public function kanban()
-    {
-        $tasks = Task::with('user')->get()->groupBy('status');
-        return view('kanban.index', compact('tasks'));
+   public function kanban()
+{
+    $statuses = ['à faire', 'en cours', 'terminé'];
+    $tasks = [];
+
+    foreach ($statuses as $status) {
+        $tasks[$status] = Task::where('status', $status)
+            ->with(['user', 'sprint'])
+            ->get();
     }
+
+    return view('kanban.index', compact('tasks'));
+}
+
+
+
 
     // Formulaire de création
     public function create()

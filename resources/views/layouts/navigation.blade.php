@@ -1,106 +1,48 @@
-<nav x-data="{ open: false }" class="bg-white border-b border-gray-100">
-    <!-- Primary Navigation Menu -->
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="flex justify-between h-16">
-            <div class="flex">
-                <!-- Logo -->
-                <div class="shrink-0 flex items-center">
-                    <a href="{{ route('dashboard') }}">
-                        <!-- ممكن تضيف هنا Logo إذا بغيتي -->
-                    </a>
-                </div>
+<nav class="bg-[#4A249D] text-white shadow-md py-3 z-50 fixed top-0 left-0 w-full">
+    <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
 
-                <!-- Navigation Links -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
-                </div>
-            </div>
+        {{-- Logo + Accueil --}}
+        <div class="flex items-center gap-8">
+            <a href="{{ url('/') }}" class="flex items-center gap-3 group">
+                <img src="{{ asset('logo.jpg') }}" alt="logo" class="h-10 w-auto">
+     
 
-            <!-- Settings Dropdown -->
-            <div class="hidden sm:flex sm:items-center sm:ms-6">
-                <x-dropdown align="right" width="48">
-                    <x-slot name="trigger">
-                        <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
-                            @auth
-                                <div>{{ Auth::user()->name }}</div>
-                            @else
-                                <div>Invité</div>
-                            @endauth
+                <span class="text-bleu text-2xl font-extrabold drop-shadow-lg">
+                    PredictiveMind
+                </span>
+            </a>
 
-                            <div class="ms-1">
-                                <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
-                                    <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
-                                </svg>
-                            </div>
-                        </button>
-                    </x-slot>
+            <div class="hidden md:flex space-x-6 text-sm font-medium">
+                <a href="{{ url('/') }}"
+                   class="{{ request()->is('/') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">
+                    Accueil
+                </a>
 
-                    <x-slot name="content">
-                        @auth
-                            <x-dropdown-link :href="route('profile.edit')">
-                                {{ __('Profile') }}
-                            </x-dropdown-link>
-
-                            <form method="POST" action="{{ route('logout') }}">
-                                @csrf
-                                <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault(); this.closest('form').submit();">
-                                    {{ __('Log Out') }}
-                                </x-dropdown-link>
-                            </form>
-                        @endauth
-                    </x-slot>
-                </x-dropdown>
-            </div>
-
-            <!-- Hamburger (mobile) -->
-            <div class="-me-2 flex items-center sm:hidden">
-                <button @click="open = ! open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out">
-                    <svg class="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                        <path :class="{'hidden': open, 'inline-flex': ! open }" class="inline-flex" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
-                        <path :class="{'hidden': ! open, 'inline-flex': open }" class="hidden" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Responsive Navigation Menu -->
-    <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
-        <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
-        </div>
-
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200">
-            <div class="px-4">
                 @auth
-                    <div class="font-medium text-base text-gray-800">{{ Auth::user()->name }}</div>
-                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-                @else
-                    <div class="font-medium text-base text-gray-800">Invité</div>
+                    <a href="{{ route('dashboard') }}" class="{{ request()->routeIs('dashboard') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">Dashboard</a>
+                    <a href="{{ route('projects.index') }}" class="{{ request()->routeIs('projects.*') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">Projets</a>
+                    <a href="{{ route('sprints.index') }}" class="{{ request()->routeIs('sprints.*') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">Sprints</a>
+                    <a href="{{ route('user_stories.view') }}" class="{{ request()->routeIs('user_stories.*') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">User Stories</a>
+                    <a href="{{ route('backlogs.view') }}" class="{{ request()->routeIs('backlogs.*') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">Backlogs</a>
+                    <a href="{{ route('tasks.index') }}" class="{{ request()->routeIs('tasks.*') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">Tâches</a>
+                    <a href="{{ route('tasks.kanban') }}" class="{{ request()->routeIs('kanban.*') ? 'text-yellow-300 font-bold' : 'hover:text-yellow-300' }} hover:underline transition">Kanban</a>
                 @endauth
             </div>
+        </div>
 
+        {{-- Zone utilisateur --}}
+        <div class="flex items-center gap-4">
             @auth
-                <div class="mt-3 space-y-1">
-                    <x-responsive-nav-link :href="route('profile.edit')">
-                        {{ __('Profile') }}
-                    </x-responsive-nav-link>
-
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault(); this.closest('form').submit();">
-                            {{ __('Log Out') }}
-                        </x-responsive-nav-link>
-                    </form>
-                </div>
+                <span class="text-sm font-semibold">{{ Auth::user()->name }}</span>
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <button class="text-sm text-red-100 hover:underline transition">Déconnexion</button>
+                </form>
+            @else
+                <a href="{{ route('login') }}" class="bg-wavy text-[#4A249D] px-4 py-2 rounded hover:bg-gray-200 transition">Connexion</a>
+                <a href="{{ route('register') }}" class="bg-yellow-300 text-black px-4 py-2 rounded hover:bg-yellow-400 transition">S’inscrire</a>
             @endauth
         </div>
+
     </div>
 </nav>

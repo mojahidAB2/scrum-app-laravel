@@ -1,29 +1,37 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-            {{ __('Profile') }}
-        </h2>
-    </x-slot>
+@extends('layouts.app')
 
-    <div class="py-12">
-        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-profile-information-form')
-                </div>
-            </div>
+@section('content')
+<div class="py-12 bg-gray-100 min-h-screen">
+    <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.update-password-form')
-                </div>
-            </div>
+        {{-- Titre --}}
+        <div class="mb-6">
+            <h2 class="text-xl font-semibold text-gray-800 leading-tight">
+                Profil
+            </h2>
+        </div>
 
-            <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                <div class="max-w-xl">
-                    @include('profile.partials.delete-user-form')
-                </div>
+        {{-- Formulaire d'information du profil --}}
+        <div class="p-6 bg-white shadow rounded-lg">
+            <div class="max-w-xl">
+                @include('profile.partials.update-profile-information-form')
             </div>
         </div>
+
+        {{-- Formulaire de changement de mot de passe --}}
+        <div class="p-6 bg-white shadow rounded-lg">
+            <div class="max-w-xl">
+                @include('profile.partials.update-password-form')
+            </div>
+        </div>
+
+        {{-- Formulaire de suppression de compte --}}
+        <div class="p-6 bg-white shadow rounded-lg">
+            <div class="max-w-xl">
+                @include('profile.partials.delete-user-form')
+            </div>
+        </div>
+
     </div>
-</x-app-layout>
+</div>
+@endsection

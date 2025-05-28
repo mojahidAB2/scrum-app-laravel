@@ -1,133 +1,60 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="dark-dashboard-container">
-    <h2 class="form-title">📁 Nouveau Projet</h2>
+<div class="max-w-7xl mx-auto py-8 px-4 sm:px-6 lg:px-8">
+    <div class="bg-white shadow rounded-lg p-6">
+        <h2 class="text-2xl font-bold text-[#ba3dd1] mb-6">Ajouter un nouveau projet</h2>
 
-    <form action="{{ route('projects.store') }}" method="POST" class="dark-form">
-        @csrf
+        <form action="{{ route('projects.store') }}" method="POST">
+            @csrf
 
-        <div class="form-group">
-            <label for="name">📝 Nom du projet</label>
-            <input type="text" name="name" id="name" required>
-        </div>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                {{-- Nom du projet --}}
+                <div>
+                    <label for="name" class="block text-sm font-medium text-gray-700">Nom du projet</label>
+                    <input type="text" name="name" id="name" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#f18ac5] focus:border-[#f18ac5]">
+                </div>
 
-        <div class="form-group">
-            <label for="description">🗒️ Description</label>
-            <textarea name="description" id="description" rows="3" required></textarea>
-        </div>
+                {{-- Scrum Master --}}
+                <div>
+                    <label for="scrum_master" class="block text-sm font-medium text-gray-700">Scrum Master</label>
+                    <input type="text" name="scrum_master" id="scrum_master"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#f18ac5] focus:border-[#f18ac5]">
+                </div>
 
-        <div class="form-group">
-            <label for="start_date">📅 Date de début</label>
-            <input type="date" name="start_date" id="start_date" required>
-        </div>
+                {{-- Date de début --}}
+                <div>
+                    <label for="start_date" class="block text-sm font-medium text-gray-700">Date de début</label>
+                    <input type="date" name="start_date" id="start_date" required
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#f18ac5] focus:border-[#f18ac5]">
+                </div>
 
-        <div class="form-group">
-            <label for="end_date">📆 Date de fin</label>
-            <input type="date" name="end_date" id="end_date" required>
-        </div>
+                {{-- Date de fin --}}
+                <div>
+                    <label for="end_date" class="block text-sm font-medium text-gray-700">Date de fin</label>
+                    <input type="date" name="end_date" id="end_date"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#f18ac5] focus:border-[#f18ac5]">
+                </div>
 
-        <div class="form-group">
-            <label for="scrum_master">👤 Scrum Master</label>
-            <input type="text" name="scrum_master" id="scrum_master" required>
-        </div>
+                {{-- Description --}}
+                <div class="md:col-span-2">
+                    <label for="description" class="block text-sm font-medium text-gray-700">Description</label>
+                    <textarea name="description" id="description" rows="4"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:ring-[#f18ac5] focus:border-[#f18ac5]"></textarea>
+                </div>
+            </div>
 
-        <div class="form-group">
-            <label for="priorite">🚦 Priorité</label>
-            <select name="priorite" id="priorite" required>
-                <option value="Haute">🔴 Haute</option>
-                <option value="Moyenne">🟡 Moyenne</option>
-                <option value="Basse">🟢 Basse</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label for="type">💡 Type de projet</label>
-            <input type="text" name="type" id="type" required>
-        </div>
-
-        <div class="form-group">
-            <label for="objectifs">🎯 Objectifs</label>
-            <textarea name="objectifs" id="objectifs" rows="3"></textarea>
-        </div>
-
-        <button type="submit" class="btn-dark-submit">✅ Créer le Projet</button>
-    </form>
+            <div class="mt-6">
+                <button type="submit"
+                    class="bg-[#ba3dd1] hover:bg-[#a92dc0] text-white font-semibold py-2 px-6 rounded-md shadow transition duration-200">
+                    Enregistrer
+                </button>
+                <a href="{{ route('projects.index') }}" class="ml-4 text-[#f18ac5] hover:underline transition">
+                    Annuler
+                </a>
+            </div>
+        </form>
+    </div>
 </div>
-
-<style>
-    body {
-        background-color: #0e1a2b;
-        font-family: 'Segoe UI', sans-serif;
-        color: #e0e6ed;
-    }
-
-    .dark-dashboard-container {
-        max-width: 750px;
-        margin: 50px auto;
-        background-color: #182b45;
-        padding: 40px;
-        border-radius: 12px;
-        box-shadow: 0 0 20px rgba(0, 255, 255, 0.08);
-        animation: fadeIn 0.6s ease-in-out;
-    }
-
-    .form-title {
-        text-align: center;
-        font-size: 24px;
-        color: #00c8ff;
-        margin-bottom: 30px;
-    }
-
-    .form-group {
-        margin-bottom: 20px;
-    }
-
-    label {
-        display: block;
-        font-weight: 600;
-        margin-bottom: 6px;
-        color: #c9d1d9;
-    }
-
-    input, textarea, select {
-        width: 100%;
-        background-color: #1e3a5c;
-        border: 1px solid #2b4b72;
-        color: #e6edf3;
-        padding: 12px;
-        border-radius: 6px;
-        font-size: 14px;
-        transition: all 0.3s ease-in-out;
-    }
-
-    input:focus, textarea:focus, select:focus {
-        outline: none;
-        border-color: #00c8ff;
-        background-color: #223b5e;
-        box-shadow: 0 0 5px rgba(0, 200, 255, 0.4);
-    }
-
-    .btn-dark-submit {
-        width: 100%;
-        padding: 12px;
-        background: linear-gradient(to right, #00c6ff, #0072ff);
-        border: none;
-        color: white;
-        font-size: 16px;
-        font-weight: bold;
-        border-radius: 8px;
-        transition: background 0.3s ease;
-    }
-
-    .btn-dark-submit:hover {
-        background: linear-gradient(to right, #0072ff, #00c6ff);
-        box-shadow: 0 0 10px rgba(0, 200, 255, 0.3);
-    }
-
-    @keyframes fadeIn {
-        from { opacity: 0; transform: translateY(20px); }
-        to { opacity: 1; transform: translateY(0); }
-    }
-</style>
 @endsection
