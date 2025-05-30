@@ -9,7 +9,7 @@ class Project extends Model
 {
     use HasFactory;
 
-    protected $table = 'projets';
+    protected $table = 'projects';
 
     protected $fillable = [
         'name', 'description', 'start_date', 'end_date', 'scrum_master', 'priority', 'project_type', 'main_goals'
@@ -17,7 +17,7 @@ class Project extends Model
 
     public function users()
     {
-        return $this->belongsToMany(User::class, 'projet_user');
+        return $this->belongsToMany(User::class, 'project_user');
     }
 
     public function sprints()

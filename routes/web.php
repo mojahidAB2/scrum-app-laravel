@@ -1,6 +1,7 @@
 <?php
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\{
+    UserController,
     ProfileController,
     ProjectController,
     SprintController,
@@ -26,6 +27,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+});
+    // 👉 Routes pour choisir le rôle après inscription
+Route::middleware(['auth'])->group(function () {
+    Route::get('/choisir-role', [UserController::class, 'choisirRole'])->name('choisir.role');
+    Route::post('/choisir-role', [UserController::class, 'enregistrerRole'])->name('choisir.role.post');
 });
 
 require __DIR__.'/auth.php';
@@ -84,3 +90,19 @@ Route::post('/comments/{type}/{id}', [CommentController::class, 'store'])->name(
 
 // === BURNDOWN CHART ===
 Route::get('/burndown-chart', [BurndownChartController::class, 'index'])->name('burndown.index');
+// === ROUTES DISPONIBLES POUR UTILISATEURS CONNECTÉS, MÊME SANS RÔLE ===
+// 👉 Ces routes permettent à un utilisateur fraîchement inscrit de choisir un rôle
+Route::middleware('auth')->group(function () {
+    Route::get('/choisir-role', [UserController::class, 'choisirRole'])->name('choisir.role');
+    Route::post('/choisir-role', [UserController::class, 'enregistrerRole'])->name('choisir.role.post');
+});
+
+// === ROUTES QUI NÉCESSITENT UN RÔLE ===
+// 👉 Ces routes sont protégées par le middleware "role.check"
+// Donc seul un utilisateur connecté ET avec un rôle pourra y accéder
+Route::middleware(['auth', 'role.check'])->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+    // Gestion des projets accessible uniquement si l'utilisateur a un rôle
+    Route::resource('projects', ProjectController::class);
+});

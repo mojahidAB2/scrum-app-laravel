@@ -4,16 +4,18 @@
         {{-- 🧠 Logo + Nom --}}
         <div class="flex items-center gap-3">
             <img src="{{ asset('logo.jpg') }}" alt="Logo PredictiveMind" class="h-10 rounded shadow-md">
-            <span class="text-xl font-bold">PredictiveMind</span>
+            <span class="text-xl font-bold text-gray-900">PredictiveMind</span>
         </div>
-
-
 
         {{-- 📬 Contact --}}
         <div>
-            <h4 class="text-lg font-semibold mb-3">Contact</h4>
-            <p class="text-sm">📧 contact@predictivemind.com</p>
-            <p class="text-sm">📞 +212 6 00 00 00 00</p>
+            <h4 class="text-lg font-semibold mb-3 text-gray-900">Contact</h4>
+            <p class="text-sm text-gray-800">
+                <i class="fas fa-envelope me-2 text-[#4A249D]"></i> contact@predictivemind.com
+            </p>
+            <p class="text-sm text-gray-800">
+                <i class="fas fa-phone me-2 text-[#4A249D]"></i> +212 6 00 00 00 00
+            </p>
         </div>
     </div>
 
@@ -22,6 +24,6 @@
         © {{ date('Y') }} PredictiveMind. Tous droits réservés.
     </div>
 </footer>
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+
+{{-- Font Awesome CDN (ajoute le si pas déjà موجود) --}}
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
