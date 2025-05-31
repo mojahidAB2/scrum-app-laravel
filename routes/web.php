@@ -84,3 +84,28 @@ Route::post('/comments/{type}/{id}', [CommentController::class, 'store'])->name(
 
 // === BURNDOWN CHART ===
 Route::get('/burndown-chart', [BurndownChartController::class, 'index'])->name('burndown.index');
+
+
+
+
+
+
+// Auth routes (normalement déjà présentes via Laravel Breeze ou Jetstream)
+
+use App\Http\Middleware\CheckRole;
+
+
+// Dashboard Product Owner
+Route::middleware(['auth', CheckRole::class . ':product_owner'])->get('/dashboard/po', function () {
+    return view('dashboard.po');
+});
+
+// Dashboard Scrum Master
+Route::middleware(['auth', CheckRole::class . ':scrum_master'])->get('/dashboard/sm', function () {
+    return view('dashboard.sm');
+});
+
+// Dashboard Développeur
+Route::middleware(['auth', CheckRole::class . ':developer'])->get('/dashboard/dev', function () {
+    return view('dashboard.dev');
+});
