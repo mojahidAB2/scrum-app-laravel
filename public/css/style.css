@@ -1,0 +1,48 @@
+:root {
+    --beige: #F5EEDC;
+    --blue-main: #27548A;
+    --blue-dark: #183B4E;
+    --gold-accent: #DDA853;
+}
+
+/* Effet général de transition pour tous les boutons */
+.navbar .btn {
+    transition: all 0.3s ease-in-out;
+    transform-origin: center;
+}
+
+/* Style et hover du bouton Connexion */
+.navbar .btn-outline-light {
+    background-color: var(--gold-accent) !important;
+    color: var(--blue-dark) !important;
+    border: none;
+}
+.navbar .btn-outline-light:hover {
+    background-color: #c6932a !important;
+    color: white !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+/* Style et hover du bouton S'inscrire */
+.navbar .bg-gold {
+    background-color: var(--gold-accent) !important;
+    color: var(--blue-dark) !important;
+}
+.navbar .bg-gold:hover {
+    background-color: #c6932a !important;
+    color: white !important;
+    transform: scale(1.05);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+}
+
+
+/* Couleurs de fond depuis les variables CSS */
+.bg-beige { background-color: var(--beige) !important; }
+.bg-blue-main { background-color: var(--blue-main) !important; }
+.bg-blue-dark { background-color: var(--blue-dark) !important; }
+.bg-gold { background-color: var(--gold-accent) !important; }
+
+/* Couleurs de texte depuis les variables CSS */
+.text-blue-main { color: var(--blue-main) !important; }
+.text-gold { color: var(--gold-accent) !important; }
