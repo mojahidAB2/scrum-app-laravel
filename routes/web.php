@@ -90,19 +90,3 @@ Route::post('/comments/{type}/{id}', [CommentController::class, 'store'])->name(
 
 // === BURNDOWN CHART ===
 Route::get('/burndown-chart', [BurndownChartController::class, 'index'])->name('burndown.index');
-// === ROUTES DISPONIBLES POUR UTILISATEURS CONNECTÉS, MÊME SANS RÔLE ===
-// 👉 Ces routes permettent à un utilisateur fraîchement inscrit de choisir un rôle
-Route::middleware('auth')->group(function () {
-    Route::get('/choisir-role', [UserController::class, 'choisirRole'])->name('choisir.role');
-    Route::post('/choisir-role', [UserController::class, 'enregistrerRole'])->name('choisir.role.post');
-});
-
-// === ROUTES QUI NÉCESSITENT UN RÔLE ===
-// 👉 Ces routes sont protégées par le middleware "role.check"
-// Donc seul un utilisateur connecté ET avec un rôle pourra y accéder
-Route::middleware(['auth', 'role.check'])->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    // Gestion des projets accessible uniquement si l'utilisateur a un rôle
-    Route::resource('projects', ProjectController::class);
-});
