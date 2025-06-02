@@ -12,6 +12,8 @@ class UserController extends Controller
        return view('choisir-role.choisir-role'); // 📄 crée la vue choisir-role.blade.php
     }
 
+
+
     public function enregistrerRole(Request $request)
     {
         $request->validate([
@@ -25,3 +27,5 @@ class UserController extends Controller
         return redirect()->route('dashboard');
     }
 }
+
+

@@ -21,7 +21,4 @@ yarn-error.log
 /.nova
 /.vscode
 /.zed
-# 🔒 Ignorer les fichiers liés à Filament
-app/Filament/
-resources/views/filament/
-app/Providers/Filament/AppServiceProvider.php
+
