@@ -22,16 +22,16 @@
             --primary: #6c63ff;
             --secondary: #ff6584;
             --dark: #2d3748;
-            --light: #f7fafc;
+            --light: #32373a;
             --gradient: linear-gradient(135deg, #6c63ff 0%, #ff6584 100%);
         }
-        
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-        
+
         body {
             font-family: 'Poppins', sans-serif;
             overflow-x: hidden;
@@ -39,11 +39,11 @@
             color: var(--dark);
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%236c63ff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>'), auto;
         }
-        
+
         a, button {
             cursor: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="%23ff6584" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/></svg>'), pointer;
         }
-        
+
         /* Navbar */
         .navbar-scrum {
             background: var(--gradient);
@@ -56,13 +56,13 @@
             z-index: 1000;
             transition: all 0.3s ease;
         }
-        
+
         .navbar-scrum.scrolled {
             padding: 0.5rem 0;
             backdrop-filter: blur(10px);
             background: rgba(108, 99, 255, 0.95);
         }
-        
+
         .navbar-brand {
             display: flex;
             align-items: center;
@@ -71,17 +71,17 @@
             color: white !important;
             font-family: 'Montserrat', sans-serif;
         }
-        
+
         .navbar-brand img {
             height: 40px;
             margin-right: 10px;
             transition: transform 0.3s;
         }
-        
+
         .navbar-brand:hover img {
             transform: rotate(15deg);
         }
-        
+
         .nav-link {
             color: white !important;
             font-weight: 500;
@@ -89,7 +89,7 @@
             position: relative;
             padding: 0.5rem 0;
         }
-        
+
         .nav-link::after {
             content: '';
             position: absolute;
@@ -100,15 +100,15 @@
             background: white;
             transition: width 0.3s ease;
         }
-        
+
         .nav-link:hover::after {
             width: 100%;
         }
-        
+
         .nav-link.active {
             font-weight: 600;
         }
-        
+
         .btn-scrum {
             background: white;
             color: var(--primary) !important;
@@ -119,12 +119,12 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(108, 99, 255, 0.3);
         }
-        
+
         .btn-scrum:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(108, 99, 255, 0.4);
         }
-        
+
         /* Hero Section */
         .hero-section {
             height: 100vh;
@@ -134,12 +134,12 @@
             overflow: hidden;
             background: linear-gradient(135deg, rgba(108, 99, 255, 0.1) 0%, rgba(255, 101, 132, 0.1) 100%);
         }
-        
+
         .hero-content {
             z-index: 2;
             position: relative;
         }
-        
+
         .hero-title {
             font-size: 3.5rem;
             font-weight: 700;
@@ -148,25 +148,25 @@
             line-height: 1.2;
             font-family: 'Montserrat', sans-serif;
         }
-        
+
         .hero-title span {
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        
+
         .hero-subtitle {
             font-size: 1.25rem;
             margin-bottom: 2rem;
             color: #4a5568;
             max-width: 600px;
         }
-        
+
         .hero-btns .btn {
             margin-right: 1rem;
             margin-bottom: 1rem;
         }
-        
+
         .btn-primary-scrum {
             background: var(--gradient);
             color: white;
@@ -177,12 +177,12 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(108, 99, 255, 0.4);
         }
-        
+
         .btn-primary-scrum:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(108, 99, 255, 0.5);
         }
-        
+
         .btn-outline-scrum {
             background: transparent;
             color: var(--primary);
@@ -192,31 +192,31 @@
             font-weight: 600;
             transition: all 0.3s ease;
         }
-        
+
         .btn-outline-scrum:hover {
             background: var(--primary);
             color: white;
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(108, 99, 255, 0.3);
         }
-        
+
         .hero-image {
             position: relative;
             animation: float 6s ease-in-out infinite;
         }
-        
+
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
             100% { transform: translateY(0px); }
         }
-        
+
         .hero-image img {
             max-width: 100%;
             height: auto;
             filter: drop-shadow(0 20px 30px rgba(108, 99, 255, 0.3));
         }
-        
+
         /* Background Animation */
         .bg-animation {
             position: absolute;
@@ -227,14 +227,14 @@
             z-index: 1;
             overflow: hidden;
         }
-        
+
         .bg-circle {
             position: absolute;
             border-radius: 50%;
             background: linear-gradient(135deg, rgba(108, 99, 255, 0.1) 0%, rgba(255, 101, 132, 0.1) 100%);
             animation: float 15s infinite linear;
         }
-        
+
         .bg-circle:nth-child(1) {
             width: 600px;
             height: 600px;
@@ -242,7 +242,7 @@
             left: -100px;
             animation-delay: 0s;
         }
-        
+
         .bg-circle:nth-child(2) {
             width: 400px;
             height: 400px;
@@ -251,7 +251,7 @@
             animation-delay: 2s;
             animation-direction: reverse;
         }
-        
+
         .bg-circle:nth-child(3) {
             width: 300px;
             height: 300px;
@@ -259,14 +259,14 @@
             right: 20%;
             animation-delay: 4s;
         }
-        
+
         /* Features Section */
         .features-section {
             padding: 6rem 0;
             position: relative;
             overflow: hidden;
         }
-        
+
         .section-title {
             font-size: 2.5rem;
             font-weight: 700;
@@ -276,7 +276,7 @@
             position: relative;
             font-family: 'Montserrat', sans-serif;
         }
-        
+
         .section-title::after {
             content: '';
             position: absolute;
@@ -288,7 +288,7 @@
             background: var(--gradient);
             border-radius: 2px;
         }
-        
+
         .feature-card {
             background: white;
             border-radius: 15px;
@@ -301,7 +301,7 @@
             overflow: hidden;
             z-index: 1;
         }
-        
+
         .feature-card::before {
             content: '';
             position: absolute;
@@ -312,12 +312,12 @@
             background: var(--gradient);
             z-index: 2;
         }
-        
+
         .feature-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 40px rgba(108, 99, 255, 0.2);
         }
-        
+
         .feature-icon {
             width: 70px;
             height: 70px;
@@ -331,32 +331,32 @@
             font-size: 1.75rem;
             transition: all 0.3s ease;
         }
-        
+
         .feature-card:hover .feature-icon {
             background: var(--gradient);
             color: white;
             transform: rotate(15deg) scale(1.1);
         }
-        
+
         .feature-title {
             font-size: 1.5rem;
             font-weight: 600;
             margin-bottom: 1rem;
             color: var(--dark);
         }
-        
+
         .feature-text {
             color: #718096;
             margin-bottom: 1.5rem;
         }
-        
+
         /* Why Scrum Section */
         .why-scrum-section {
             padding: 6rem 0;
             background: linear-gradient(135deg, rgba(108, 99, 255, 0.03) 0%, rgba(255, 101, 132, 0.03) 100%);
             position: relative;
         }
-        
+
         .why-scrum-image {
             position: relative;
             border-radius: 15px;
@@ -365,25 +365,25 @@
             transform: perspective(1000px) rotateY(-10deg);
             transition: all 0.5s ease;
         }
-        
+
         .why-scrum-image:hover {
             transform: perspective(1000px) rotateY(0deg);
         }
-        
+
         .why-scrum-image img {
             width: 100%;
             height: auto;
             transition: all 0.5s ease;
         }
-        
+
         .why-scrum-image:hover img {
             transform: scale(1.05);
         }
-        
+
         .why-scrum-content {
             padding-left: 3rem;
         }
-        
+
         .why-scrum-title {
             font-size: 2.5rem;
             font-weight: 700;
@@ -391,33 +391,33 @@
             color: var(--dark);
             font-family: 'Montserrat', sans-serif;
         }
-        
+
         .why-scrum-title span {
             background: var(--gradient);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
-        
+
         .why-scrum-text {
             color: #4a5568;
             margin-bottom: 2rem;
             font-size: 1.1rem;
             line-height: 1.8;
         }
-        
+
         .scrum-benefits {
             list-style: none;
             padding: 0;
             margin-bottom: 2rem;
         }
-        
+
         .scrum-benefits li {
             margin-bottom: 1rem;
             position: relative;
             padding-left: 2rem;
             color: #4a5568;
         }
-        
+
         .scrum-benefits li::before {
             content: '\f00c';
             font-family: 'Font Awesome 6 Free';
@@ -427,13 +427,13 @@
             top: 0;
             color: var(--primary);
         }
-        
+
         /* Testimonials Section */
         .testimonials-section {
             padding: 6rem 0;
             background: white;
         }
-        
+
         .testimonial-card {
             background: white;
             border-radius: 15px;
@@ -443,19 +443,19 @@
             position: relative;
             transition: all 0.3s ease;
         }
-        
+
         .testimonial-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 40px rgba(108, 99, 255, 0.2);
         }
-        
+
         .testimonial-text {
             font-style: italic;
             color: #4a5568;
             margin-bottom: 1.5rem;
             position: relative;
         }
-        
+
         .testimonial-text::before,
         .testimonial-text::after {
             content: '"';
@@ -463,22 +463,22 @@
             color: rgba(108, 99, 255, 0.2);
             position: absolute;
         }
-        
+
         .testimonial-text::before {
             top: -20px;
             left: -10px;
         }
-        
+
         .testimonial-text::after {
             bottom: -40px;
             right: -10px;
         }
-        
+
         .testimonial-author {
             display: flex;
             align-items: center;
         }
-        
+
         .testimonial-author img {
             width: 50px;
             height: 50px;
@@ -487,19 +487,19 @@
             object-fit: cover;
             border: 3px solid var(--primary);
         }
-        
+
         .author-info h5 {
             margin-bottom: 0;
             color: var(--dark);
             font-weight: 600;
         }
-        
+
         .author-info p {
             color: #718096;
             font-size: 0.9rem;
             margin-bottom: 0;
         }
-        
+
         /* CTA Section */
         .cta-section {
             padding: 6rem 0;
@@ -508,20 +508,20 @@
             position: relative;
             overflow: hidden;
         }
-        
+
         .cta-content {
             position: relative;
             z-index: 2;
             text-align: center;
         }
-        
+
         .cta-title {
             font-size: 2.5rem;
             font-weight: 700;
             margin-bottom: 1.5rem;
             font-family: 'Montserrat', sans-serif;
         }
-        
+
         .cta-text {
             font-size: 1.2rem;
             margin-bottom: 2rem;
@@ -529,7 +529,7 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
+
         .btn-cta {
             background: white;
             color: var(--primary) !important;
@@ -540,12 +540,12 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
-        
+
         .btn-cta:hover {
             transform: translateY(-3px);
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
         }
-        
+
         .cta-particles {
             position: absolute;
             top: 0;
@@ -554,14 +554,14 @@
             height: 100%;
             z-index: 1;
         }
-        
+
         .cta-particle {
             position: absolute;
             border-radius: 50%;
             background: rgba(255, 255, 255, 0.2);
             animation: float 10s infinite linear;
         }
-        
+
         /* Footer */
         .footer {
             background: var(--dark);
@@ -569,29 +569,29 @@
             padding: 4rem 0 2rem;
             position: relative;
         }
-        
+
         .footer-logo {
             display: flex;
             align-items: center;
             margin-bottom: 1.5rem;
         }
-        
+
         .footer-logo img {
             height: 40px;
             margin-right: 10px;
         }
-        
+
         .footer-logo-text {
             font-size: 1.5rem;
             font-weight: 700;
             font-family: 'Montserrat', sans-serif;
         }
-        
+
         .footer-about {
             margin-bottom: 2rem;
             color: #a0aec0;
         }
-        
+
         .footer-title {
             font-size: 1.25rem;
             font-weight: 600;
@@ -599,46 +599,46 @@
             color: white;
             font-family: 'Montserrat', sans-serif;
         }
-        
+
         .footer-links {
             list-style: none;
             padding: 0;
         }
-        
+
         .footer-links li {
             margin-bottom: 0.75rem;
         }
-        
+
         .footer-links a {
             color: #a0aec0;
             text-decoration: none;
             transition: all 0.3s ease;
         }
-        
+
         .footer-links a:hover {
             color: white;
             padding-left: 5px;
         }
-        
+
         .footer-contact p {
             margin-bottom: 1rem;
             color: #a0aec0;
             display: flex;
             align-items: center;
         }
-        
+
         .footer-contact i {
             margin-right: 10px;
             color: var(--primary);
             width: 20px;
             text-align: center;
         }
-        
+
         .footer-social {
             display: flex;
             margin-top: 1.5rem;
         }
-        
+
         .footer-social a {
             width: 40px;
             height: 40px;
@@ -651,12 +651,12 @@
             color: white;
             transition: all 0.3s ease;
         }
-        
+
         .footer-social a:hover {
             background: var(--primary);
             transform: translateY(-3px);
         }
-        
+
         .footer-bottom {
             border-top: 1px solid rgba(255, 255, 255, 0.1);
             padding-top: 2rem;
@@ -665,73 +665,73 @@
             color: #a0aec0;
             font-size: 0.9rem;
         }
-        
+
         /* Animations */
         .animate-up {
             animation: fadeInUp 1s ease;
         }
-        
+
         .animate-down {
             animation: fadeInDown 1s ease;
         }
-        
+
         .animate-left {
             animation: fadeInLeft 1s ease;
         }
-        
+
         .animate-right {
             animation: fadeInRight 1s ease;
         }
-        
+
         .animate-zoom {
             animation: zoomIn 1s ease;
         }
-        
+
         /* Responsive */
         @media (max-width: 992px) {
             .hero-title {
                 font-size: 2.8rem;
             }
-            
+
             .why-scrum-content {
                 padding-left: 0;
                 margin-top: 3rem;
             }
         }
-        
+
         @media (max-width: 768px) {
             .hero-title {
                 font-size: 2.2rem;
             }
-            
+
             .hero-subtitle {
                 font-size: 1.1rem;
             }
-            
+
             .section-title {
                 font-size: 2rem;
             }
-            
+
             .why-scrum-title {
                 font-size: 2rem;
             }
-            
+
             .cta-title {
                 font-size: 2rem;
             }
         }
-        
+
         @media (max-width: 576px) {
             .hero-title {
                 font-size: 1.8rem;
             }
-            
+
             .hero-btns .btn {
                 display: block;
                 width: 100%;
                 margin-bottom: 1rem;
             }
-            
+
             .hero-btns .btn:last-child {
                 margin-bottom: 0;
             }
@@ -746,13 +746,14 @@
                 <img src="{{ asset('logo.jpg') }}" alt="PredictiveMind">
                 PredictiveMind
             </a>
-            
+
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-            
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
+                    
                     @auth
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
@@ -776,7 +777,7 @@
                             <a class="nav-link {{ request()->routeIs('kanban.*') ? 'active' : '' }}" href="{{ route('tasks.kanban') }}">Kanban</a>
                         </li>
                     @endauth
-                    
+
                     @guest
                         <li class="nav-item">
                             <a class="nav-link" href="{{ route('login') }}">Connexion</a>
@@ -797,7 +798,7 @@
             <div class="bg-circle"></div>
             <div class="bg-circle"></div>
         </div>
-        
+
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-6 hero-content" data-aos="fade-right">
@@ -821,7 +822,7 @@
     <section id="features" class="features-section">
         <div class="container">
             <h2 class="section-title" data-aos="fade-up">Fonctionnalités puissantes</h2>
-            
+
             <div class="row">
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
                     <div class="feature-card">
@@ -833,7 +834,7 @@
                         <a href="{{ route('sprints.index') }}" class="btn btn-sm btn-outline-scrum">Explorer</a>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
                     <div class="feature-card">
                         <div class="feature-icon">
@@ -844,7 +845,7 @@
                         <a href="#" class="btn btn-sm btn-outline-scrum">Explorer</a>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
                     <div class="feature-card">
                         <div class="feature-icon">
@@ -856,7 +857,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="row mt-4">
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
                     <div class="feature-card">
@@ -868,7 +869,7 @@
                         <a href="{{ route('backlogs.view') }}" class="btn btn-sm btn-outline-scrum">Explorer</a>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
                     <div class="feature-card">
                         <div class="feature-icon">
@@ -879,7 +880,7 @@
                         <a href="{{ route('tasks.kanban') }}" class="btn btn-sm btn-outline-scrum">Explorer</a>
                     </div>
                 </div>
-                
+
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="300">
                     <div class="feature-card">
                         <div class="feature-icon">
@@ -907,11 +908,11 @@
                     <div class="why-scrum-content">
                         <h2 class="why-scrum-title">Pourquoi choisir <span>Scrum</span> ?</h2>
                         <p class="why-scrum-text">
-                            La méthode Scrum est un cadre agile qui favorise la collaboration, la transparence et l'adaptabilité. 
-                            En divisant un projet en petits cycles appelés sprints, Scrum permet aux équipes de livrer des résultats 
+                            La méthode Scrum est un cadre agile qui favorise la collaboration, la transparence et l'adaptabilité.
+                            En divisant un projet en petits cycles appelés sprints, Scrum permet aux équipes de livrer des résultats
                             concrets rapidement tout en s'adaptant aux changements.
                         </p>
-                        
+
                         <ul class="scrum-benefits">
                             <li>Livraison plus rapide de produits de haute qualité</li>
                             <li>Meilleure adaptabilité aux changements</li>
@@ -919,7 +920,7 @@
                             <li>Amélioration continue grâce aux rétrospectives</li>
                             <li>Meilleure satisfaction des clients et des équipes</li>
                         </ul>
-                        
+
                         <a href="{{ route('register') }}" class="btn btn-primary-scrum">Essayer gratuitement</a>
                     </div>
                 </div>
@@ -927,7 +928,7 @@
         </div>
     </section>
 
-   
+
 
     <!-- CTA Section -->
     <section class="cta-section">
@@ -937,7 +938,7 @@
             <div class="cta-particle" style="width: 15px; height: 15px; top: 80%; left: 30%; animation-delay: 4s;"></div>
             <div class="cta-particle" style="width: 25px; height: 25px; top: 30%; left: 60%; animation-delay: 6s;"></div>
         </div>
-        
+
         <div class="container">
             <div class="cta-content" data-aos="zoom-in">
                 <h2 class="cta-title">Prêt à transformer notre gestion de projet ?</h2>
@@ -964,16 +965,8 @@
 
                     </p>
                 </div>
-                
+
                 <div class="col-lg-2 col-md-6">
-                    <h4 class="footer-title">Liens rapides</h4>
-                    <ul class="footer-links">
-                        <li><a href="{{ url('/') }}">Accueil</a></li>
-                        <li><a href="{{ route('projects.index') }}">Projets</a></li>
-                        <li><a href="{{ route('sprints.index') }}">Sprints</a></li>
-                        <li><a href="{{ route('user_stories.view') }}">User Stories</a></li>
-                        <li><a href="{{ route('register') }}">S'inscrire</a></li>
-                    </ul>
 
     <!-- Rendre la page responsive (s'adapte à tous les écrans) -->
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -996,23 +989,7 @@
 </head>
 <body class="bg-beige">
 
-<!-- Barre de navigation fixe en haut de page -->
-<nav class="navbar navbar-expand-md bg-blue-main text-white fixed-top shadow">
-    <div class="container-fluid px-4">
-        <!-- Logo + Nom du site -->
-        <a class="navbar-brand d-flex align-items-center" href="{{ url('/') }}">
-            <img src="{{ asset('logo.jpg') }}" alt="Logo" class="me-2 rounded shadow" style="height: 40px;">
-            <strong>PredictiveMind</strong>
-        </a>
-        <!-- Boutons de connexion / inscription si l'utilisateur n'est pas connecté -->
-        <div class="ms-auto">
-            @guest
-                <a href="{{ route('login') }}" class="btn btn-outline-light btn-sm me-2">Connexion</a>
-                <a href="{{ route('register') }}" class="btn bg-gold text-dark btn-sm">S’inscrire</a>
-            @endguest
-        </div>
-    </div>
-</nav>
+
 
 <!-- Carrousel d'images pour illustrer la plateforme -->
 <div id="carouselExample" class="carousel slide" data-bs-ride="carousel" style="margin-top: 70px;">
@@ -1123,7 +1100,7 @@
                     <a href="#" class="text-white me-2"><i class="fab fa-linkedin"></i></a>
                     <a href="#" class="text-white"><i class="fab fa-tw
                 </div>
-                
+
                 <div class="col-lg-3 col-md-6">
                     <h4 class="footer-title">Ressources</h4>
                     <ul class="footer-links">
@@ -1134,7 +1111,7 @@
                         <li><a href="#">API</a></li>
                     </ul>
                 </div>
-                
+
                 <div class="col-lg-3">
                     <h4 class="footer-title">Contact</h4>
                     <div class="footer-contact">
@@ -1142,7 +1119,7 @@
                         <p><i class="fas fa-phone"></i> 0536 70 51 52</p>
                         <p><i class="fas fa-map-marker-alt"></i> Oujda, Maroc</p>
                     </div>
-                    
+
                     <div class="footer-social">
                         <a href="#"><i class="fab fa-facebook-f"></i></a>
                         <a href="#"><i class="fab fa-linkedin-in"></i></a>
@@ -1150,7 +1127,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="footer-bottom">
                 <p>&copy; {{ date('Y') }} PredictiveMind. Tous droits réservés.</p>
             </div>
@@ -1172,7 +1149,7 @@
             easing: 'ease-in-out',
             once: true
         });
-        
+
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.navbar-scrum');
@@ -1182,7 +1159,7 @@
                 navbar.classList.remove('scrolled');
             }
         });
-        
+
         // Floating animation for feature cards on hover
         const featureCards = document.querySelectorAll('.feature-card');
         featureCards.forEach(card => {
@@ -1193,7 +1170,7 @@
                     duration: 0.3
                 });
             });
-            
+
             card.addEventListener('mouseleave', () => {
                 gsap.to(card, {
                     y: 0,
@@ -1202,7 +1179,7 @@
                 });
             });
         });
-        
+
         // Particle animation for CTA section
         const ctaParticles = document.querySelectorAll('.cta-particle');
         ctaParticles.forEach(particle => {
@@ -1210,7 +1187,7 @@
             const randomY = Math.random() * 100;
             const randomDelay = Math.random() * 5;
             const randomDuration = 5 + Math.random() * 10;
-            
+
             gsap.to(particle, {
                 x: randomX,
                 y: randomY,
@@ -1221,14 +1198,14 @@
                 ease: 'sine.inOut'
             });
         });
-        
+
         // Background circle animation
         const bgCircles = document.querySelectorAll('.bg-circle');
         bgCircles.forEach((circle, index) => {
             const randomX = 50 + (Math.random() * 100 - 50);
             const randomY = 50 + (Math.random() * 100 - 50);
             const randomDuration = 15 + Math.random() * 10;
-            
+
             gsap.to(circle, {
                 x: randomX,
                 y: randomY,
@@ -1238,15 +1215,15 @@
                 ease: 'sine.inOut'
             });
         });
-        
+
         // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
-                
+
                 const targetId = this.getAttribute('href');
                 if (targetId === '#') return;
-                
+
                 const targetElement = document.querySelector(targetId);
                 if (targetElement) {
                     window.scrollTo({

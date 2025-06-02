@@ -21,7 +21,7 @@
 
         {{-- Submit --}}
         <button type="submit"
-            class="w-full bg-[#ba3dd1] hover:bg-[#a72abc] text-white font-semibold py-2 px-4 rounded">
+            class="w-full bg-[#320a39] hover:bg-[#657318] text-white font-semibold py-2 px-4 rounded">
             Connexion
         </button>
     </form>

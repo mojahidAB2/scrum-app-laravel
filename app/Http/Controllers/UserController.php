@@ -9,7 +9,7 @@ class UserController extends Controller
 {
     public function choisirRole()
     {
-        return view('choisir-role'); // 📄 crée la vue choisir-role.blade.php
+       return view('choisir-role.choisir-role'); // 📄 crée la vue choisir-role.blade.php
     }
 
     public function enregistrerRole(Request $request)
