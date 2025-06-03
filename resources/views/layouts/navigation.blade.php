@@ -1,4 +1,4 @@
-<nav style="background-color: #4A249D; color: white; box-shadow: 0 2px 6px rgba(0,0,0,0.2); padding: 12px 0; position: fixed; top: 0; left: 0; width: 100%; z-index: 50;">
+<nav style="position: fixed; top: 0; width: 100%; z-index: 50; background-color: #A42A9D; color: white; padding: 16px;">
     <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center;">
 
         {{-- 🔵 Logo + Accueil --}}

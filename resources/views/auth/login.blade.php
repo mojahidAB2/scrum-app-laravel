@@ -4,7 +4,6 @@
 @section('guest-content')
     <form method="POST" action="{{ route('login') }}">
         @csrf
-
         {{-- Email --}}
         <div class="mb-4">
             <label for="email" class="block text-sm font-medium text-gray-700">Adresse e-mail</label>

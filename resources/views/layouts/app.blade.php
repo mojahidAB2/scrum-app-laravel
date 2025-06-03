@@ -23,7 +23,7 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 
-<body class="bg-white font-sans antialiased min-h-screen">
+<body class="bg-white font-sans antialiased min-h-screen pt-24">
 
     <!-- 🚀 Barre de navigation principale -->
     @include('layouts.navigation')

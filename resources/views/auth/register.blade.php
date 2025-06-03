@@ -10,7 +10,6 @@
     <!-- Formulaire d'inscription -->
     <form method="POST" action="{{ route('register') }}">
         @csrf
-
         <!-- Champ Nom -->
         <div class="mb-3" data-aos="fade-up">
             <label for="name" class="form-label text-blue-dark">Nom</label>
