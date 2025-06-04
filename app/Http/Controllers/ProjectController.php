@@ -109,7 +109,7 @@ class ProjectController extends Controller
         $project = Project::with('users')->findOrFail($id); // Projet avec relation users
         return view('projects.members_list', compact('project'));
     }
-    
+
     // Affiche le projet avec ses membres (doublon possible avec show)
     public function showw($id)
     {
@@ -132,4 +132,20 @@ class ProjectController extends Controller
             'completedStories' => $stories->where('status', 'terminée')->count(),
         ]);
     }
+
+    public function smDashboard()
+{
+    $user = auth()->user();
+
+    // projects lié au Scrum Master via relation project_user
+    $projects = $user->projects;
+
+    return view('dashboard.sm', [
+        'projectsCount' => $projects->count(),
+        'tasksCount' => \App\Models\Task::where('user_id', $user->id)->count(),
+        'sprintsActifs' => \App\Models\Sprint::where('status', 'en cours')->count(),
+        'projects' => $projects,
+    ]);
+}
+
 }

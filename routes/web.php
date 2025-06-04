@@ -20,16 +20,21 @@ Route::get('/', fn() => view('welcome'));
 Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
+// ✅ PO
 Route::middleware(['auth', 'role:product_owner'])->group(function () {
     Route::get('/dashboard/po', [ProjectController::class, 'poDashboard'])->name('dashboard.po');
 });
+
+// ✅ SM
 Route::middleware(['auth', 'role:scrum_master'])->group(function () {
     Route::get('/dashboard/sm', [ProjectController::class, 'smDashboard'])->name('dashboard.sm');
 });
 
+// ✅ Dev
 Route::middleware(['auth', 'role:developer'])->group(function () {
     Route::get('/dashboard/dev', [ProjectController::class, 'devDashboard'])->name('dashboard.dev');
 });
+
 
 
 // === PROFILE UTILISATEUR ===
