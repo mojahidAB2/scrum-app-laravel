@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Projet;
 use App\Models\Sprint;
 use App\Models\UserStory;
 use App\Models\Task;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
+use App\Models\Project;
 
 class SprintController extends Controller
 {
@@ -21,7 +21,7 @@ class SprintController extends Controller
 
     public function create($projectId)
     {
-        $project = Projet::findOrFail($projectId);
+        $project = Project::findOrFail($projectId);
         return view('sprints.createsprints', compact('project'));
     }
 
@@ -31,7 +31,7 @@ class SprintController extends Controller
 }
 
 
-    public function store(Request $request, Projet $project)
+    public function store(Request $request, Project $project)
     {
         $request->validate([
             'name' => 'required|string|max:255',

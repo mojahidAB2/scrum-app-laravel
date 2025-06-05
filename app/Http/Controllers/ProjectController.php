@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\UserStory;
+use App\Models\Task;
+use App\Models\Sprint;
 
 class ProjectController extends Controller
 {
@@ -149,8 +151,8 @@ public function smDashboard()
 
     return view('dashboard.sm', [
         'projectsCount' => $projects->count(),
-        'tasksCount' => \App\Models\Task::where('user_id', $user->id)->count(),
-        'sprintsActifs' => \App\Models\Sprint::where('status', 'en cours')->count(),
+        'tasksCount' => Task::where('user_id', $user->id)->count(),
+        'sprintsActifs' => Sprint::where('status', 'en cours')->count(),
         'projects' => $projects,
     ]);
 }
@@ -162,13 +164,24 @@ public function devDashboard()
         abort(403, 'Accès refusé.');
     }
 
-    $tasksCount = \App\Models\Task::where('user_id', $user->id)->count();
-    $sprintsActifs = \App\Models\Sprint::where('status', 'en cours')->count();
+    $tasksCount = Task::where('user_id', $user->id)->count();
+    $sprintsActifs = Sprint::where('status', 'en cours')->count();
+
+    // ➕ Les user stories assignées à ce développeur
+    $assignedStories = UserStory::whereHas('developers', function ($q) use ($user) {
+        $q->where('user_id', $user->id);
+    })->get();
+
+    // ➕ Les tâches assignées
+    $assignedTasks = Task::where('user_id', $user->id)->get();
 
     return view('dashboard.dev', [
         'tasksCount' => $tasksCount,
         'sprintsActifs' => $sprintsActifs,
+        'assignedStories' => $assignedStories,
+        'assignedTasks' => $assignedTasks,
     ]);
 }
+
 
 }
