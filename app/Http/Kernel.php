@@ -37,7 +37,6 @@ class Kernel extends HttpKernel
     // 🔹 Middleware que tu peux appeler individuellement dans les routes (ex: ->middleware('auth'))
     protected $routeMiddleware = [
         'auth' => \App\Http\Middleware\Authenticate::class, // Vérifie que l’utilisateur est connecté
-        'role' => \App\Http\Middleware\CheckRole::class, // ✅ Vérifie le rôle (Product Owner, Scrum Master, etc.)
         'verified' => \Illuminate\Auth\Middleware\EnsureEmailIsVerified::class, // Vérifie que l’e-mail est vérifié
     ];
 }

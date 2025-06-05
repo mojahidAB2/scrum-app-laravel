@@ -119,25 +119,32 @@ class ProjectController extends Controller
 
     // Dashboard du Product Owner avec stats
     public function poDashboard()
-    {
-        $user = auth()->user();
-
-        $projects = Project::where('created_by', $user->id)->get();
-        $stories = UserStory::whereIn('project_id', $projects->pluck('id'))->get();
-
-        return view('dashboard.po', [
-            'projectsCount' => $projects->count(),
-            'storiesCount' => $stories->count(),
-            'inProgressStories' => $stories->where('status', 'en cours')->count(),
-            'completedStories' => $stories->where('status', 'terminée')->count(),
-        ]);
-    }
-
-    public function smDashboard()
 {
     $user = auth()->user();
 
-    // projects lié au Scrum Master via relation project_user
+    if ($user->role !== 'product_owner') {
+        abort(403, 'Accès refusé.');
+    }
+
+    $projects = Project::where('created_by', $user->id)->get();
+    $stories = UserStory::whereIn('project_id', $projects->pluck('id'))->get();
+
+    return view('dashboard.po', [
+        'projectsCount' => $projects->count(),
+        'storiesCount' => $stories->count(),
+        'inProgressStories' => $stories->where('status', 'en cours')->count(),
+        'completedStories' => $stories->where('status', 'terminée')->count(),
+    ]);
+}
+
+public function smDashboard()
+{
+    $user = auth()->user();
+
+    if ($user->role !== 'scrum_master') {
+        abort(403, 'Accès refusé.');
+    }
+
     $projects = $user->projects;
 
     return view('dashboard.sm', [
@@ -145,6 +152,22 @@ class ProjectController extends Controller
         'tasksCount' => \App\Models\Task::where('user_id', $user->id)->count(),
         'sprintsActifs' => \App\Models\Sprint::where('status', 'en cours')->count(),
         'projects' => $projects,
+    ]);
+}
+public function devDashboard()
+{
+    $user = auth()->user();
+
+    if ($user->role !== 'developer') {
+        abort(403, 'Accès refusé.');
+    }
+
+    $tasksCount = \App\Models\Task::where('user_id', $user->id)->count();
+    $sprintsActifs = \App\Models\Sprint::where('status', 'en cours')->count();
+
+    return view('dashboard.dev', [
+        'tasksCount' => $tasksCount,
+        'sprintsActifs' => $sprintsActifs,
     ]);
 }
 

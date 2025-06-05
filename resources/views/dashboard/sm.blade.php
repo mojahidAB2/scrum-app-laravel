@@ -37,7 +37,8 @@
 
     <!-- Message d’accueil -->
     <h1 class="text-xl font-bold text-[#ba3dd1] mb-3">Bienvenue Scrum Master</h1>
-    <a href="{{ route('sm.projets') }}" class="text-blue-400 underline">Voir mes projets</a>
+   
+
 
     <!-- Section statistiques -->
     <div class="custom-card mt-5">
@@ -65,9 +66,9 @@
 
         <div class="text-end">
             <!-- Projets -->
-            <a href="{{ route('sm.projets') }}" class="btn btn-outline-light me-2 mb-2">
-                📁 Voir mes projets
-            </a>
+            <a href="{{ route('projects.index') }}" class="btn btn-outline-light me-2 mb-2">
+    📁 Voir mes projets
+</a>
 
             <!-- Sprints -->
             <a href="{{ route('sprints.index') }}" class="btn btn-outline-success me-2 mb-2">

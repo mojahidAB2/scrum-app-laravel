@@ -16,38 +16,30 @@ use App\Http\Controllers\{
 // === ROUTE D'ACCUEIL APRÈS LOGIN ===
 Route::get('/', fn() => view('welcome'));
 
-// === DASHBOARD ===
+// === DASHBOARD PRINCIPAL ===
+Route::middleware('auth')->get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+
+// ✅ PO Dashboard
+Route::get('/dashboard/po', [ProjectController::class, 'poDashboard'])->middleware('auth')->name('dashboard.po');
+
+// ✅ SM Dashboard
+Route::get('/dashboard/sm', [ProjectController::class, 'smDashboard'])->middleware('auth')->name('dashboard.sm');
+
+// ✅ Dev Dashboard
+Route::get('/dashboard/dev', [ProjectController::class, 'devDashboard'])->middleware('auth')->name('dashboard.dev');
+
+// 👉 Choix du rôle après inscription
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/choisir-role', [UserController::class, 'choisirRole'])->name('choisir.role');
+    Route::post('/choisir-role', [UserController::class, 'enregistrerRole'])->name('choisir.role.post');
 });
-// ✅ PO
-Route::middleware(['auth', 'role:product_owner'])->group(function () {
-    Route::get('/dashboard/po', [ProjectController::class, 'poDashboard'])->name('dashboard.po');
-});
-
-// ✅ SM
-Route::middleware(['auth', 'role:scrum_master'])->group(function () {
-    Route::get('/dashboard/sm', [ProjectController::class, 'smDashboard'])->name('dashboard.sm');
-});
-
-// ✅ Dev
-Route::middleware(['auth', 'role:developer'])->group(function () {
-    Route::get('/dashboard/dev', [ProjectController::class, 'devDashboard'])->name('dashboard.dev');
-});
-
-
-
 // === PROFILE UTILISATEUR ===
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
-    // 👉 Routes pour choisir le rôle après inscription
-Route::middleware(['auth'])->group(function () {
-    Route::get('/choisir-role', [UserController::class, 'choisirRole'])->name('choisir.role');
-    Route::post('/choisir-role', [UserController::class, 'enregistrerRole'])->name('choisir.role.post');
-});
+
 
 require __DIR__.'/auth.php';
 
@@ -105,3 +97,4 @@ Route::post('/comments/{type}/{id}', [CommentController::class, 'store'])->name(
 
 // === BURNDOWN CHART ===
 Route::get('/burndown-chart', [BurndownChartController::class, 'index'])->name('burndown.index');
+
