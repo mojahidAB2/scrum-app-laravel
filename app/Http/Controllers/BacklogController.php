@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Backlog;
 use App\Models\UserStory;
+use App\Models\Project;
 use Illuminate\Http\Request;
 
 class BacklogController extends Controller
@@ -18,11 +19,17 @@ class BacklogController extends Controller
 
 
     // 🔹 Formulaire d'ajout
-    public function create()
-    {
-        $userStories = UserStory::all(); // pour le select
-        return view('userstoryetbacklogs.create_backlog', compact('userStories'));
-    }
+ public function create()
+{
+    $projects = Project::all();
+    $userStories = UserStory::all();
+    return view('userstoryetbacklogs.create_backlog', compact('projects', 'userStories'));
+}
+
+
+
+
+
 
     // 🔹 Enregistrement
     public function store(Request $request)
@@ -54,18 +61,12 @@ class BacklogController extends Controller
 
     // 🔹 Mise à jour
     public function update(Request $request, $id)
-    {
-        $request->validate([
-            'titre' => 'required',
-            'description' => 'required',
-            'user_story_id' => 'nullable|exists:user_stories,id',
-        ]);
+{
+    $backlog = Backlog::findOrFail($id);
+    $backlog->update($request->all());
+    return redirect()->route('backlogs.view')->with('success', 'Backlog mis à jour !');
+}
 
-        $backlog = Backlog::findOrFail($id);
-        $backlog->update($request->all());
-
-        return redirect()->route('backlogs.view')->with('success', 'Backlog mis à jour avec succès.');
-    }
 
     // 🔹 Suppression
     public function destroy($id)

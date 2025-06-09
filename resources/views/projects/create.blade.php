@@ -2,118 +2,147 @@
 
 @section('content')
 <style>
-/* Container centré avec max-width et padding */
+body {
+    background: linear-gradient(to right, #FFD93D, #FF8400, #E84A5F, #6A0572);
+    min-height: 100vh;
+}
+
 .container {
     max-width: 960px;
     margin: 0 auto;
     padding: 2rem 1rem;
 }
 
-/* Carte blanche avec ombre et padding */
+/* Animation */
 .form-wrapper {
-    background-color: #fff;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-    border-radius: 8px;
-    padding: 1.5rem 2rem;
+    animation: fadeIn 0.6s ease;
+    background: linear-gradient(to bottom right, #ffd6e0, #ffb3c6, #fbb1ff);
+    border-radius: 12px;
+    padding: 2rem 2.5rem;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    border-top: 6px solid #E84A5F;
 }
 
-/* Titre */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
 .title {
-    font-size: 1.75rem;
-    font-weight: 700;
-    color: #ba3dd1;
+    font-size: 1.8rem;
+    font-weight: bold;
+    color: #6A0572;
+    text-align: center;
     margin-bottom: 1.5rem;
 }
 
-/* Grid 2 colonnes sur desktop, 1 colonne sur mobile */
 .grid {
     display: grid;
     grid-template-columns: 1fr;
     gap: 1.5rem;
 }
-
 @media(min-width: 768px) {
     .grid {
         grid-template-columns: repeat(2, 1fr);
     }
 }
 
-/* Groupe de champ */
 .form-group {
     display: flex;
     flex-direction: column;
 }
 
-/* Champ qui prend toute la largeur (description) */
 .full-width {
     grid-column: 1 / -1;
 }
 
-/* Label */
 .form-group label {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #4a5568;
+    font-weight: 600;
     margin-bottom: 0.5rem;
+    color: #333;
 }
 
-/* Input / textarea styles */
-.input-field, .textarea-field {
-    padding: 0.5rem 0.75rem;
-    border: 1px solid #d1d5db;
+.input-field,
+.textarea-field,
+select {
+    padding: 0.6rem 1rem;
+    border: 1px solid #ddd;
     border-radius: 6px;
     font-size: 1rem;
-    font-family: inherit;
-    color: #111827;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border-color 0.3s, box-shadow 0.3s;
 }
 
-.input-field:focus, .textarea-field:focus {
+/* Hover */
+.input-field:hover,
+.textarea-field:hover,
+select:hover {
+    border-color: #ba3dd1;
+    box-shadow: 0 0 0 3px rgba(186, 61, 209, 0.1);
+}
+
+.input-field:focus,
+.textarea-field:focus,
+select:focus {
     outline: none;
-    border-color: #f18ac5;
-    box-shadow: 0 0 0 3px rgba(241, 138, 197, 0.3);
+    border-color: #FF8400;
+    box-shadow: 0 0 0 3px rgba(255,132,0,0.3);
 }
 
-/* Textarea hauteur ajustée */
 .textarea-field {
+    min-height: 120px;
     resize: vertical;
-    min-height: 100px;
 }
 
-/* Actions boutons */
+/* Buttons */
 .actions {
     margin-top: 1.5rem;
     display: flex;
-    align-items: center;
+    justify-content: center;
+    gap: 1rem;
 }
 
-/* Bouton principal */
 .btn-primary {
-    background-color: #ba3dd1;
+    background: linear-gradient(to right, #E84A5F, #6A0572);
     color: white;
-    font-weight: 600;
-    padding: 0.5rem 1.5rem;
+    font-weight: bold;
+    padding: 0.6rem 2rem;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background 0.3s ease;
 }
-
 .btn-primary:hover {
-    background-color: #a92dc0;
+    background: linear-gradient(to right, #6A0572, #E84A5F);
 }
 
-/* Lien annuler */
 .btn-link {
-    margin-left: 1rem;
-    color: #f18ac5;
-    text-decoration: none;
+    background-color: transparent;
+    color: #E84A5F;
+    border: 1px solid #E84A5F;
+    padding: 0.5rem 1rem;
+    border-radius: 6px;
     font-weight: 500;
-    transition: text-decoration 0.2s ease;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+.btn-link:hover {
+    background-color: #ffe3ec;
+    text-decoration: none;
 }
 
-.btn-link:hover {
-    text-decoration: underline;
+/* Icon inside input */
+.input-icon-wrapper {
+    position: relative;
+}
+.input-icon-wrapper i {
+    position: absolute;
+    top: 50%;
+    left: 12px;
+    transform: translateY(-50%);
+    color: #aaa;
+}
+.input-icon-wrapper input {
+    padding-left: 36px;
 }
 </style>
 
@@ -125,64 +154,58 @@
             @csrf
 
             <div class="grid">
-                {{-- Nom du projet --}}
+                <!-- Nom avec icône -->
                 <div class="form-group">
                     <label for="name">Nom du projet</label>
-                    <input type="text" name="name" id="name" required class="input-field">
+                    <div class="input-icon-wrapper">
+                        <i class="fa fa-folder"></i>
+                        <input type="text" name="name" id="name" required class="input-field">
+                    </div>
                 </div>
 
-                {{-- Scrum Master --}}
+                <!-- Scrum Master -->
                 <div class="form-group">
                     <label for="scrum_master">Scrum Master</label>
                     <input type="text" name="scrum_master" id="scrum_master" class="input-field">
                 </div>
 
-                {{-- Date de début --}}
+                <!-- Start -->
                 <div class="form-group">
                     <label for="start_date">Date de début</label>
                     <input type="date" name="start_date" id="start_date" required class="input-field" value="{{ date('Y-m-d') }}">
-
                 </div>
 
-                {{-- Date de fin --}}
+                <!-- End -->
                 <div class="form-group">
                     <label for="end_date">Date de fin</label>
                     <input type="date" name="end_date" id="end_date" class="input-field">
                 </div>
-                   
 
-
-
-
-
-            
-                {{-- Type de projet --}}
-                <div class="form-group">
+                <!-- Type -->
+                <div class="form-group full-width">
                     <label for="project_type">Type de projet</label>
                     <select name="project_type" id="project_type" class="input-field" required>
-                        <option value="" disabled selected>-- Sélectionner --</option>
-                        <option value="site_web">Site Web</option>
-                        <option value="application_mobile">Application Mobile</option>
-                        <option value="data_science">Data Science</option>
-                        <option value="Développement logiciel">Développement logiciel</option>
-                        <option value="Produit numérique">Produit numérique</option>
-                        <option value="Transformation digitale">Transformation digitale</option>
-                        <option value="IA">Intelligence Artificielle</option>
-                        <option value="Projet interne">Projet interne</option>
-                        <option value="autre">Autre</option>
+                        <option disabled selected>-- Sélectionner --</option>
+                        <option>Site Web</option>
+                        <option>Application Mobile</option>
+                        <option>Data Science</option>
+                        <option>Développement logiciel</option>
+                        <option>Produit numérique</option>
+                        <option>Transformation digitale</option>
+                        <option>IA</option>
+                        <option>Projet interne</option>
+                        <option>Autre</option>
                     </select>
                 </div>
 
-
-
-
-                {{-- Description --}}
+                <!-- Description -->
                 <div class="form-group full-width">
                     <label for="description">Description</label>
-                    <textarea name="description" id="description" rows="4" class="textarea-field"></textarea>
+                    <textarea name="description" id="description" class="textarea-field"></textarea>
                 </div>
             </div>
 
+            <!-- Boutons -->
             <div class="actions">
                 <button type="submit" class="btn-primary">Enregistrer</button>
                 <a href="{{ route('projects.index') }}" class="btn-link">Annuler</a>

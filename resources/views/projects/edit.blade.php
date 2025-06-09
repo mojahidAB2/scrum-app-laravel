@@ -2,20 +2,26 @@
 
 @section('content')
 <style>
-.container {
-    max-width: 768px;
-    margin: 2rem auto;
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+body {
+    background: linear-gradient(to right, #FFD93D, #FF8400, #E84A5F, #6A0572);
+    min-height: 100vh;
 }
 
-h1.title {
-    font-size: 1.75rem;
+.container {
+    max-width: 768px;
+    margin: 3rem auto;
+    padding: 2.5rem;
+    background: linear-gradient(to bottom right, #ffd6e0, #ffb3c6, #fbb1ff);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.title {
+    font-size: 2rem;
     font-weight: bold;
-    color: #ba3dd1;
-    margin-bottom: 1.5rem;
+    color: #6A0572;
+    text-align: center;
+    margin-bottom: 2rem;
 }
 
 .form-group {
@@ -24,8 +30,8 @@ h1.title {
 
 .form-group label {
     display: block;
-    font-size: 0.875rem;
-    font-weight: 500;
+    font-size: 0.9rem;
+    font-weight: 600;
     color: #4a5568;
     margin-bottom: 0.5rem;
 }
@@ -33,55 +39,58 @@ h1.title {
 .input-field,
 .textarea-field {
     width: 100%;
-    padding: 0.5rem 0.75rem;
+    padding: 0.65rem 1rem;
     border: 1px solid #d1d5db;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 1rem;
-    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    transition: border 0.3s, box-shadow 0.3s;
+    font-family: inherit;
 }
 
 .input-field:focus,
 .textarea-field:focus {
-    border-color: #f18ac5;
-    box-shadow: 0 0 0 3px rgba(241, 138, 197, 0.3);
     outline: none;
+    border-color: #FF8400;
+    box-shadow: 0 0 0 3px rgba(255,132,0,0.25);
 }
 
 .textarea-field {
-    min-height: 100px;
+    min-height: 120px;
     resize: vertical;
 }
 
 .button-group {
+    margin-top: 2rem;
     display: flex;
-    align-items: center;
+    justify-content: center;
     gap: 1rem;
-    margin-top: 1rem;
 }
 
 .btn-primary {
-    background-color: #ba3dd1;
+    background: linear-gradient(to right, #E84A5F, #6A0572);
     color: white;
-    font-weight: 600;
-    padding: 0.5rem 1.5rem;
+    font-weight: bold;
+    padding: 0.6rem 2rem;
     border: none;
-    border-radius: 6px;
+    border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: background 0.3s ease;
 }
-
 .btn-primary:hover {
-    background-color: #a126b6;
+    background: linear-gradient(to right, #6A0572, #E84A5F);
 }
 
 .btn-link {
-    color: #f18ac5;
+    color: #FF8400;
     text-decoration: none;
     font-weight: 500;
-    transition: text-decoration 0.2s ease;
+    padding: 0.6rem 2rem;
+    border-radius: 8px;
+    border: 2px solid #FF8400;
+    transition: all 0.3s ease;
 }
-
 .btn-link:hover {
+    background-color: #ffedd5;
     text-decoration: underline;
 }
 </style>
@@ -96,8 +105,7 @@ h1.title {
         {{-- Nom du projet --}}
         <div class="form-group">
             <label for="name">Nom du projet</label>
-            <input type="text" name="name" id="name" value="{{ old('name', $project->name) }}"
-                class="input-field" required>
+            <input type="text" name="name" id="name" value="{{ old('name', $project->name) }}" class="input-field" required>
         </div>
 
         {{-- Description --}}
@@ -109,19 +117,17 @@ h1.title {
         {{-- Date de début --}}
         <div class="form-group">
             <label for="start_date">Date de début</label>
-            <input type="date" name="start_date" id="start_date" value="{{ old('start_date', $project->start_date) }}"
-                class="input-field" required>
+            <input type="date" name="start_date" id="start_date" value="{{ old('start_date', $project->start_date) }}" class="input-field" required>
         </div>
 
         {{-- Date de fin --}}
         <div class="form-group">
             <label for="end_date">Date de fin</label>
-            <input type="date" name="end_date" id="end_date" value="{{ old('end_date', $project->end_date) }}"
-                class="input-field">
+            <input type="date" name="end_date" id="end_date" value="{{ old('end_date', $project->end_date) }}" class="input-field">
         </div>
 
         <div class="button-group">
-            <button type="submit" class="btn-primary">Enregistrer les modifications</button>
+            <button type="submit" class="btn-primary">Enregistrer</button>
             <a href="{{ route('projects.index') }}" class="btn-link">Annuler</a>
         </div>
     </form>

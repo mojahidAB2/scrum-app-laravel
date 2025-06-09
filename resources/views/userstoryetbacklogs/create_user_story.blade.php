@@ -1,37 +1,105 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="max-w-3xl mx-auto px-4 mt-8">
+<style>
+body {
+    background: linear-gradient(to right, #FFD93D, #FF8400, #E84A5F, #6A0572);
+    min-height: 100vh;
+}
 
-    {{-- 🔵 Titre --}}
-    <h2 class="text-2xl font-bold text-[#4A249D] text-center mb-6">➕ Ajouter une User Story</h2>
+.container {
+    max-width: 768px;
+    margin: 3rem auto;
+    padding: 2.5rem;
+    background: linear-gradient(to bottom right, #ffd6e0, #ffb3c6, #fbb1ff);
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
 
-    {{-- ➕ Formulaire --}}
-    <div class="bg-white p-6 rounded-xl shadow">
-        <form method="POST" action="{{ route('user_stories.store') }}" class="grid grid-cols-1 gap-4">
-            @csrf
+.title {
+    font-size: 2rem;
+    font-weight: bold;
+    color: #6A0572;
+    text-align: center;
+    margin-bottom: 2rem;
+}
 
-            <input type="number" name="project_id" placeholder="ID du projet" required
-                class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-purple-500 focus:border-purple-500">
+.form-group {
+    margin-bottom: 1.25rem;
+}
 
-            <input type="text" name="titre" placeholder="Titre de la User Story" required
-                class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-purple-500 focus:border-purple-500">
+.form-group select,
+.form-group input {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
 
-            <input type="text" name="en_tant_que" placeholder="En tant que..." required
-                class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-purple-500 focus:border-purple-500">
+input:focus,
+select:focus {
+    outline: none;
+    border-color: #FF8400;
+    box-shadow: 0 0 0 3px rgba(255,132,0,0.25);
+}
 
-            <input type="text" name="je_veux" placeholder="Je veux..." required
-                class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-purple-500 focus:border-purple-500">
+.button-submit {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1.5rem;
+}
 
-            <input type="text" name="afin_de" placeholder="Afin de..." required
-                class="border border-gray-300 rounded-lg px-3 py-2 focus:ring-purple-500 focus:border-purple-500">
+.btn-submit {
+    background: linear-gradient(to right, #E84A5F, #6A0572);
+    color: white;
+    font-weight: bold;
+    padding: 0.6rem 2rem;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+.btn-submit:hover {
+    background: linear-gradient(to right, #6A0572, #E84A5F);
+}
+</style>
 
-            <div class="text-end">
-                <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded-lg hover:bg-green-700">
-                    Enregistrer
-                </button>
-            </div>
-        </form>
-    </div>
+<div class="container">
+    <h2 class="title">Ajouter une User Story</h2>
+
+    <form method="POST" action="{{ route('user_stories.store') }}">
+        @csrf
+
+        <div class="form-group">
+            <select name="project_id" required>
+                <option value="">Sélectionner un projet</option>
+                @foreach ($projects as $project)
+                    <option value="{{ $project->id }}">{{ $project->name }}</option>
+                @endforeach
+            </select>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="titre" placeholder="Titre de la User Story" required>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="en_tant_que" placeholder="En tant que..." required>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="je_veux" placeholder="Je veux..." required>
+        </div>
+
+        <div class="form-group">
+            <input type="text" name="afin_de" placeholder="Afin de..." required>
+        </div>
+
+        <div class="button-submit">
+            <button type="submit" class="btn-submit">Enregistrer</button>
+        </div>
+    </form>
 </div>
 @endsection

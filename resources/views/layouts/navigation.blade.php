@@ -1,4 +1,5 @@
-<nav style="position: fixed; top: 0; width: 100%; z-index: 50; background-color: #A42A9D; color: white; padding: 16px;">
+<nav style="position: fixed; top: 0; width: 100%; z-index: 50; background: linear-gradient(to right, #8b5cf6, #ec4899);
+ color: white; padding: 16px;">
     <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center;">
 
         {{-- 🔵 Logo + Accueil --}}

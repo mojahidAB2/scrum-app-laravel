@@ -64,18 +64,21 @@ Route::get('/user-stories', [UserStoryController::class, 'showAllView'])->name('
 Route::get('/user-stories/create', [UserStoryController::class, 'create'])->name('user_stories.create');
 Route::post('/user-stories/store', [UserStoryController::class, 'store'])->name('user_stories.store');
 Route::get('/user-stories/{id}/edit', [UserStoryController::class, 'edit'])->name('user_stories.edit');
-Route::post('/user-stories/{id}/update', [UserStoryController::class, 'update'])->name('user_stories.update');
-Route::post('/user-stories/{id}/delete', [UserStoryController::class, 'destroy'])->name('user_stories.destroy');
+Route::put('/user-stories/{id}', [UserStoryController::class, 'update'])->name('user_stories.update');
+Route::delete('/user-stories/{id}', [UserStoryController::class, 'destroy'])->name('user_stories.destroy');
 Route::get('/projects/{project}/user-stories', [UserStoryController::class, 'byProject'])->name('userstories.byProject');
+Route::get('/user-stories/project/{projectId}', [UserStoryController::class, 'byProject'])->name('user_stories.byProject');
 
 // === BACKLOGS ===
 Route::get('/backlogs', [BacklogController::class, 'showAllView'])->name('backlogs.view');
 Route::get('/backlogs/create', [BacklogController::class, 'create'])->name('backlogs.create');
 Route::post('/backlogs/store', [BacklogController::class, 'store'])->name('backlogs.store');
 Route::get('/backlogs/{id}/edit', [BacklogController::class, 'edit'])->name('backlogs.edit');
-Route::post('/backlogs/{id}/update', [BacklogController::class, 'update'])->name('backlogs.update');
+Route::put('/backlogs/{id}', [BacklogController::class, 'update'])->name('backlogs.update');
 Route::post('/backlogs/{id}/delete', [BacklogController::class, 'destroy'])->name('backlogs.destroy');
 Route::get('/projects/{project}/backlogs', [BacklogController::class, 'byProject'])->name('backlogs.byProject');
+Route::get('/backlogs/by-project/{projectId}', [BacklogController::class, 'byProject'])
+    ->name('backlogs.byProject');
 
 // === SPRINTS ===
 Route::get('/sprints', [SprintController::class, 'index'])->name('sprints.index');

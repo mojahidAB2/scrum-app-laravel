@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\UserStory;
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Contracts\View\View;
 
 class UserStoryController extends Controller
 {
@@ -12,15 +13,20 @@ class UserStoryController extends Controller
    public function showAllView()
 {
     $stories = UserStory::with('comments.user')->get();
-    return view('userstoryetbacklogs.user_stories', compact('stories'));
+    $projects = \App\Models\Project::all(); // ⬅️ أضف هذا السطر
+
+    return view('userstoryetbacklogs.user_stories', compact('stories', 'projects'));
 }
 
 
-    // 🔹 Formulaire de création
-    public function create()
-    {
-        return view('userstoryetbacklogs.create_user_story');
-    }
+// 🔹 Formulaire de création
+public function create(): View
+{
+    $projects = \App\Models\Project::all(); // Récupérer tous les projets
+    return view('userstoryetbacklogs.create_user_story', compact('projects'));
+}
+
+
 
     // 🔹 Enregistrer une nouvelle User Story
     public function store(Request $request)
@@ -71,11 +77,13 @@ class UserStoryController extends Controller
         return redirect()->route('user_stories.view')->with('success', 'User Story supprimée avec succès.');
     }
 
-    
+
     // 🔹 Afficher User Stories selon le projet sélectionné
     public function byProject($projectId)
     {
         $stories = UserStory::where('project_id', $projectId)->get();
         return view('userstoryetbacklogs.user_stories_by_project', compact('stories', 'projectId'));
     }
+    // 🔹 Afficher les User Stories d'un projet spécifique
+    
 }
