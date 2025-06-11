@@ -27,7 +27,10 @@
     </main>
 
     {{-- 🔻 Footer --}}
+   @if (Request::is('/'))
     @include('layouts.footer')
+@endif
+
 
     {{-- 📜 Scripts supplémentaires --}}
     @stack('scripts')

@@ -25,5 +25,9 @@ public function userStory()
     return $this->belongsTo(UserStory::class);
 }
 
+public function sprint()
+{
+    return $this->belongsTo(Sprint::class);
+}
 
 }

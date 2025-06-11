@@ -25,6 +25,15 @@ Route::get('/dashboard/po', [ProjectController::class, 'poDashboard'])->middlewa
 // ✅ SM Dashboard
 Route::get('/dashboard/sm', [ProjectController::class, 'smDashboard'])->middleware('auth')->name('dashboard.sm');
 
+// Affiche le formulaire de création du sprint (avec id du projet)
+Route::get('/sprints/create/{project}', [SprintController::class, 'create'])->name('sprints.create');
+
+// Enregistre le sprint
+Route::post('/sprints/store/{project}', [SprintController::class, 'store'])->name('sprints.store');
+
+//supprime le sprint
+Route::delete('/sprints/{sprint}', [SprintController::class, 'destroy'])->name('sprints.destroy');
+
 // ✅ Dev Dashboard
 Route::get('/dashboard/dev', [ProjectController::class, 'devDashboard'])->middleware('auth')->name('dashboard.dev');
 

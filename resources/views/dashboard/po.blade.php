@@ -32,42 +32,29 @@
 </style>
 
 <div class="container mt-5">
-
-
-
-
-
     <h1 class="text-center mb-4" style="color: #7c3aed;">Bienvenue Product Owner</h1>
     <p class="text-center text-muted mb-4">Gérez vos projets avec efficacité</p>
 
     <div class="card-container">
-
         {{-- 1. Créer un projet --}}
         <a href="{{ route('projects.create') }}" class="action-card">
-             Créer un projet
+            Créer un projet
         </a>
 
         {{-- 2. Voir mes projets --}}
         <a href="{{ route('projects.index') }}" class="action-card">
-             Voir mes projets
+            Voir mes projets
         </a>
 
         {{-- 3. Ajouter une User Story --}}
         <a href="{{ route('user_stories.create') }}" class="action-card">
-             Ajouter une User Story
+            Ajouter une User Story
         </a>
 
         {{-- 4. Ajouter un Backlog --}}
-      <a href="{{ route('backlogs.create') }}">
-           Ajouter un Backlog
+        <a href="{{ route('backlogs.create', 1) }}" class="action-card">
+            Ajouter un Backlog
         </a>
-
-
-        {{-- 5. Voir mes Backlogs --}}
-        <a href="{{ route('backlogs.view') }}" class="action-card">
-             Voir mes Backlogs
-        </a>
-
     </div>
 </div>
 @endsection

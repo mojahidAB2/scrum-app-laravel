@@ -11,8 +11,14 @@ class Sprint extends Model
 
     protected $fillable = ['name', 'start_date', 'end_date', 'project_id'];
 
-    public function projet()
-    {
-        return $this->belongsTo(Projet::class, 'project_id');
-    }
+public function project()
+{
+    return $this->belongsTo(Project::class, 'project_id');
+}
+public function backlogs()
+{
+    return $this->hasMany(Backlog::class);
+}
+
+
 }
