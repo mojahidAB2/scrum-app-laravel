@@ -30,10 +30,6 @@ class Project extends Model
         return $this->hasMany(UserStory::class);
     }
 
-    public function tasks()
-    {
-        return $this->hasMany(Task::class);
-    }
     public function members()
 {
     return $this->belongsToMany(User::class, 'project_user', 'project_id', 'user_id');
@@ -45,4 +41,6 @@ public function backlogs()
 {
     return $this->hasMany(Backlog::class);
 }
+
+
 }

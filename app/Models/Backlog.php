@@ -29,5 +29,11 @@ public function sprint()
 {
     return $this->belongsTo(Sprint::class);
 }
+// app/Models/Backlog.php
+
+public function developer()
+{
+    return $this->belongsTo(User::class, 'developer_id');
+}
 
 }

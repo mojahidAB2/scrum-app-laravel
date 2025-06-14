@@ -9,22 +9,22 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up(): void
-    {
-       Schema::create('comments', function (Blueprint $table) {
+   public function up(): void
+{
+    Schema::create('sprint_user', function (Blueprint $table) {
         $table->id();
-        $table->text('content');
+        $table->foreignId('sprint_id')->constrained()->onDelete('cascade');
         $table->foreignId('user_id')->constrained()->onDelete('cascade');
-        $table->morphs('commentable'); // permet de lier à plusieurs types de modèles ( userstory)
         $table->timestamps();
     });
-    }
+}
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('comments');
+        Schema::dropIfExists('sprint_user');
     }
 };

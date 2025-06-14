@@ -133,6 +133,9 @@
                              @method('DELETE')
                             <button type="submit" class="btn-danger">Supprimer</button>
                                  </form>
+                                 <!-- ✅ Ici le bouton d'assignation -->
+
+                              <a href="{{ route('sprints.assign.form', $sprint->id) }}" class="btn btn-sm btn-outline-success mt-1">Assigner Backlogs</a>
                                 </td>
                             </tr>
                         @endforeach

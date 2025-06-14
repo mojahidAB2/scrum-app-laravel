@@ -82,5 +82,14 @@ class BacklogController extends Controller
     return view('userstoryetbacklogs.backlogs_by_project', compact('backlogs', 'projectId'));
 }
 
+public function devIndex()
+{
+    $user = auth()->user();
+    // Récupérer tous les backlogs de l'utilisateur
+    $backlogs = $user->backlogs()->with(['project', 'userStory'])->get();
+
+    return view('userstoryetbacklogs.dev_index', compact('backlogs'));
+}
+
 
 }

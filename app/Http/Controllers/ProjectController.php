@@ -6,28 +6,31 @@ use Illuminate\Http\Request;
 use App\Models\Project;
 use App\Models\User;
 use App\Models\UserStory;
-use App\Models\Task;
 use App\Models\Sprint;
+use App\Models\Backlog;
 
 class ProjectController extends Controller
 {
-    // Affiche tous les projets
     public function index()
     {
-        $projects = Project::all(); // Récupère tous les projets
-        return view('projects.index', compact('projects')); // Affiche la vue avec les projets
+        $user = auth()->user();
+
+        if ($user->role === 'developpeur') {
+            $projects = $user->projects;
+        } else {
+            $projects = Project::all();
+        }
+
+        return view('projects.index', compact('projects', 'user'));
     }
 
-    // Affiche le formulaire de création
     public function create()
     {
-        return view('projects.create'); // Affiche la vue du formulaire de création de projet
+        return view('projects.create');
     }
 
-    // Enregistre un nouveau projet
     public function store(Request $request)
     {
-        // Valide les données du formulaire
         $request->validate([
             'name' => 'required|max:255',
             'scrum_master' => 'required|max:255',
@@ -35,29 +38,25 @@ class ProjectController extends Controller
             'end_date' => 'required|date|after:start_date',
         ]);
 
-        Project::create($request->all()); // Crée un nouveau projet avec les données reçues
+        Project::create($request->all());
 
-        return redirect()->route('projects.index'); // Redirige vers la liste des projets
+        return redirect()->route('projects.index');
     }
 
-    // Affiche un projet en détail
     public function show($id)
     {
-        $project = Project::findOrFail($id); // Récupère le projet ou renvoie une erreur 404
+        $project = Project::findOrFail($id);
         return view('projects.show', compact('project'));
     }
 
-    // Affiche le formulaire de modification
     public function edit($id)
     {
-        $project = Project::findOrFail($id); // Récupère le projet à modifier
+        $project = Project::findOrFail($id);
         return view('projects.edit', compact('project'));
     }
 
-    // Met à jour un projet existant
     public function update(Request $request, $id)
     {
-        // Valide les données modifiées
         $request->validate([
             'name' => 'required|max:255',
             'scrum_master' => 'required|max:255',
@@ -65,123 +64,122 @@ class ProjectController extends Controller
             'end_date' => 'required|date|after:start_date',
         ]);
 
-        $project = Project::findOrFail($id); // Trouve le projet
-        $project->update($request->all()); // Met à jour avec les nouvelles données
+        $project = Project::findOrFail($id);
+        $project->update($request->all());
 
-        return redirect()->route('projects.index'); // Retour à la liste
+        return redirect()->route('projects.index');
     }
 
-    // Supprime un projet
     public function destroy($id)
     {
-        $project = Project::findOrFail($id); // Trouve le projet
-        $project->delete(); // Supprime
+        $project = Project::findOrFail($id);
+        $project->delete();
 
-        return redirect()->route('projects.index'); // Retour liste
+        return redirect()->route('projects.index');
     }
 
-    // Affiche le formulaire d'édition des membres du projet
     public function editMembers($id)
     {
-        $project = Project::findOrFail($id); // Projet concerné
-        $users = User::all(); // Tous les utilisateurs
+        $project = Project::findOrFail($id);
+        $users = User::all();
 
         return view('projects.members', compact('project', 'users'));
     }
 
-    // Met à jour les membres du projet
     public function updateMembers(Request $request, $id)
     {
         $project = Project::findOrFail($id);
 
         $request->validate([
             'users' => 'required|array',
-            'users.*' => 'exists:users,id', // Chaque user doit exister
+            'users.*' => 'exists:users,id',
         ]);
 
-        $project->users()->sync($request->users); // Synchro des membres du projet
+        $project->users()->sync($request->users);
 
         return redirect()->route('projects.show', $project->id)
                          ->with('success', 'Membres mis à jour avec succès.');
     }
 
-    // Liste des membres d'un projet
     public function membersList($id)
     {
-        $project = Project::with('users')->findOrFail($id); // Projet avec relation users
+        $project = Project::with('users')->findOrFail($id);
         return view('projects.members_list', compact('project'));
     }
 
-    // Affiche le projet avec ses membres (doublon possible avec show)
     public function showw($id)
     {
         $project = Project::with('members')->findOrFail($id);
         return view('projects.show', compact('project'));
     }
 
-    // Dashboard du Product Owner avec stats
     public function poDashboard()
-{
-    $user = auth()->user();
+    {
+        $user = auth()->user();
 
-    if ($user->role !== 'product_owner') {
-        abort(403, 'Accès refusé.');
+        if ($user->role !== 'product_owner') {
+            abort(403, 'Accès refusé.');
+        }
+
+        $projects = Project::where('created_by', $user->id)->get();
+        $stories = UserStory::whereIn('project_id', $projects->pluck('id'))->get();
+
+        return view('dashboard.po', [
+            'projectsCount' => $projects->count(),
+            'storiesCount' => $stories->count(),
+            'inProgressStories' => $stories->where('status', 'en cours')->count(),
+            'completedStories' => $stories->where('status', 'terminée')->count(),
+        ]);
     }
 
-    $projects = Project::where('created_by', $user->id)->get();
-    $stories = UserStory::whereIn('project_id', $projects->pluck('id'))->get();
+    public function smDashboard()
+    {
+        $user = auth()->user();
 
-    return view('dashboard.po', [
-        'projectsCount' => $projects->count(),
-        'storiesCount' => $stories->count(),
-        'inProgressStories' => $stories->where('status', 'en cours')->count(),
-        'completedStories' => $stories->where('status', 'terminée')->count(),
-    ]);
-}
+        if ($user->role !== 'scrum_master') {
+            abort(403, 'Accès refusé.');
+        }
 
-public function smDashboard()
-{
-    $user = auth()->user();
+        $projects = $user->projects;
 
-    if ($user->role !== 'scrum_master') {
-        abort(403, 'Accès refusé.');
+        return view('dashboard.sm', [
+            'projectsCount' => $projects->count(),
+            'sprintsActifs' => Sprint::where('status', 'en cours')->count(),
+            'projects' => $projects,
+        ]);
     }
 
-    $projects = $user->projects;
+    public function devDashboard()
+    {
+        $user = auth()->user();
 
-    return view('dashboard.sm', [
-        'projectsCount' => $projects->count(),
-        'tasksCount' => Task::where('user_id', $user->id)->count(),
-        'sprintsActifs' => Sprint::where('status', 'en cours')->count(),
-        'projects' => $projects,
-    ]);
-}
-public function devDashboard()
-{
-    $user = auth()->user();
+       $assignedStories = $user->userStories; // UserStories qui ont été assignés au développeur
+        $assignedBacklogs = $user->backlogs; // Backlogs associés au développeur
+        $assignedSprints = $user->sprints; // Sprints associés au développeur
+        $projects = $user->projects;
 
-    if ($user->role !== 'developer') {
-        abort(403, 'Accès refusé.');
+        return view('dashboard.dev', compact(
+            'projects',
+            'assignedStories',
+            'assignedBacklogs',
+            'assignedSprints'
+        ));
     }
 
-    $tasksCount = Task::where('user_id', $user->id)->count();
-    $sprintsActifs = Sprint::where('status', 'en cours')->count();
+    public function developerProjects()
+    {
+        $user = auth()->user();
+        $projects = $user->projects;
 
-    // ➕ Les user stories assignées à ce développeur
-    $assignedStories = UserStory::whereHas('developers', function ($q) use ($user) {
-        $q->where('user_id', $user->id);
-    })->get();
+        return view('projects.projet_assigned', compact('projects', 'user'));
+    }
 
-    // ➕ Les tâches assignées
-    $assignedTasks = Task::where('user_id', $user->id)->get();
+    public function developerProjectDetails($projectId)
+    {
+        $user = auth()->user();
 
-    return view('dashboard.dev', [
-        'tasksCount' => $tasksCount,
-        'sprintsActifs' => $sprintsActifs,
-        'assignedStories' => $assignedStories,
-        'assignedTasks' => $assignedTasks,
-    ]);
-}
+        $project = $user->projects()->where('project_id', $projectId)->firstOrFail();
 
-
+        return view('dashboard.developer_details', compact('project'));
+    }
 }

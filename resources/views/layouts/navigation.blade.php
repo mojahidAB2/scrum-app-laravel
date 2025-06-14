@@ -1,5 +1,4 @@
-<nav style="position: fixed; top: 0; width: 100%; z-index: 50; background: linear-gradient(to right, #8b5cf6, #ec4899);
- color: white; padding: 16px;">
+<nav style="position: fixed; top: 0; width: 100%; z-index: 50; background: linear-gradient(to right, #8b5cf6, #ec4899); color: white; padding: 16px;">
     <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center;">
 
         {{-- 🔵 Logo + Accueil --}}
@@ -20,8 +19,6 @@
                 <a href="{{ route('sprints.index') }}" style="{{ request()->routeIs('sprints.*') ? 'color: #FFD700; font-weight: bold;' : 'color: white;' }} text-decoration: none;">Sprints</a>
                 <a href="{{ route('user_stories.view') }}" style="{{ request()->routeIs('user_stories.*') ? 'color: #FFD700; font-weight: bold;' : 'color: white;' }} text-decoration: none;">User Stories</a>
                 <a href="{{ route('backlogs.view') }}" style="{{ request()->routeIs('backlogs.*') ? 'color: #FFD700; font-weight: bold;' : 'color: white;' }} text-decoration: none;">Backlogs</a>
-                <a href="{{ route('tasks.index') }}" style="{{ request()->routeIs('tasks.*') ? 'color: #FFD700; font-weight: bold;' : 'color: white;' }} text-decoration: none;">Tâches</a>
-                <a href="{{ route('tasks.kanban') }}" style="{{ request()->routeIs('kanban.*') ? 'color: #FFD700; font-weight: bold;' : 'color: white;' }} text-decoration: none;">Kanban</a>
             @endauth
         </div>
 
@@ -31,12 +28,20 @@
                 <span style="font-size: 14px; font-weight: 600;">{{ Auth::user()->name }}</span>
                 <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
                     @csrf
-                    <button style="background: none; border: none; color: #ffdddd; cursor: pointer; font-size: 14px; text-decoration: underline;">Déconnexion</button>
+                    <button style="background: none; border: none; color: #ffdddd; cursor: pointer; font-size: 14px; text-decoration: underline;">
+                        Déconnexion
+                    </button>
                 </form>
-            @else
-                <a href="{{ route('login') }}" style="background-color: #eee; color: #4A249D; padding: 8px 16px; border-radius: 6px; text-decoration: none;">Connexion</a>
-                <a href="{{ route('register') }}" style="background-color: #FFD700; color: black; padding: 8px 16px; border-radius: 6px; text-decoration: none;">S’inscrire</a>
             @endauth
+
+            @guest
+                <a href="{{ route('login') }}" style="background-color: #eee; color: #4A249D; padding: 8px 16px; border-radius: 6px; text-decoration: none;">
+                    Connexion
+                </a>
+                <a href="{{ route('register') }}" style="background-color: #FFD700; color: black; padding: 8px 16px; border-radius: 6px; text-decoration: none;">
+                    S’inscrire
+                </a>
+            @endguest
         </div>
 
     </div>

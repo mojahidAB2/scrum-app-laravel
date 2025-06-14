@@ -742,10 +742,30 @@
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-scrum">
         <div class="container">
-            <a class="navbar-brand" href="{{ url('/') }}">
-                <img src="{{ asset('logo.jpg') }}" alt="PredictiveMind">
-                PredictiveMind
-            </a>
+            <a class="navbar-brand" href="{{ url('/') }}" style="
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 6px 12px;
+    border-radius: 10px;
+    background: linear-gradient(to right, #df3ce7, #990367);
+    transition: background 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+"
+   onmouseover="this.style.transform='scale(1.02)'"
+   onmouseout="this.style.transform='scale(1)'"
+>
+    <img src="{{ asset('logo.jpg') }}" alt="PredictiveMind"
+         style="height: 48px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.3); transition: transform 0.3s ease;"
+         onmouseover="this.style.transform='scale(1.05)'"
+         onmouseout="this.style.transform='scale(1)'"
+    >
+
+    <span style="font-size: 1.4rem; font-weight: bold; color: #EF88AD; font-family: 'Segoe UI', sans-serif;">
+        PredictiveMind
+    </span>
+</a>
+
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
@@ -753,7 +773,7 @@
 
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
-                    
+
                     @auth
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('dashboard') ? 'active' : '' }}" href="{{ route('dashboard') }}">Dashboard</a>
@@ -770,12 +790,8 @@
                         <li class="nav-item">
                             <a class="nav-link {{ request()->routeIs('backlogs.*') ? 'active' : '' }}" href="{{ route('backlogs.view') }}">Backlogs</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('tasks.*') ? 'active' : '' }}" href="{{ route('tasks.index') }}">Tâches</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link {{ request()->routeIs('kanban.*') ? 'active' : '' }}" href="{{ route('tasks.kanban') }}">Kanban</a>
-                        </li>
+
+
                     @endauth
 
                     @guest
@@ -826,9 +842,6 @@
             <div class="row">
                 <div class="col-lg-4" data-aos="fade-up" data-aos-delay="100">
                     <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-tasks"></i>
-                        </div>
                         <h3 class="feature-title">Gestion des Sprints</h3>
                         <p class="feature-text">Organisez vos sprints de manière claire et efficace grâce à un tableau agile visuel et des outils de planification intégrés.</p>
                         <a href="{{ route('sprints.index') }}" class="btn btn-sm btn-outline-scrum">Explorer</a>
@@ -867,17 +880,6 @@
                         <h3 class="feature-title">Backlogs organisés</h3>
                         <p class="feature-text">Priorisez et gérez facilement votre backlog produit avec des outils de tri et de filtrage avancés.</p>
                         <a href="{{ route('backlogs.view') }}" class="btn btn-sm btn-outline-scrum">Explorer</a>
-                    </div>
-                </div>
-
-                <div class="col-lg-4" data-aos="fade-up" data-aos-delay="200">
-                    <div class="feature-card">
-                        <div class="feature-icon">
-                            <i class="fas fa-columns"></i>
-                        </div>
-                        <h3 class="feature-title">Tableaux Kanban</h3>
-                        <p class="feature-text">Visualisez votre workflow avec des tableaux Kanban personnalisables pour un suivi visuel des tâches.</p>
-                        <a href="{{ route('tasks.kanban') }}" class="btn btn-sm btn-outline-scrum">Explorer</a>
                     </div>
                 </div>
 
@@ -950,295 +952,85 @@
         </div>
     </section>
 
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-4">
-                    <div class="footer-logo">
-                        <img src="{{ asset('logo.jpg') }}" alt="PredictiveMind">
-                        <span class="footer-logo-text">PredictiveMind</span>
-                    </div>
-                    <p class="footer-about">
-                       Nous utilisons PredictiveMind pour structurer efficacement nos projets selon la méthodologie Scrum, grâce à des outils robustes qui facilitent la planification, le suivi des sprints et la collaboration inter-équipes.
-
-
-                    </p>
-                </div>
-
-                <div class="col-lg-2 col-md-6">
-
-    <!-- Rendre la page responsive (s'adapte à tous les écrans) -->
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-
-    <!-- Jeton de sécurité pour les formulaires Laravel -->
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-
-    <!-- Titre de la page -->
-    <title>PredictiveMind</title>
-
-    <!-- Importation de Bootstrap et Font Awesome pour les icônes -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
-
-    <!-- Fichier CSS personnalisé avec ta palette de couleurs -->
-    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
-
-    <!-- Bibliothèque d'animations AOS (Animate On Scroll) -->
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
-</head>
-<body class="bg-beige">
-
-
-
-<!-- Carrousel d'images pour illustrer la plateforme -->
-<div id="carouselExample" class="carousel slide" data-bs-ride="carousel" style="margin-top: 70px;">
-    <div class="carousel-inner">
-        <div class="carousel-item active">
-            <img src="image1.jpeg" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-            <img src="image2.jpg" class="d-block w-100" alt="...">
-        </div>
-        <div class="carousel-item">
-            <img src="image3.jpg" class="d-block w-100" alt="...">
-        </div>
-    </div>
-    <!-- Contrôles du carrousel -->
-    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon"></span>
-    </button>
-    <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-        <span class="carousel-control-next-icon"></span>
-    </button>
-</div>
-
-<!-- Section explicative sur la méthode Scrum -->
-<section class="py-5">
-    <div class="container">
-        <div class="row align-items-center">
-            <!-- Image avec animation AOS -->
-            <div class="col-md-6" data-aos="fade-right">
-                <img src="scrum10.png" class="img-fluid rounded shadow" alt="Scrum">
-            </div>
-            <!-- Texte explicatif avec bouton d'inscription -->
-            <div class="col-md-6" data-aos="fade-left">
-                <h2 class="text-blue-main">Pourquoi la méthode Scrum ?</h2>
-                <p>La méthode Scrum est un cadre agile qui favorise la collaboration, la transparence et l’adaptabilité...</p>
-                <a href="{{ route('register') }}" class="btn bg-gold text-dark mt-3">Commencer maintenant</a>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Section des fonctionnalités principales avec cartes animées -->
-<section class="bg-light py-5">
-    <div class="container text-center">
-        <!-- Titre de section -->
-        <h2 class="text-blue-main mb-5" data-aos="zoom-in">Fonctionnalités principales</h2>
-        <div class="row g-4">
-            <!-- Carte 1 -->
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
-                <div class="card h-100 border-0 shadow transition-hover">
-                    <img src="chatscrum7.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title text-gold">Gestion des Sprints</h5>
-                        <p>Organisez vos sprints efficacement avec un tableau agile visuel.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Carte 2 -->
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
-                <div class="card h-100 border-0 shadow transition-hover">
-                    <img src="https://images.unsplash.com/photo-1551434678-e076c223a692" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title text-gold">Collaboration en Équipe</h5>
-                        <p>Facilitez la communication dans l’équipe Scrum.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- Carte 3 -->
-            <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
-                <div class="card h-100 border-0 shadow transition-hover">
-                    <img src="chatscrum5.jpg" class="card-img-top" alt="...">
-                    <div class="card-body">
-                        <h5 class="card-title text-gold">Suivi des Performances</h5>
-                        <p>Visualisez l’avancement des projets en temps réel.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Pied de page avec contact et liens rapides -->
-<footer class="bg-blue-dark text-white py-5" data-aos="fade-up">
+<!-- Footer avec nouveau dégradé et palette #3A0519 #670D2F #A53860 #EF88AD -->
+<footer style="background: linear-gradient(to right, #3A0519, #670D2F); color: white; padding: 40px 0;">
     <div class="container">
         <div class="row">
-            <!-- Logo + description -->
-            <div class="col-md-4">
-                <img src="{{ asset('logo.jpg') }}" alt="Logo" style="height: 40px;">
-                <p class="mt-2 small">Scrum vous aide à gérer vos projets avec agilité et performance.</p>
+
+            <!-- Bloc Logo + Description -->
+            <div class="col-md-4 mb-4">
+                <div style="
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding: 8px 16px;
+    background: linear-gradient(to right, #3A0519, #670D2F);
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(239, 136, 173, 0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+">
+
+    <img src="{{ asset('logo.jpg') }}"
+         alt="PredictiveMind"
+         style="
+             height: 55px;
+             width: auto;
+             border-radius: 10px;
+             box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+             transition: transform 0.3s ease;
+         "
+         onmouseover="this.style.transform='scale(1.08)'"
+         onmouseout="this.style.transform='scale(1)'"
+    >
+
+    <h4 style="
+        margin: 0;
+        font-weight: bold;
+        font-size: 1.6rem;
+        color: #EF88AD;
+        font-family: 'Segoe UI', sans-serif;
+        transition: color 0.3s ease;
+    ">
+        PredictiveMind
+    </h4>
+</div>
+
+                <p style="margin-top: 15px; font-size: 14px; color: #F4C6D5;">
+                    Nous utilisons PredictiveMind pour structurer efficacement nos projets selon la méthodologie Scrum,
+                    grâce à des outils robustes qui facilitent la planification, le suivi des sprints et la collaboration inter-équipes.
+                </p>
             </div>
-            <!-- Liens rapides -->
-            <div class="col-md-4">
-                <h6 class="text-gold">Liens rapides</h6>
-                <ul class="list-unstyled small">
-                    <li><a href="{{ url('/') }}" class="text-white">Accueil</a></li>
-                    <li><a href="{{ route('projects.index') }}" class="text-white">Projets</a></li>
-                    <li><a href="{{ route('sprints.index') }}" class="text-white">Sprints</a></li>
-                    <li><a href="{{ route('register') }}" class="text-white">S’inscrire</a></li>
+
+            <!-- Bloc Navigation -->
+            <div class="col-md-4 mb-4">
+                <h5 style="font-weight: bold; color: #EF88AD;">Navigation</h5>
+                <ul style="list-style: none; padding-left: 0; margin-top: 15px;">
+                    <li><a href="/" style="color: #EF88AD; text-decoration: none; transition: color 0.3s;">Accueil</a></li>
+                    <li><a href="{{ route('login') }}" style="color: #EF88AD; text-decoration: none; transition: color 0.3s;">Connexion</a></li>
+                    <li><a href="{{ route('register') }}" style="color: #EF88AD; text-decoration: none; transition: color 0.3s;">S’inscrire</a></li>
+                    <li><a href="#" style="color: #EF88AD; text-decoration: none; transition: color 0.3s;">Contact</a></li>
                 </ul>
             </div>
-            <!-- Coordonnées et réseaux sociaux -->
-            <div class="col-md-4">
-                <h6 class="text-gold">Contact</h6>
-                <p><i class="fas fa-envelope"></i> contact@predictivemind.ma</p>
-                <p><i class="fas fa-phone"></i> 0536 70 51 52</p>
-                <div>
-                    <a href="#" class="text-white me-2"><i class="fab fa-facebook"></i></a>
-                    <a href="#" class="text-white me-2"><i class="fab fa-linkedin"></i></a>
-                    <a href="#" class="text-white"><i class="fab fa-tw
-                </div>
 
-                <div class="col-lg-3 col-md-6">
-                    <h4 class="footer-title">Ressources</h4>
-                    <ul class="footer-links">
-                        <li><a href="#">Blog</a></li>
-                        <li><a href="#">Documentation</a></li>
-                        <li><a href="#">Centre d'aide</a></li>
-                        <li><a href="#">Tutoriels</a></li>
-                        <li><a href="#">API</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-lg-3">
-                    <h4 class="footer-title">Contact</h4>
-                    <div class="footer-contact">
-                        <p><i class="fas fa-envelope"></i> contact@predictivemind.ma</p>
-                        <p><i class="fas fa-phone"></i> 0536 70 51 52</p>
-                        <p><i class="fas fa-map-marker-alt"></i> Oujda, Maroc</p>
-                    </div>
-
-                    <div class="footer-social">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                    </div>
-                </div>
+            <!-- Bloc Contact -->
+            <div class="col-md-4 mb-4">
+                <h5 style="font-weight: bold; color: #EF88AD;">Contact</h5>
+                <p style="font-size: 14px; color: #F4C6D5; margin-top: 15px;">
+                    Email : support@predictivemind.com <br>
+                    Téléphone : +212 6 12 34 56 78 <br>
+                    Adresse : Casablanca, Maroc
+                </p>
             </div>
 
-            <div class="footer-bottom">
-                <p>&copy; {{ date('Y') }} PredictiveMind. Tous droits réservés.</p>
-            </div>
         </div>
 
-    </footer>
-
-    <!-- Scripts -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- AOS (Animate On Scroll) -->
-    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
-    <!-- GSAP (Advanced Animations) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.11.4/gsap.min.js"></script>
-    <!-- Custom JS -->
-    <script>
-        // Initialize AOS
-        AOS.init({
-            duration: 800,
-            easing: 'ease-in-out',
-            once: true
-        });
-
-        // Navbar scroll effect
-        window.addEventListener('scroll', function() {
-            const navbar = document.querySelector('.navbar-scrum');
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
-
-        // Floating animation for feature cards on hover
-        const featureCards = document.querySelectorAll('.feature-card');
-        featureCards.forEach(card => {
-            card.addEventListener('mouseenter', () => {
-                gsap.to(card, {
-                    y: -10,
-                    boxShadow: '0 15px 40px rgba(108, 99, 255, 0.2)',
-                    duration: 0.3
-                });
-            });
-
-            card.addEventListener('mouseleave', () => {
-                gsap.to(card, {
-                    y: 0,
-                    boxShadow: '0 10px 30px rgba(108, 99, 255, 0.1)',
-                    duration: 0.3
-                });
-            });
-        });
-
-        // Particle animation for CTA section
-        const ctaParticles = document.querySelectorAll('.cta-particle');
-        ctaParticles.forEach(particle => {
-            const randomX = Math.random() * 100;
-            const randomY = Math.random() * 100;
-            const randomDelay = Math.random() * 5;
-            const randomDuration = 5 + Math.random() * 10;
-
-            gsap.to(particle, {
-                x: randomX,
-                y: randomY,
-                duration: randomDuration,
-                delay: randomDelay,
-                repeat: -1,
-                yoyo: true,
-                ease: 'sine.inOut'
-            });
-        });
-
-        // Background circle animation
-        const bgCircles = document.querySelectorAll('.bg-circle');
-        bgCircles.forEach((circle, index) => {
-            const randomX = 50 + (Math.random() * 100 - 50);
-            const randomY = 50 + (Math.random() * 100 - 50);
-            const randomDuration = 15 + Math.random() * 10;
-
-            gsap.to(circle, {
-                x: randomX,
-                y: randomY,
-                duration: randomDuration,
-                repeat: -1,
-                yoyo: true,
-                ease: 'sine.inOut'
-            });
-        });
-
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function(e) {
-                e.preventDefault();
-
-                const targetId = this.getAttribute('href');
-                if (targetId === '#') return;
-
-                const targetElement = document.querySelector(targetId);
-                if (targetElement) {
-                    window.scrollTo({
-                        top: targetElement.offsetTop - 80,
-                        behavior: 'smooth'
-                    });
-                }
-            });
-        });
-    </script>
-
-        <hr class="border-light">
-        <div class="text-center small">&copy; {{ date('Y') }} ScrumApp. Tous droits réservés.</div>
+        <!-- Bas de page -->
+        <div style="border-top: 1px solid rgba(255,255,255,0.1); margin-top: 30px; padding-top: 20px; text-align: center; font-size: 13px; color: #F4C6D5;">
+            © {{ date('Y') }} PredictiveMind. Tous droits réservés.
+        </div>
     </div>
 </footer>
+
 
 <!-- Scripts JS Bootstrap et initialisation AOS pour les animations -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>

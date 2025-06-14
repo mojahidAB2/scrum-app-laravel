@@ -5,11 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Sprint;
 use App\Models\UserStory;
-use App\Models\Task;
 use Illuminate\View\View;
 use Illuminate\Http\RedirectResponse;
 use App\Models\Project;
 use App\Models\Backlog;
+use Illuminate\Support\Facades\Auth;
+
 
 class SprintController extends Controller
 {
@@ -100,5 +101,65 @@ public function byProject($projectId)
         'projectId' => $projectId,
     ]);
 }
+
+public function assignDeveloperToSprint(Request $request)
+{
+    $request->validate([
+        'sprint_id' => 'required|exists:sprints,id',
+        'developer_id' => 'required|exists:users,id',
+    ]);
+
+    $sprint = Sprint::find($request->sprint_id);
+    $sprint->users()->attach($request->developer_id);
+
+    return back()->with('success', 'Développeur assigné au sprint avec succès !');
+}
+
+
+public function devIndex()
+{
+    $user = auth()->user();
+
+    // Many-to-Many
+    $sprints = $user->sprints ?? collect(); // si $user->sprints est vide, alors on retourne une collection vide
+
+    return view('sprints.sprints_dev', compact('sprints'));
+}
+
+public function assignBacklogForm($id)
+{
+    $sprint = Sprint::findOrFail($id);
+    $projectId = $sprint->project_id;
+
+    // Récupère les backlogs non assignés ou assignés à ce sprint
+    $backlogs = Backlog::where('project_id', $projectId)
+                        ->where(function ($q) use ($sprint) {
+                            $q->whereNull('sprint_id')->orWhere('sprint_id', $sprint->id);
+                        })->get();
+
+    return view('sprints.assign_backlog', compact('sprint', 'backlogs'));
+}
+public function showAssignBacklogForm($sprintId)
+{
+    $sprint = Sprint::findOrFail($sprintId);
+    $backlogs = Backlog::whereNull('sprint_id')->get(); // non encore assignés
+
+    return view('sprints.assign_backlog', compact('sprint', 'backlogs'));
+}
+
+public function assignBacklog(Request $request, $sprintId)
+{
+    $request->validate([
+        'backlog_id' => 'required|exists:backlogs,id',
+    ]);
+
+    $backlog = Backlog::find($request->backlog_id);
+    $backlog->sprint_id = $sprintId;
+    $backlog->save();
+
+    return redirect()->route('sprints.index')->with('success', 'Backlog assigné avec succès !');
+}
+
+
 }
 

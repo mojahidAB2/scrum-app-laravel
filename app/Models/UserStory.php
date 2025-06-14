@@ -25,9 +25,8 @@ class UserStory extends Model
     {
         return $this->belongsTo(Project::class, 'project_id');
     }
-    public function developers()
+  public function developers()
 {
     return $this->belongsToMany(User::class, 'developer_user_story', 'user_story_id', 'user_id');
 }
-
 }

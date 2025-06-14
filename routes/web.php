@@ -8,7 +8,6 @@ use App\Http\Controllers\{
     UserStoryController,
     BacklogController,
     BurndownChartController,
-    TaskController,
     DashboardController,
     CommentController
 };
@@ -34,8 +33,42 @@ Route::post('/sprints/store/{project}', [SprintController::class, 'store'])->nam
 //supprime le sprint
 Route::delete('/sprints/{sprint}', [SprintController::class, 'destroy'])->name('sprints.destroy');
 
-// ✅ Dev Dashboard
-Route::get('/dashboard/dev', [ProjectController::class, 'devDashboard'])->middleware('auth')->name('dashboard.dev');
+// Dashboard du développeur
+Route::get('/dashboard/dev', [ProjectController::class, 'devDashboard'])
+    ->middleware('auth')
+    ->name('dashboard.dev');
+
+// Détails d’un projet assigné
+Route::get('/dev/projects/{project}', [ProjectController::class, 'developerProjectDetails'])
+    ->middleware('auth')
+    ->name('projects.dev.details');
+
+// Liste des projets assignés au développeur
+Route::get('/dev/projects', [ProjectController::class, 'developerProjects'])
+    ->middleware('auth')
+    ->name('projects.dev.index');
+
+    // Formulaire d’assignation d'une user story à un développeur
+Route::get('/assign-user-story', [UserController::class, 'showAssignForm'])
+    ->middleware('auth')
+    ->name('userstories.assignForm');
+
+// Traitement du formulaire d’assignation
+Route::post('/assign-user-story', [UserController::class, 'assignDeveloper'])
+    ->middleware('auth')
+    ->name('userstories.assignDeveloper');
+
+
+    // Affichage des backlogs pour le développeur connecté
+Route::get('/backlogs/dev', [BacklogController::class, 'devIndex'])
+    ->middleware('auth')
+    ->name('backlogs.dev.index');
+
+    // Affichage du détail d'une user story
+    Route::get('/sprints/dev', [SprintController::class, 'devIndex'])
+    ->middleware('auth')
+    ->name('sprints.dev.index');
+
 
 // 👉 Choix du rôle après inscription
 Route::middleware('auth')->group(function () {
@@ -97,16 +130,6 @@ Route::get('/sprints/{sprint}/edit', [SprintController::class, 'edit'])->name('s
 Route::put('/sprints/{sprint}', [SprintController::class, 'update'])->name('sprints.update');
 Route::delete('/sprints/{sprint}', [SprintController::class, 'destroy'])->name('sprints.destroy');
 Route::get('/projects/{project}/sprints', [SprintController::class, 'byProject'])->name('sprints.byProject');
-
-// === TÂCHES & KANBAN ===
-Route::resource('tasks', TaskController::class);
-Route::get('/kanban', [TaskController::class, 'kanban'])->name('tasks.kanban');
-Route::put('/tasks/{task}/status', [TaskController::class, 'updateStatus'])->name('tasks.updateStatus');
-Route::get('/tasks/{id}', [TaskController::class, 'show'])->name('tasks.show');
-
-// === COMMENTAIRES ===
-Route::post('/comments/{type}/{id}', [CommentController::class, 'store'])->name('comments.store');
-
-// === BURNDOWN CHART ===
-Route::get('/burndown-chart', [BurndownChartController::class, 'index'])->name('burndown.index');
-
+//
+Route::get('/sprints/{id}/assign-backlog', [SprintController::class, 'showAssignBacklogForm'])->name('sprints.assign.form');
+Route::post('/sprints/{id}/assign-backlog', [SprintController::class, 'assignBacklog'])->name('sprints.assign.backlog');
