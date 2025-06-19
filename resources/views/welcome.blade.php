@@ -19,12 +19,12 @@
     <!-- Custom CSS -->
     <style>
         :root {
-            --primary: #6c63ff;
-            --secondary: #ff6584;
-            --dark: #2d3748;
-            --light: #32373a;
-            --gradient: linear-gradient(135deg, #6c63ff 0%, #ff6584 100%);
-        }
+    --primary: #3B82F6;        /* Blue - moderne */
+    --secondary: #6366F1;      /* Indigo - tech */
+    --dark: #111827;           /* Texte sombre */
+    --light: #F9FAFB;          /* Fond clair */
+    --gradient: linear-gradient(135deg, #3B82F6 0%, #6366F1 100%);
+}
 
         * {
             margin: 0;

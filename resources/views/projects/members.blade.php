@@ -3,78 +3,85 @@
 @section('content')
 <style>
     body {
-        background: linear-gradient(to right, #FFD93D, #FF8400, #E84A5F, #6A0572);
+        background: linear-gradient(to right, var(--bg-light), #e0e7ff);
         min-height: 100vh;
+        color: var(--text-dark);
     }
 
     .form-container {
         max-width: 700px;
         margin: 3rem auto;
-        background: linear-gradient(to bottom right, #fbb1ff, #f18ac5, #ffd6e0);
+        background: linear-gradient(to bottom right, #f9f5ff, #e0e7ff);
         padding: 2rem;
         border-radius: 16px;
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
         animation: fadeIn 0.5s ease;
     }
 
     .form-container h2 {
         text-align: center;
         font-weight: bold;
-        color: #6A0572;
+        color: var(--blue-main);
         margin-bottom: 2rem;
     }
 
     .form-label {
         font-weight: 600;
         margin-bottom: 0.5rem;
-        color: #333;
+        color: var(--indigo);
     }
 
-    .select2-container .select2-selection--multiple {
+    .select2-container--default .select2-selection--multiple {
     background: white;
     border: 1px solid #d1d5db;
     border-radius: 10px;
     min-height: 50px;
     padding: 6px 12px;
     font-size: 1rem;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06); /* Ajout ici */
+    transition: box-shadow 0.3s ease;
+}
+.select2-container--default .select2-selection--multiple:hover {
+    box-shadow: 0 4px 14px rgba(99, 102, 241, 0.15); /* Indigo */
 }
 
+
 .select2-container--default .select2-selection--multiple .select2-selection__choice {
-    background: linear-gradient(to right, #ff84b7, #ba3dd1);
-    color: white;
+    background: #7400f9 !important;  /* Neon rose */
+    color: white !important;
     border: none;
     border-radius: 50px;
     padding: 4px 12px;
     font-weight: 500;
     margin-top: 4px;
+    box-shadow: 0 3px 6px rgb(245, 5, 209); /* effet glow */
 }
 
 .select2-container--default .select2-selection--multiple .select2-selection__choice__remove {
-    color: white;
+    color: white !important;
     font-weight: bold;
     margin-right: 6px;
 }
 
-.select2-dropdown {
-    border-radius: 10px;
-    background: linear-gradient(to bottom, #fff, #ffe4f1);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
-}
 
-.select2-container--default .select2-results__option--highlighted[aria-selected] {
-    background: linear-gradient(to right, #ba3dd1, #f18ac5);
-    color: white;
-}
+    .select2-dropdown {
+        border-radius: 10px;
+        background: linear-gradient(to bottom, #fff, #f3f4ff);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+    }
 
-.select2-container--default .select2-results__option[aria-selected="true"] {
-    background-color: #f3d1f3;
-    color: black;
-}
+    .select2-container--default .select2-results__option--highlighted[aria-selected] {
+        background: var(--blue-main);
+        color: white;
+    }
 
+    .select2-container--default .select2-results__option[aria-selected="true"] {
+        background-color: #dbeafe;
+        color: black;
+    }
 
     .btn-submit {
-        background: linear-gradient(to right, #E84A5F, #6A0572);
+        background: var(--blue-main);
         color: white;
         font-weight: bold;
         padding: 0.6rem 2rem;
@@ -87,7 +94,7 @@
     }
 
     .btn-submit:hover {
-        background: linear-gradient(to right, #6A0572, #E84A5F);
+        background: #2563eb;
     }
 
     @keyframes fadeIn {

@@ -2,38 +2,51 @@
 
 @section('content')
 <style>
+:root {
+    --blue-main: #3B82F6;
+    --indigo: #2228d7;
+    --bg-light: #F9FAFB;
+    --text-dark: #111827;
+    --gold: #facc15;
+    --pink-neon: #97022f;
+}
+
 body {
-    background: linear-gradient(to right, #FFD93D, #FF8400, #E84A5F, #6A0572);
+    background-color: var(--bg-light);
     min-height: 100vh;
+    color: var(--text-dark);
+    font-family: 'Segoe UI', sans-serif;
 }
 
 .page-container {
     max-width: 1200px;
-    margin: 4rem auto;
+    margin: 3rem auto;
     padding: 2rem;
-    background: linear-gradient(to bottom right, #ffd6e0, #ffb3c6, #fbb1ff);
-    border-radius: 14px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.06);
 }
 
 .page-title {
     font-size: 2rem;
     font-weight: bold;
-    color: #6A0572;
+    color: var(--indigo);
     margin-bottom: 2rem;
     text-align: center;
 }
 
+/* ⚠️ Alerte vide */
 .alert-warning {
-    background-color: #fff3cd;
-    border-left: 6px solid #ffc107;
-    color: #856404;
+    background-color: #fff8e1;
+    border-left: 5px solid var(--gold);
+    color: #8a6d3b;
     padding: 1rem;
     border-radius: 8px;
     font-size: 1rem;
     text-align: center;
 }
 
+/* 📋 Tableau */
 .table-wrapper {
     overflow-x: auto;
 }
@@ -41,76 +54,97 @@ body {
 .table-custom {
     width: 100%;
     border-collapse: collapse;
-    background-color: #2e2e2e;
-    color: #f3f4f6;
+    font-size: 0.95rem;
     border-radius: 8px;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    background-color: rgb(33, 108, 247);
 }
 
 .table-custom thead {
-    background-color: #5b21b6;
+    background-color: var(--indigo);
+    color: white;
     text-transform: uppercase;
-    font-size: 0.875rem;
 }
 
 .table-custom th, .table-custom td {
     padding: 1rem;
     text-align: left;
-    border-bottom: 1px solid #4b5563;
+    border-bottom: 1px solid #e5e7eb;
 }
 
 .table-custom tbody tr:hover {
-    background-color: #3f3f46;
+    background-color: #f1f5f9;
 }
 
-.action-buttons a,
-.action-buttons button {
-    font-size: 0.875rem;
-    padding: 0.4rem 1rem;
-    border: none;
-    border-radius: 6px;
-    font-weight: 600;
-    cursor: pointer;
-    text-decoration: none;
-    transition: background-color 0.3s ease;
-}
-
+/* 🟨 Modifier */
 .btn-edit {
-    background-color: #facc15;
-    color: black;
+    background-color: var(--gold);
+    color: var(--text-dark);
 }
 .btn-edit:hover {
     background-color: #eab308;
 }
 
+/* 🟪 Supprimer */
 .btn-delete {
-    background-color: #ef4444;
+    background-color: var(--pink-neon);
     color: white;
 }
 .btn-delete:hover {
-    background-color: #dc2626;
+    background-color: #f10505;
 }
 
+/* 🎯 Boutons généraux */
+.action-buttons a,
+.action-buttons button {
+    font-size: 0.85rem;
+    padding: 0.45rem 1rem;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    border: none;
+    transition: background 0.3s ease;
+    text-decoration: none;
+}
+
+/* 🔙 Bouton retour */
 .btn-back {
-    margin-top: 2rem;
     display: inline-block;
-    background: linear-gradient(to right, #3b82f6, #6366f1);
+    background: linear-gradient(to right, var(--blue-main), var(--indigo));
     color: white;
     padding: 0.6rem 1.5rem;
     border-radius: 8px;
     font-weight: bold;
-    transition: background 0.3s ease;
+    margin-top: 2rem;
+    transition: 0.3s ease;
 }
 .btn-back:hover {
-    background: linear-gradient(to right, #6366f1, #3b82f6);
+    background: linear-gradient(to right, var(--indigo), var(--blue-main));
 }
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.page-container {
+  animation: fadeSlideUp 0.7s ease-out both;
+}
+
 </style>
+
 
 <div class="page-container">
 
     {{-- 🟪 Titre --}}
-    <h2 class="page-title">User Stories du Projet #{{ $projectId }}</h2>
+    <h2 class="page-title">User Stories du Projet : {{ $project->name }}</h2>
+
 
     {{-- 📢 Message si vide --}}
     @if ($stories->isEmpty())
@@ -154,7 +188,7 @@ body {
 
     {{-- 🔙 Retour --}}
     <div class="text-center">
-        <a href="{{ route('projects.show', $projectId) }}" class="btn-back">Retour au projet</a>
+        <a href="{{ route('projects.show', $projectId) }}" class="btn-back">Retour</a>
     </div>
 
 </div>

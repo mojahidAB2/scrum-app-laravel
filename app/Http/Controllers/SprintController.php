@@ -126,40 +126,49 @@ public function devIndex()
     return view('sprints.sprints_dev', compact('sprints'));
 }
 
-public function assignBacklogForm($id)
+public function showAssignBacklogForm($id)
 {
     $sprint = Sprint::findOrFail($id);
     $projectId = $sprint->project_id;
 
-    // Récupère les backlogs non assignés ou assignés à ce sprint
+    // Backlogs dispo pour assignation
     $backlogs = Backlog::where('project_id', $projectId)
-                        ->where(function ($q) use ($sprint) {
-                            $q->whereNull('sprint_id')->orWhere('sprint_id', $sprint->id);
-                        })->get();
+        ->where(function ($q) use ($sprint) {
+            $q->whereNull('sprint_id')->orWhere('sprint_id', $sprint->id);
+        })->get();
 
-    return view('sprints.assign_backlog', compact('sprint', 'backlogs'));
-}
-public function showAssignBacklogForm($sprintId)
-{
-    $sprint = Sprint::findOrFail($sprintId);
-    $backlogs = Backlog::whereNull('sprint_id')->get(); // non encore assignés
+    // Backlogs déjà assignés
+    $assignedBacklogs = Backlog::where('sprint_id', $sprint->id)->get();
 
-    return view('sprints.assign_backlog', compact('sprint', 'backlogs'));
+    return view('sprints.assign_backlog', compact('sprint', 'backlogs', 'assignedBacklogs'));
 }
 
-public function assignBacklog(Request $request, $sprintId)
+
+
+public function assignBacklog(Request $request, $id)
 {
     $request->validate([
-        'backlog_id' => 'required|exists:backlogs,id',
+        'backlog_ids' => 'required|array',
+        'backlog_ids.*' => 'exists:backlogs,id',
     ]);
 
-    $backlog = Backlog::find($request->backlog_id);
-    $backlog->sprint_id = $sprintId;
-    $backlog->save();
+    $sprint = Sprint::findOrFail($id);
 
-    return redirect()->route('sprints.index')->with('success', 'Backlog assigné avec succès !');
+    foreach ($request->backlog_ids as $backlogId) {
+        $backlog = Backlog::findOrFail($backlogId);
+        $backlog->sprint_id = $sprint->id;
+        $backlog->save();
+    }
+
+    return redirect()->back()->with('success', 'Les backlogs ont été assignés avec succès au sprint.');
 }
 
+
+public function poIndex()
+{
+    $sprints = Sprint::with('project')->get(); // optionnel : filtrer par projets du PO
+    return view('sprints.sprints_po', compact('sprints'));
+}
 
 }
 

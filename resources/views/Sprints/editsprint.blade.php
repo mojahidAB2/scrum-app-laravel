@@ -2,36 +2,41 @@
 
 @section('content')
 <style>
+    :root {
+        --primary: #3B82F6;
+        --secondary: #6366F1;
+        --bg-light: #F9FAFB;
+        --text-dark: #111827;
+    }
+
     body {
-        background: linear-gradient(to bottom right, #ffe0c3, #ffc1a3); /* 🎨 skin gradient */
-        min-height: 100vh;
-        margin: 0;
+        background-color: var(--bg-light);
         font-family: 'Segoe UI', sans-serif;
+        margin: 0;
     }
 
     .form-container {
         max-width: 600px;
-        margin: 4rem auto;
-        background: #1f2937;
-        color: white;
-        padding: 2rem;
+        margin: 3rem auto;
+        background: white;
         border-radius: 1rem;
-        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        padding: 2rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
     }
 
     .form-container h1 {
         font-size: 1.8rem;
         font-weight: bold;
-        color: #ffb77b;
-        margin-bottom: 1.5rem;
+        color: var(--primary);
         text-align: center;
+        margin-bottom: 1.5rem;
     }
 
     label {
         display: block;
         margin-bottom: 0.5rem;
-        font-size: 0.9rem;
-        font-weight: 500;
+        color: var(--text-dark);
+        font-weight: 600;
     }
 
     input[type="text"],
@@ -40,21 +45,22 @@
         width: 100%;
         padding: 0.75rem;
         border-radius: 0.5rem;
-        background-color: #374151;
-        color: white;
-        border: 1px solid #4b5563;
+        background-color: #ffffff;
+        border: 1px solid #d1d5db;
+        color: var(--text-dark);
         margin-bottom: 1.2rem;
+        font-size: 0.95rem;
     }
 
     input:focus,
     textarea:focus {
         outline: none;
-        border-color: #f18ac5;
-        box-shadow: 0 0 0 3px rgba(241, 138, 197, 0.4);
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.3);
     }
 
     .btn-update {
-        background-color: #f18ac5;
+        background-color: var(--primary);
         color: white;
         padding: 0.6rem 2rem;
         font-weight: bold;
@@ -65,12 +71,18 @@
     }
 
     .btn-update:hover {
-        background-color: #e176ae;
+        background-color: var(--secondary);
     }
 </style>
 
 <div class="form-container">
     <h1>Modifier le sprint</h1>
+
+    @if (session('success'))
+        <div style="background:#dcfce7; color:#065f46; padding:1rem; border-radius:0.5rem; margin-bottom:1rem; text-align:center;">
+            {{ session('success') }}
+        </div>
+    @endif
 
     <form action="{{ route('sprints.update', $sprint->id) }}" method="POST">
         @csrf
@@ -80,7 +92,6 @@
             <label for="name">Nom du sprint</label>
             <input type="text" name="name" id="name" value="{{ $sprint->name }}" required>
         </div>
-
         <div>
             <label for="start_date">Date début</label>
             <input type="date" name="start_date" id="start_date" value="{{ $sprint->start_date }}" required>

@@ -3,71 +3,88 @@
 @section('content')
 <style>
     body {
-        background: linear-gradient(to right, #FFD93D, #FF8400, #E84A5F, #6A0572);
+        background: linear-gradient(to right, #3B82F6, #6366F1);
         min-height: 100vh;
     }
 
-    .table-card {
-        background: linear-gradient(to bottom right, #fbe4f1, #f6d0eb, #f0c3e3);
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        border-radius: 1rem;
+    .page-container {
+        max-width: 1200px;
+        margin: 4rem auto;
         padding: 2rem;
+        background: #fff;
+        border-radius: 16px;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
     }
 
-    .title {
-        font-size: 1.8rem;
+    .page-title {
+        font-size: 2rem;
         font-weight: bold;
-        color: #6A0572;
+        color: #4F46E5;
+        margin-bottom: 2rem;
         text-align: center;
-        margin-bottom: 1.5rem;
     }
 
-    table {
+    .table-custom {
         width: 100%;
         border-collapse: collapse;
-        border-radius: 1rem;
+        background-color: white;
+        border-radius: 12px;
         overflow: hidden;
     }
 
-    th {
-        background-color: #ba3dd1;
+    .table-custom th {
+        background-color: #6366F1;
         color: white;
+        padding: 1rem;
+        text-align: left;
         text-transform: uppercase;
-        padding: 0.75rem;
         font-size: 0.9rem;
     }
 
-    td {
-        padding: 0.75rem;
-        font-size: 0.875rem;
+    .table-custom td {
+        padding: 0.9rem 1rem;
+        border-bottom: 1px solid #e5e7eb;
+        font-size: 0.95rem;
     }
 
-    tr:nth-child(even) {
-        background-color: #f9f5ff;
+    .table-custom tr:hover {
+        background-color: #f9fafb;
     }
 
-    tr:hover {
-        background-color: #f3e8ff;
+    .action-buttons {
+        display: flex;
+        gap: 0.5rem;
+    }
+
+    .btn-view {
+        background-color: #3B82F6;
+        color: white;
+        padding: 0.4rem 0.9rem;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-decoration: none;
     }
 
     .btn-edit {
         background-color: #facc15;
         color: black;
-        font-size: 0.75rem;
-        padding: 0.25rem 0.75rem;
-        border-radius: 0.5rem;
-    }
-
-    .btn-edit:hover {
-        background-color: #eab308;
+        padding: 0.4rem 0.9rem;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-decoration: none;
     }
 
     .btn-delete {
         background-color: #ef4444;
         color: white;
-        font-size: 0.75rem;
-        padding: 0.25rem 0.75rem;
-        border-radius: 0.5rem;
+        padding: 0.4rem 0.9rem;
+        border-radius: 6px;
+        font-weight: 600;
+        font-size: 0.85rem;
+        border: none;
+        cursor: pointer;
     }
 
     .btn-delete:hover {
@@ -75,42 +92,45 @@
     }
 </style>
 
-<div class="max-w-7xl mx-auto px-6 py-10">
-    <h2 class="title"> Liste des Backlogs</h2>
+<div class="page-container">
+    <h2 class="page-title">Liste des Backlogs</h2>
 
-    <div class="table-card mt-6 overflow-x-auto">
-        <table>
-            <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Projet</th>
-                    <th>User Story</th>
-                    <th>Titre</th>
-                    <th>Description</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($backlogs as $backlog)
-                    <tr>
-                        <td>{{ $backlog->id }}</td>
-                        <td>{{ $backlog->project->name ?? 'Projet inconnu' }}</td>
-                        <td>{{ $backlog->userStory->titre ?? '—' }}</td>
-                        <td>{{ $backlog->titre }}</td>
-                        <td>{{ $backlog->description }}</td>
-                        <td>
-                            <a href="{{ route('backlogs.edit', $backlog->id) }}" class="btn-edit">Modifier</a>
-                            <form method="POST" action="{{ route('backlogs.destroy', $backlog->id) }}" class="inline-block"
-                                  onsubmit="return confirm('Voulez-vous vraiment supprimer ce backlog ?');">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="btn-delete">Supprimer</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+    <table class="table-custom">
+        <thead>
+    <tr>
+        <th>PROJET</th>
+        <th>USER STORY</th>
+        <th>TITRE</th>
+        <th>DESCRIPTION</th>
+
+        @if(Auth::user()->role !== 'scrum_master')
+            <th>ACTIONS</th>
+        @endif
+    </tr>
+</thead>
+<tbody>
+    @foreach($backlogs as $backlog)
+        <tr>
+            <td>{{ $backlog->project->name ?? '-' }}</td>
+            <td>{{ $backlog->userStory->titre ?? '—' }}</td>
+            <td>{{ $backlog->titre }}</td>
+            <td>{{ $backlog->description }}</td>
+
+            @if(Auth::user()->role !== 'scrum_master')
+            <td>
+                <div class="action-buttons">
+                    <a href="{{ route('backlogs.edit', $backlog->id) }}" class="btn-edit">Modifier</a>
+                    <form action="{{ route('backlogs.destroy', $backlog->id) }}" method="POST" onsubmit="return confirm('Confirmer la suppression ?')" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-delete">Supprimer</button>
+                    </form>
+                </div>
+            </td>
+            @endif
+        </tr>
+    @endforeach
+</tbody>
+    </table>
 </div>
 @endsection

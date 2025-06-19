@@ -3,8 +3,9 @@
 @section('content')
 <style>
 body {
-    background: linear-gradient(to right, #FFD93D, #FF8400, #E84A5F, #6A0572);
+    background: linear-gradient(to right, #F9FAFB, #e0e7ff);
     min-height: 100vh;
+    color: var(--text-dark);
 }
 
 .container {
@@ -13,23 +14,19 @@ body {
     padding: 0 1rem;
 }
 
-/* 🎨 Header */
 .title-section {
-    background: linear-gradient(to right, #fbb1ff, #f18ac5);
+    background: linear-gradient(to right,  #345af5);
     padding: 1rem 2rem;
     border-radius: 12px 12px 0 0;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
     text-align: center;
-    margin-bottom: 0;
+    color: white;
 }
 .title-section h1 {
     font-size: 2rem;
     font-weight: bold;
-    color: #6A0572;
 }
 .title-section p {
-    color: #4b5563;
-    font-size: 0.95rem;
+    color: #e5e7eb;
 }
 
 /* ➕ Button */
@@ -39,7 +36,7 @@ body {
     margin: 1rem 0;
 }
 .add-button a {
-    background: linear-gradient(to right, #f18ac5, #ba3dd1);
+    background: var(--pink-neon, #F900BF);
     color: white;
     font-weight: 600;
     padding: 0.5rem 1rem;
@@ -48,13 +45,13 @@ body {
     transition: 0.3s ease;
 }
 .add-button a:hover {
-    background: linear-gradient(to right, #ba3dd1, #f18ac5);
+    background-color: #d100a8;
 }
 
-/* 📋 Table Style */
+/* 📋 Table */
 .table-container {
     overflow-x: auto;
-    background: linear-gradient(to bottom right, #fbb1ff, #f18ac5, #ffd6e0);
+    background: #ffffff;
     padding: 1.5rem;
     border-radius: 0 0 12px 12px;
     box-shadow: 0 4px 12px rgba(0,0,0,0.07);
@@ -63,10 +60,10 @@ body {
 .table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
 }
 .table thead {
-    background: #ba3dd1;
+    background: #3B82F6;
     color: white;
     text-transform: uppercase;
 }
@@ -75,11 +72,8 @@ body {
     text-align: left;
     border-bottom: 1px solid #f3f4f6;
 }
-.table tbody tr {
-    transition: all 0.25s ease;
-}
 .table tbody tr:hover {
-    background: #fdf2f8;
+    background: #f0f9ff;
     transform: scale(1.01);
 }
 
@@ -92,30 +86,33 @@ body {
 .action-buttons a,
 .action-buttons button {
     font-size: 0.85rem;
-    padding: 0.3rem 0.75rem;
+    padding: 0.4rem 0.9rem;
     border: none;
     border-radius: 6px;
     font-weight: 600;
-    color: white;
     cursor: pointer;
-    transition: 0.2s ease;
     text-decoration: none;
+    transition: all 0.2s ease;
 }
+
+/* Boutons */
 .btn-view {
-    background-color: #3b82f6;
+    background-color: #3B82F6;
+    color: white;
 }
 .btn-view:hover {
     background-color: #2563eb;
 }
 .btn-edit {
-    background-color: #facc15;
-    color: black;
+    background-color: #6366F1;
+    color: white;
 }
 .btn-edit:hover {
-    background-color: #eab308;
+    background-color: #4f46e5;
 }
 .btn-delete {
     background-color: #ef4444;
+    color: white;
 }
 .btn-delete:hover {
     background-color: #dc2626;
@@ -134,6 +131,7 @@ body {
     <div class="title-section">
         <h1> Liste des Projets</h1>
     </div>
+
 
     {{-- 📋 Tableau --}}
     <div class="table-container">
@@ -173,14 +171,19 @@ body {
                         </td>
                         <td>
                             <div class="action-buttons">
-                                <a href="{{ route('projects.show', $project->id) }}" class="btn-view">Voir</a>
-                                <a href="{{ route('projects.edit', $project->id) }}" class="btn-edit">Modifier</a>
-                                <form action="{{ route('projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Confirmer la suppression ?')" style="display:inline;">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="btn-delete">Supprimer</button>
-                                </form>
-                            </div>
+    <a href="{{ route('projects.show', $project->id) }}" class="btn-view">Voir</a>
+
+    @if(Auth::user()->role !== 'scrum_master')
+        <a href="{{ route('projects.edit', $project->id) }}" class="btn-edit">Modifier</a>
+        <form action="{{ route('projects.destroy', $project->id) }}" method="POST" onsubmit="return confirm('Confirmer la suppression ?')" style="display:inline;">
+            @csrf
+            @method('DELETE')
+            <button type="submit" class="btn-delete">Supprimer</button>
+        </form>
+    @endif
+</div>
+
+
                         </td>
                     </tr>
                 @endforeach

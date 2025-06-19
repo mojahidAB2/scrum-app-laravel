@@ -2,111 +2,134 @@
 
 @section('content')
 <style>
-    body {
-        background: linear-gradient(to right, #a044ff, #f18ac5);
-        min-height: 100vh;
-    }
+:root {
+    --blue-main: #3B82F6;
+    --indigo: #1b1ef2;
+    --bg-light: #c2d0df;
+    --text-dark: #111827;
+    --gold: #facc15;
+    --pink-neon: #F900BF;
+}
 
-    .form-container {
-        background: linear-gradient(to bottom right, #fbe4f1, #f6d0eb, #f0c3e3);
-        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
-        border-radius: 1rem;
-        padding: 2rem;
-        max-width: 700px;
-        margin: auto;
-    }
+body {
+    background-color: var(--bg-light);
+    min-height: 100vh;
+    color: var(--text-dark);
+}
 
-    h2.title {
-        font-size: 1.8rem;
-        font-weight: bold;
-        color: #6A0572;
-        text-align: center;
-        margin-bottom: 1.5rem;
-    }
+.page-container {
+    max-width: 700px;
+    margin: 3rem auto;
+    padding: 2rem;
+    background-color: white;
+    border-radius: 14px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+    animation: fadeIn 0.5s ease;
+}
 
-    label {
-        font-weight: 500;
-        color: #4b5563;
-    }
+.page-title {
+    font-size: 1.75rem;
+    font-weight: bold;
+    color: var(--indigo);
+    text-align: center;
+    margin-bottom: 2rem;
+}
 
-    input, select {
-        border-radius: 8px;
-        border: 1px solid #d1d5db;
-        padding: 0.5rem 0.75rem;
-        width: 100%;
-        margin-top: 0.25rem;
-    }
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+    color: #374151;
+}
 
-    input:focus, select:focus {
-        border-color: #ba3dd1;
-        box-shadow: 0 0 0 3px rgba(186, 61, 209, 0.3);
-        outline: none;
-    }
+input, select {
+    width: 100%;
+    padding: 0.6rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
+    margin-bottom: 1.25rem;
+    font-size: 1rem;
+    transition: border-color 0.3s, box-shadow 0.3s;
+}
 
-    .btn-primary {
-        background-color: #ba3dd1;
-        color: white;
-        font-weight: 600;
-        padding: 0.5rem 1.5rem;
-        border-radius: 8px;
-    }
+input:focus, select:focus {
+    border-color: var(--blue-main);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+    outline: none;
+}
 
-    .btn-primary:hover {
-        background-color: #9c2bbf;
-    }
+/* Buttons */
+.btn-group {
+    display: flex;
+    justify-content: flex-end;
+    gap: 1rem;
+}
 
-    .btn-secondary {
-        background-color: #f3f4f6;
-        color: #333;
-        padding: 0.5rem 1.5rem;
-        border-radius: 8px;
-    }
+.btn-primary {
+    background-color: var(--indigo);
+    color: white;
+    font-weight: 600;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    border: none;
+}
+.btn-primary:hover {
+    background-color: var(--blue-main);
+}
 
-    .btn-secondary:hover {
-        background-color: #e5e7eb;
-    }
+.btn-secondary {
+    background-color: #3b72e0;
+    color: #111827;
+    padding: 0.5rem 1.5rem;
+    border-radius: 8px;
+    text-decoration: none;
+}
+.btn-secondary:hover {
+    background-color: #d1d5db;
+}
+
+/* Fade animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
 </style>
 
-<div class="py-10 px-6">
-    <div class="form-container">
-        <h2 class="title">Modifier un Backlog</h2>
+<div class="page-container">
+    <h2 class="page-title">Modifier un Backlog</h2>
 
-        <form method="POST" action="{{ route('backlogs.update', $backlog->id) }}">
-            @csrf
-            @method('PUT')
+    <form method="POST" action="{{ route('backlogs.update', $backlog->id) }}">
+        @csrf
+        @method('PUT')
 
-            <div class="mb-4">
-                <label>Project ID</label>
-                <input type="number" name="project_id" value="{{ $backlog->project_id }}" required>
-            </div>
+        <input type="hidden" name="project_id" value="{{ $backlog->project_id }}">
 
-            <div class="mb-4">
-                <label>Titre</label>
-                <input type="text" name="titre" value="{{ $backlog->titre }}" required>
-            </div>
+        <div>
+            <label for="titre">Titre</label>
+            <input type="text" name="titre" value="{{ $backlog->titre }}" required>
+        </div>
 
-            <div class="mb-4">
-                <label>Description</label>
-                <input type="text" name="description" value="{{ $backlog->description }}" required>
-            </div>
+        <div>
+            <label for="description">Description</label>
+            <input type="text" name="description" value="{{ $backlog->description }}" required>
+        </div>
 
-            <div class="mb-4">
-                <label>Associer à une User Story</label>
-                <select name="user_story_id">
-                    <option value="">-- Aucune --</option>
-                    @foreach ($userStories as $story)
-                        <option value="{{ $story->id }}" {{ $backlog->user_story_id == $story->id ? 'selected' : '' }}>
-                            {{ $story->titre }}
-                        </option>
-                    @endforeach
-                </select>
-            </div>
+        <div>
+            <label for="user_story_id">Associer à une User Story</label>
+            <select name="user_story_id">
+                <option value="">Aucune</option>
+                @foreach ($userStories as $story)
+                    <option value="{{ $story->id }}" {{ $backlog->user_story_id == $story->id ? 'selected' : '' }}>
+                        {{ $story->titre }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
 
-            <div class="flex justify-end gap-4 mt-6">
-                <a href="{{ route('backlogs.view') }}" class="btn-secondary">↩ Retour</a>
-                <button type="submit" class="btn-primary">Enregistrer</button>
-            </div>
-        </form>
-    </div>
+        <div class="btn-group mt-4">
+            <a href="{{ route('backlogs.view') }}" class="btn-secondary"> Retour</a>
+            <button type="submit" class="btn-primary">Enregistrer</button>
+        </div>
+    </form>
 </div>
 @endsection

@@ -1,0 +1,33 @@
+:root {
+    --blue-main: #3B82F6;
+    --indigo: #6c25e8;
+    --bg-light: #F9FAFB;
+    --text-dark: #111827;
+    --gold: #facc15;
+    --pink-neon: #1500f9;
+}
+
+.text-blue-main {
+    color: var(--blue-main) !important;
+}
+.text-blue-dark {
+    color: var(--text-dark) !important;
+}
+.bg-beige {
+    background-color: var(--bg-light) !important;
+}
+.bg-gold {
+    background-color: var(--gold) !important;
+}
+.border-gold {
+    border: 1px solid var(--gold) !important;
+}
+.hover-scale {
+    transition: transform 0.3s ease;
+}
+.hover-scale:hover {
+    transform: scale(1.03);
+}
+.hover-underline:hover {
+    text-decoration: underline;
+}

@@ -3,16 +3,16 @@
 @section('content')
 <style>
     body {
-        background: linear-gradient(to bottom right, #a044ff, #f18ac5);
+        background: lightgray);
         min-height: 100vh;
     }
 
     .form-box {
-        background: #1f2937;
+        background: #5d9cf4;
         border-radius: 1rem;
         padding: 2rem;
         box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
-        color: white;
+        color: rgb(120, 115, 115);
     }
 
     .form-box h1 {
@@ -24,9 +24,9 @@
     }
 
     label {
-        display: block;
+        display: rgb(238, 119, 119);
         margin-bottom: 0.4rem;
-        color: #f3f4f6;
+        color: #fcfcfc;
         font-weight: 500;
     }
 
@@ -34,12 +34,12 @@
     input[type="date"],
     textarea {
         width: 100%;
-        background: #374151;
+        background: #cfd3d9;
         border: 1px solid #4b5563;
         border-radius: 0.5rem;
         padding: 0.5rem 0.75rem;
-        color: white;
-        transition: border 0.2s ease-in-out;
+        color: rgb(0, 0, 0);
+        transition: border 0.2s ease-in-out, box-shadow 0.2s ease;
     }
 
     input:focus,
@@ -56,6 +56,8 @@
         padding: 0.6rem 1.5rem;
         border-radius: 0.5rem;
         transition: background 0.2s ease-in-out;
+        border: none;
+        cursor: pointer;
     }
 
     .btn-submit:hover {
@@ -89,22 +91,6 @@
                 <label for="objective">Objectif</label>
                 <textarea name="objective" id="objective" rows="3" required></textarea>
             </div>
-         <div>
-    <label for="backlogs" class="block text-sm font-medium text-gray-300 mb-1">
-        Associer des backlogs
-    </label>
-    <select name="backlogs[]" id="backlogs" multiple required
-        class="w-full rounded-md bg-gray-800 text-gray-200 border border-gray-600 px-4 py-2 focus:outline-none focus:ring-2 focus:ring-purple-500">
-        @foreach ($backlogs as $backlog)
-            <option value="{{ $backlog->id }}">
-                {{ $backlog->titre }} - {{ $backlog->description }}
-            </option>
-        @endforeach
-    </select>
-    <p class="text-sm text-gray-400 mt-1">Utilisez Ctrl (ou Cmd) + clic pour sélectionner plusieurs.</p>
-</div>
-
-
 
             <div class="text-center">
                 <button type="submit" class="btn-submit">Créer</button>

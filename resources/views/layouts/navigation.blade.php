@@ -1,48 +1,49 @@
-<nav style="position: fixed; top: 0; width: 100%; z-index: 50; background: linear-gradient(to right, #8b5cf6, #ec4899); color: white; padding: 16px;">
-    <div style="max-width: 1200px; margin: 0 auto; padding: 0 24px; display: flex; justify-content: space-between; align-items: center;">
+<nav style="position: fixed; top: 0; left: 0; width: 100%; z-index: 50; background-color: #3B82F6; color: white; padding: 0;">
+    <div style="max-width: 100%; margin: 0; padding: 12px 24px; display: flex; justify-content: space-between; align-items: center;">
 
         {{-- 🔵 Logo + Accueil --}}
         <a href="{{ url('/') }}" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
-            <img src="{{ asset('logo.jpg') }}" alt="logo" style="height: 40px; width: auto;">
-            <span style="color: #FFD700; font-size: 24px; font-weight: bold; text-shadow: 1px 1px 2px black;">
+            <img src="{{ asset('logo.jpg') }}" alt="logo" style="height: 40px; width: auto; border-radius: 6px;">
+            <span style="color: #FACC15; font-size: 22px; font-weight: bold; text-shadow: 1px 1px 2px #000;">
                 PredictiveMind
             </span>
         </a>
 
-        {{-- 📄 Liens de navigation --}}
+        {{-- 📄 Liens --}}
         <div style="display: flex; gap: 20px; font-size: 14px; font-weight: 500;">
-            <a href="{{ url('/') }}" style="{{ request()->is('/') ? 'color: #FFD700; font-weight: bold;' : 'color: white;' }} text-decoration: none;">Accueil</a>
-
+            <a href="{{ url('/') }}" style="text-decoration: none; color: white;">Accueil</a>
             @auth
-                <a href="{{ route('dashboard') }}" style="{{ request()->routeIs('dashboard') ? 'color: #FFD700; font-weight: bold;' : 'color: white;' }} text-decoration: none;">Dashboard</a>
-                <a href="{{ route('projects.index') }}" style="{{ request()->routeIs('projects.*') ? 'color: #FFD700; font-weight: bold;' : 'color: white;' }} text-decoration: none;">Projets</a>
-                <a href="{{ route('sprints.index') }}" style="{{ request()->routeIs('sprints.*') ? 'color: #FFD700; font-weight: bold;' : 'color: white;' }} text-decoration: none;">Sprints</a>
-                <a href="{{ route('user_stories.view') }}" style="{{ request()->routeIs('user_stories.*') ? 'color: #FFD700; font-weight: bold;' : 'color: white;' }} text-decoration: none;">User Stories</a>
-                <a href="{{ route('backlogs.view') }}" style="{{ request()->routeIs('backlogs.*') ? 'color: #FFD700; font-weight: bold;' : 'color: white;' }} text-decoration: none;">Backlogs</a>
+                <a href="{{ route('dashboard') }}" style="text-decoration: none; color: white;">Dashboard</a>
+                <a href="{{ route('projects.index') }}" style="text-decoration: none; color: white;">Projets</a>
+                <a href="{{ route('sprints.index') }}" style="text-decoration: none; color: white;">Sprints</a>
+                <a href="{{ route('user_stories.view') }}" style="text-decoration: none; color: white;">User Stories</a>
+                <a href="{{ route('backlogs.view') }}" style="text-decoration: none; color: white;">Backlogs</a>
             @endauth
         </div>
 
-        {{-- 👤 Zone utilisateur --}}
+        {{-- 👤 Utilisateur --}}
         <div style="display: flex; align-items: center; gap: 16px;">
-            @auth
-                <span style="font-size: 14px; font-weight: 600;">{{ Auth::user()->name }}</span>
-                <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
-                    @csrf
-                    <button style="background: none; border: none; color: #ffdddd; cursor: pointer; font-size: 14px; text-decoration: underline;">
-                        Déconnexion
-                    </button>
-                </form>
-            @endauth
+          @auth
+    <span style="font-size: 14px; font-weight: 600;">{{ Auth::user()->name }}</span>
+
+    <form method="POST" action="{{ route('logout') }}" style="margin: 0;">
+        @csrf
+        <button type="submit"
+                style="background-color: white; color: #3B82F6; font-weight: bold; padding: 6px 12px; border-radius: 6px; border: none; cursor: pointer;">
+            Déconnexion
+        </button>
+    </form>
+@endauth
+
 
             @guest
-                <a href="{{ route('login') }}" style="background-color: #eee; color: #4A249D; padding: 8px 16px; border-radius: 6px; text-decoration: none;">
+                <a href="{{ route('login') }}" style="background-color: white; color: #3B82F6; font-weight: bold; padding: 8px 16px; border-radius: 6px; text-decoration: none;">
                     Connexion
                 </a>
-                <a href="{{ route('register') }}" style="background-color: #FFD700; color: black; padding: 8px 16px; border-radius: 6px; text-decoration: none;">
+                <a href="{{ route('register') }}" style="background-color: #FACC15; color: black; font-weight: bold; padding: 8px 16px; border-radius: 6px; text-decoration: none;">
                     S’inscrire
                 </a>
             @endguest
         </div>
-
     </div>
 </nav>

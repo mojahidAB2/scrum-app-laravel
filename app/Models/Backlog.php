@@ -35,5 +35,17 @@ public function developer()
 {
     return $this->belongsTo(User::class, 'developer_id');
 }
+public function project()
+{
+    return $this->belongsTo(Project::class, 'project_id');
+}
+// app/Models/Backlog.php
+
+// Backlog.php
+public function users()
+{
+    return $this->belongsToMany(User::class, 'backlog_user', 'backlog_id', 'user_id');
+}
+
 
 }

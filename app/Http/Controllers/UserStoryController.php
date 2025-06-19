@@ -79,11 +79,15 @@ public function create(): View
 
 
     // 🔹 Afficher User Stories selon le projet sélectionné
-    public function byProject($projectId)
-    {
-        $stories = UserStory::where('project_id', $projectId)->get();
-        return view('userstoryetbacklogs.user_stories_by_project', compact('stories', 'projectId'));
-    }
+   public function byProject($projectId)
+{
+    $project = \App\Models\Project::findOrFail($projectId);
+    $stories = UserStory::where('project_id', $projectId)->get();
+
+    return view('userstoryetbacklogs.user_stories_by_project', compact('stories', 'project', 'projectId'));
+}
+
+
     // 🔹 Afficher les User Stories d'un projet spécifique
-    
+
 }

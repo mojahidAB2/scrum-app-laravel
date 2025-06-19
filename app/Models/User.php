@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
-class User extends Authenticatable // ✅ Ajouté ici
+class User extends Authenticatable
 {
     use HasFactory, Notifiable;
 
@@ -36,8 +36,9 @@ public function userStories()
 }
 public function backlogs()
 {
-    return $this->hasMany(Backlog::class, 'developer_id');
+    return $this->belongsToMany(Backlog::class, 'backlog_user', 'user_id', 'backlog_id');
 }
+
 
 public function sprints()
 {

@@ -1,83 +1,193 @@
 @extends('layouts.app')
 
 @section('content')
+<!-- ✅ CSS Select2 -->
+<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+<!-- ✅ JS jQuery + Select2 -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
 <style>
-    body {
-        background: linear-gradient(to right, #573391, #357C3C, #EF6D6D, #FFE6AB);
-        background-size: 400% 400%;
-        animation: gradientAnim 10s ease infinite;
+    :root {
+        --primary: #3B82F6;
+        --secondary: #6366F1;
+        --bg-light: #F9FAFB;
+        --text-dark: #111827;
     }
 
-    @keyframes gradientAnim {
-        0% { background-position: 0% 50%; }
-        50% { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
+    body {
+        background: linear-gradient(to right, #F9FAFB, #FFFFFF);
+        font-family: 'Segoe UI', sans-serif;
+        margin: 0;
     }
 
     .form-container {
-        max-width: 600px;
-        margin: 60px auto;
-        background: #ffffffcc;
-        border-radius: 15px;
-        padding: 40px;
-        box-shadow: 0 10px 25px rgba(0,0,0,0.2);
-        backdrop-filter: blur(6px);
+        max-width: 700px;
+        margin: 4rem auto;
+        background: #fff;
+        border-radius: 1rem;
+        padding: 2.5rem;
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        color: var(--text-dark);
     }
 
     h2 {
         text-align: center;
-        color: #573391;
-        margin-bottom: 30px;
+        color: var(--primary);
+        font-size: 1.6rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
     }
 
     label {
-        font-weight: bold;
-        color: #333;
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+        display: block;
+        color: var(--text-dark);
     }
 
-    select {
-        width: 100%;
-        padding: 12px;
-        margin-top: 10px;
+    .select2-container--default .select2-selection--multiple {
+        background-color: #fff;
         border: 1px solid #ccc;
-        border-radius: 8px;
-        font-size: 16px;
+        border-radius: 0.5rem;
+        padding: 6px;
+        min-height: 48px;
+        font-size: 15px;
+    }
+
+    .select2-container--default .select2-selection--multiple .select2-selection__choice {
+        background-color: var(--secondary);
+        border: none;
+        color: white;
+        padding: 4px 10px;
+        margin-top: 4px;
+        font-weight: 600;
+        border-radius: 6px;
     }
 
     .btn-submit {
-        background: linear-gradient(to right, #357C3C, #EF6D6D);
+        background-color: var(--primary);
         color: white;
         font-weight: bold;
-        padding: 12px 30px;
+        padding: 0.75rem 2rem;
         border: none;
-        border-radius: 8px;
-        transition: background 0.3s ease;
+        border-radius: 0.5rem;
+        cursor: pointer;
         width: 100%;
-        margin-top: 25px;
+        transition: background 0.3s ease-in-out;
     }
 
     .btn-submit:hover {
-        background: linear-gradient(to right, #2c7031, #d75454);
+        background-color: var(--secondary);
+    }
+
+    table {
+        width: 100%;
+        margin-top: 2rem;
+        border-collapse: collapse;
+        background: #fff;
+        border-radius: 0.5rem;
+        overflow: hidden;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    }
+
+    th, td {
+        padding: 0.75rem 1rem;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    th {
+        background-color: var(--primary);
+        color: white;
+    }
+
+    .btn-remove {
+        background-color: #ef4444;
+        color: white;
+        padding: 6px 14px;
+        border: none;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+
+    .btn-remove:hover {
+        background-color: #dc2626;
+    }
+
+    .alert-success {
+        background-color: #d1fae5;
+        color: #065f46;
+        padding: 0.75rem 1rem;
+        border-radius: 0.5rem;
+        margin-bottom: 1rem;
+        text-align: center;
     }
 </style>
 
 <div class="form-container">
-    <h2>Assigner un Backlog au Sprint</h2>
+    <h2>Assigner des Backlogs au Sprint</h2>
 
+    @if(session('success'))
+        <div class="alert-success">
+            {{ session('success') }}
+        </div>
+    @endif
+
+    {{-- FORMULAIRE D’ASSIGNATION --}}
     <form method="POST" action="{{ route('sprints.assign.backlog', $sprint->id) }}">
         @csrf
-
-        <div class="mb-3">
-            <label for="backlog_id">Sélectionnez un Backlog :</label>
-            <select name="backlog_id" id="backlog_id" required>
-                <option value=""> Choisir un backlog</option>
-                @foreach($backlogs as $backlog)
-                    <option value="{{ $backlog->id }}">{{ $backlog->titre }} ({{ $backlog->priorite }})</option>
-                @endforeach
-            </select>
-        </div>
+        <label for="backlog_ids">Sélectionnez un ou plusieurs Backlogs :</label>
+        <select name="backlog_ids[]" id="backlog_ids" multiple required>
+            @foreach($backlogs as $backlog)
+                <option value="{{ $backlog->id }}">{{ $backlog->titre }} </option>
+            @endforeach
+        </select>
 
         <button type="submit" class="btn-submit">Assigner</button>
     </form>
+
+    {{-- TABLEAU DES BACKLOGS DÉJÀ ASSIGNÉS --}}
+    @if($assignedBacklogs->count() > 0)
+        <h3 style="margin-top: 2.5rem; margin-bottom: 1rem; color: var(--text-dark); font-weight: bold;">Backlogs déjà assignés</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Titre</th>
+                    <th>Description</th>
+                    <th>Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($assignedBacklogs as $b)
+                <tr>
+                    <td>{{ $b->titre }}</td>
+                    <td>{{ $b->description }}</td>
+                    <td>
+                        <form method="POST" action="{{ route('backlogs.remove', $b->id) }}">
+                            @csrf
+                            <button type="submit"
+                                class="btn-remove"
+                                onclick="return confirm('Êtes-vous sûr de vouloir retirer ce backlog ?');">
+                                ❌ Retirer
+                            </button>
+                        </form>
+                    </td>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
 </div>
+
+<!-- ✅ Initialisation de Select2 -->
+<script>
+    $(document).ready(function () {
+        $('#backlog_ids').select2({
+            placeholder: "Sélectionnez les backlogs",
+            allowClear: true
+        });
+    });
+</script>
 @endsection

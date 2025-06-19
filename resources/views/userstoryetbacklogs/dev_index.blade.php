@@ -74,7 +74,7 @@
     }
 
     .back-button:hover {
-        background: linear-gradient(to right, #D91656, #FB5000);
+        background: linear-gradient(to right, #b86d86, #c5afa5);
         transform: scale(1.05);
     }
 

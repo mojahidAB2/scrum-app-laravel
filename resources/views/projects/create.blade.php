@@ -3,8 +3,10 @@
 @section('content')
 <style>
 body {
-    background: linear-gradient(to right, #FFD93D, #FF8400, #E84A5F, #6A0572);
+    background: #F9FAFB;
     min-height: 100vh;
+    color: #111827;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 .container {
@@ -13,14 +15,13 @@ body {
     padding: 2rem 1rem;
 }
 
-/* Animation */
 .form-wrapper {
     animation: fadeIn 0.6s ease;
-    background: linear-gradient(to bottom right, #ffd6e0, #ffb3c6, #fbb1ff);
+    background: #ffffff;
     border-radius: 12px;
     padding: 2rem 2.5rem;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
-    border-top: 6px solid #E84A5F;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    border-top: 6px solid #3B82F6;
 }
 
 @keyframes fadeIn {
@@ -31,7 +32,7 @@ body {
 .title {
     font-size: 1.8rem;
     font-weight: bold;
-    color: #6A0572;
+    color: #3B82F6;
     text-align: center;
     margin-bottom: 1.5rem;
 }
@@ -59,33 +60,34 @@ body {
 .form-group label {
     font-weight: 600;
     margin-bottom: 0.5rem;
-    color: #333;
+    color: #111827;
 }
 
 .input-field,
 .textarea-field,
 select {
     padding: 0.6rem 1rem;
-    border: 1px solid #ddd;
+    border: 1px solid #788eaf;
     border-radius: 6px;
     font-size: 1rem;
     transition: border-color 0.3s, box-shadow 0.3s;
+    background: #ffffff;
+    color: #111827;
 }
 
-/* Hover */
 .input-field:hover,
 .textarea-field:hover,
 select:hover {
-    border-color: #ba3dd1;
-    box-shadow: 0 0 0 3px rgba(186, 61, 209, 0.1);
+    border-color: #4f16aa;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.1);
 }
 
 .input-field:focus,
 .textarea-field:focus,
 select:focus {
     outline: none;
-    border-color: #FF8400;
-    box-shadow: 0 0 0 3px rgba(255,132,0,0.3);
+    border-color: #3B82F6;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.25);
 }
 
 .textarea-field {
@@ -93,7 +95,6 @@ select:focus {
     resize: vertical;
 }
 
-/* Buttons */
 .actions {
     margin-top: 1.5rem;
     display: flex;
@@ -102,7 +103,7 @@ select:focus {
 }
 
 .btn-primary {
-    background: linear-gradient(to right, #E84A5F, #6A0572);
+    background: #3B82F6;
     color: white;
     font-weight: bold;
     padding: 0.6rem 2rem;
@@ -112,13 +113,13 @@ select:focus {
     transition: background 0.3s ease;
 }
 .btn-primary:hover {
-    background: linear-gradient(to right, #6A0572, #E84A5F);
+    background: #2563EB;
 }
 
 .btn-link {
     background-color: transparent;
-    color: #E84A5F;
-    border: 1px solid #E84A5F;
+    color: #3B82F6;
+    border: 1px solid #3B82F6;
     padding: 0.5rem 1rem;
     border-radius: 6px;
     font-weight: 500;
@@ -126,11 +127,11 @@ select:focus {
     transition: all 0.3s ease;
 }
 .btn-link:hover {
-    background-color: #ffe3ec;
+    background-color: #E0F2FE;
     text-decoration: none;
 }
 
-/* Icon inside input */
+/* Icône dans l'input */
 .input-icon-wrapper {
     position: relative;
 }
@@ -139,12 +140,13 @@ select:focus {
     top: 50%;
     left: 12px;
     transform: translateY(-50%);
-    color: #aaa;
+    color: #9CA3AF;
 }
 .input-icon-wrapper input {
     padding-left: 36px;
 }
 </style>
+
 
 <div class="container">
     <div class="form-wrapper">
@@ -185,7 +187,7 @@ select:focus {
                 <div class="form-group full-width">
                     <label for="project_type">Type de projet</label>
                     <select name="project_type" id="project_type" class="input-field" required>
-                        <option disabled selected>-- Sélectionner --</option>
+                        <option disabled selected> Sélectionner </option>
                         <option>Site Web</option>
                         <option>Application Mobile</option>
                         <option>Data Science</option>

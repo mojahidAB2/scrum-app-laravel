@@ -2,24 +2,35 @@
 
 @section('content')
 <style>
+:root {
+    --blue-main: #3B82F6;
+    --indigo: #6366F1;
+    --bg-light: #F9FAFB;
+    --text-dark: #111827;
+    --gold: #facc15;
+    --pink-neon: #F900BF;
+}
+
 body {
-    background: linear-gradient(to right, #FFD93D, #FF8400, #E84A5F, #6A0572);
+    background-color: var(--bg-light);
     min-height: 100vh;
+    color: var(--text-dark);
 }
 
 .container {
     max-width: 768px;
     margin: 3rem auto;
     padding: 2.5rem;
-    background: linear-gradient(to bottom right, #ffd6e0, #ffb3c6, #fbb1ff);
-    border-radius: 14px;
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(to bottom right, #076aec, #295be4);
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    animation: fadeIn 0.4s ease;
 }
 
 .title {
     font-size: 2rem;
     font-weight: bold;
-    color: #6A0572;
+    color: rgb(247, 162, 4);
     text-align: center;
     margin-bottom: 2rem;
 }
@@ -31,18 +42,18 @@ body {
 .form-group select,
 .form-group input {
     width: 100%;
-    padding: 0.6rem 1rem;
+    padding: 0.65rem 1rem;
     border: 1px solid #d1d5db;
-    border-radius: 8px;
+    border-radius: 10px;
     font-size: 1rem;
-    transition: border-color 0.3s, box-shadow 0.3s;
+    transition: 0.3s ease;
 }
 
-input:focus,
-select:focus {
+.form-group input:focus,
+.form-group select:focus {
     outline: none;
-    border-color: #FF8400;
-    box-shadow: 0 0 0 3px rgba(255,132,0,0.25);
+    border-color: var(--blue-main);
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
 }
 
 .button-submit {
@@ -52,7 +63,7 @@ select:focus {
 }
 
 .btn-submit {
-    background: linear-gradient(to right, #E84A5F, #6A0572);
+    background: linear-gradient(to right, var(--blue-main), var(--indigo));
     color: white;
     font-weight: bold;
     padding: 0.6rem 2rem;
@@ -62,7 +73,12 @@ select:focus {
     transition: background 0.3s ease;
 }
 .btn-submit:hover {
-    background: linear-gradient(to right, #6A0572, #E84A5F);
+    background: linear-gradient(to right, var(--indigo), var(--blue-main));
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
 }
 </style>
 

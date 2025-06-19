@@ -2,98 +2,149 @@
 
 @section('content')
 <style>
-body {
-    background: linear-gradient(to right, #FFD93D, #FF8400, #E84A5F, #6A0572);
-    min-height: 100vh;
+:root {
+    --blue-main: #3B82F6;
+    --indigo: #6366F1;
+    --bg-light: #F9FAFB;
+    --text-dark: #111827;
+    --gold: #facc15;
+    --pink-neon: #F900BF;
 }
+
+body {
+    background-color: var(--bg-light);
+    min-height: 100vh;
+    color: var(--text-dark);
+}
+
 .title {
     text-align: center;
-    font-size: 1.75rem;
+    font-size: 2rem;
     font-weight: bold;
-    color: #6A0572;
-    margin-bottom: 2rem;
+    color: var(--indigo);
+    margin-bottom: 2.5rem;
 }
+
 .table-container {
-    background: linear-gradient(to bottom right, #ffd6e0, #ffb3c6, #fbb1ff);
+    background-color: #ffffff;
     padding: 1.5rem;
     border-radius: 14px;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
     overflow-x: auto;
 }
+
 .table {
     width: 100%;
-    border-collapse: collapse;
-    font-size: 0.9rem;
+    border-collapse: separate;
+    border-spacing: 0;
+    font-size: 0.95rem;
+    border-radius: 8px;
+    overflow: hidden;
 }
-.table th {
-    background-color: #ba3dd1;
+
+.table thead {
+    background: linear-gradient(to right, var(--blue-main), var(--indigo));
     color: white;
     text-transform: uppercase;
-    padding: 0.75rem;
-}
-.table td {
-    padding: 0.75rem;
-    border-bottom: 1px solid #e5e7eb;
-}
-.table tr:hover {
-    background-color: #fef9ff;
-}
-.actions a,
-.actions button {
-    font-size: 0.75rem;
-    padding: 0.4rem 0.75rem;
-    border-radius: 6px;
     font-weight: 600;
 }
+
+.table th,
+.table td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.table tbody tr {
+    transition: background 0.2s ease;
+}
+.table tbody tr:hover {
+    background-color: #f3f4f6;
+}
+
+/* 🎯 Boutons d'action */
+.actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+}
+
+.actions a,
+.actions button {
+    font-size: 0.85rem;
+    padding: 0.4rem 1rem;
+    border: none;
+    border-radius: 6px;
+    font-weight: 600;
+    cursor: pointer;
+    text-decoration: none;
+    transition: background-color 0.2s ease;
+}
+
+/* Bouton Modifier */
 .btn-edit {
-    background-color: #facc15;
-    color: black;
+    background-color: var(--gold);
+    color: #1e293b;
 }
 .btn-edit:hover {
-    background-color: #eab308;
+    background-color: #ffdb70;
 }
+
+/* Bouton Supprimer */
 .btn-delete {
-    background-color: #ef4444;
+    background-color: rgb(224, 2, 2);
     color: white;
 }
 .btn-delete:hover {
-    background-color: #dc2626;
+    background-color: #7407e8;
 }
+
+/* 💬 Zone commentaire */
 .comment-box {
-    background-color: white;
+    background-color: #fff;
     margin-top: 2rem;
     border-radius: 12px;
     box-shadow: 0 6px 16px rgba(0, 0, 0, 0.05);
 }
+
 .comment-header {
-    background-color: #f3f4f6;
+    background: linear-gradient(to right, var(--blue-main), var(--indigo));
+    color: white;
     padding: 0.75rem 1rem;
     border-top-left-radius: 12px;
     border-top-right-radius: 12px;
     font-weight: bold;
-    color: #6B21A8;
 }
+
 .comment-body {
     padding: 1rem;
 }
+
 .comment-textarea {
     width: 100%;
     padding: 0.6rem;
-    border: 1px solid #ddd;
-    border-radius: 6px;
+    border: 1px solid #d1d5db;
+    border-radius: 8px;
     resize: vertical;
+    font-size: 0.95rem;
 }
+
 .comment-button {
-    background-color: #3b82f6;
+    background-color: var(--blue-main);
     color: white;
-    padding: 0.4rem 1rem;
+    padding: 0.45rem 1.2rem;
     margin-top: 0.5rem;
     border-radius: 6px;
+    font-weight: 600;
+    transition: background-color 0.2s ease;
 }
+
 .comment-button:hover {
-    background-color: #2563eb;
+    background-color: var(--indigo);
 }
 </style>
+
 
 <div class="max-w-7xl mx-auto px-4 py-10">
     <h2 class="title">Liste des User Stories</h2>
@@ -101,34 +152,40 @@ body {
     <div class="table-container">
         <table class="table">
             <thead>
-                <tr>
-                    <th>ID</th>
-                    <th>Titre</th>
-                    <th>En tant que</th>
-                    <th>Je veux</th>
-                    <th>Afin de</th>
-                    <th>Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($stories as $story)
-                    <tr>
-                        <td>{{ $story->id }}</td>
-                        <td>{{ $story->titre }}</td>
-                        <td>{{ $story->en_tant_que }}</td>
-                        <td>{{ $story->je_veux }}</td>
-                        <td>{{ $story->afin_de }}</td>
-                        <td class="actions flex gap-2">
-                            <a href="{{ route('user_stories.edit', $story->id) }}" class="btn-edit">Modifier</a>
-                            <form method="POST" action="{{ route('user_stories.destroy', $story->id) }}" onsubmit="return confirm('Voulez-vous vraiment supprimer cette User Story ?');">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn-delete">Supprimer</button>
-                            </form>
-                        </td>
-                    </tr>
-                @endforeach
-            </tbody>
+    <tr>
+        <th>TITRE</th>
+        <th>EN TANT QUE</th>
+        <th>JE VEUX</th>
+        <th>AFIN DE</th>
+        @if(Auth::user()->role !== 'scrum_master')
+            <th>ACTIONS</th>
+        @endif
+    </tr>
+</thead>
+<tbody>
+    @foreach($stories as $story)
+        <tr>
+            <td>{{ $story->titre }}</td>
+            <td>{{ $story->en_tant_que }}</td>
+            <td>{{ $story->je_veux }}</td>
+            <td>{{ $story->afin_de }}</td>
+
+            @if(Auth::user()->role !== 'scrum_master')
+            <td>
+                <div class="action-buttons">
+                    <a href="{{ route('user_stories.edit', $story->id) }}" class="btn-edit">Modifier</a>
+                    <form method="POST" action="{{ route('user_stories.destroy', $story->id) }}" style="display:inline;">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn-delete">Supprimer</button>
+                    </form>
+                </div>
+            </td>
+            @endif
+        </tr>
+    @endforeach
+</tbody>
+
         </table>
     </div>
 

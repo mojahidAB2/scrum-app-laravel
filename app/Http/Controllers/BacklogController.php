@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Backlog;
 use App\Models\UserStory;
 use App\Models\Project;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BacklogController extends Controller
@@ -25,11 +26,6 @@ class BacklogController extends Controller
     $userStories = UserStory::all();
     return view('userstoryetbacklogs.create_backlog', compact('projects', 'userStories'));
 }
-
-
-
-
-
 
     // 🔹 Enregistrement
     public function store(Request $request)
@@ -91,5 +87,83 @@ public function devIndex()
     return view('userstoryetbacklogs.dev_index', compact('backlogs'));
 }
 
+public function backlogsByProject($projectId)
+{
+    $project = Project::findOrFail($projectId);
+
+    $backlogs = Backlog::with('userStory')
+                ->where('project_id', $projectId)
+                ->get();
+
+    return view('userstoryetbacklogs.backlogs_by_project', compact('project', 'backlogs')); // ✅ ضروري تبعت $project
+}
+
+
+public function removeFromSprint($id)
+{
+    $backlog = Backlog::findOrFail($id);
+    $sprintId = $backlog->sprint_id;
+
+    $backlog->sprint_id = null;
+    $backlog->save();
+     dd('fonction appelée');
+   return redirect()->route('sprints.assign.backlog.form', $sprintId)
+                     ->with('success', 'Backlog retiré avec succès du sprint.');
+}
+
+public function showBacklogFormForDev(User $user)
+{
+    $backlogs = Backlog::all(); // tu peux aussi filtrer par sprint courant
+   $developer = $user;
+return view('userstoryetbacklogs.assignadev', compact('developer', 'backlogs'));
+}
+
+public function assignBacklogsToDev(Request $request, User $user)
+{
+    $request->validate([
+        'backlogs' => 'required|array',
+    ]);
+
+    $user->backlogs()->syncWithoutDetaching($request->backlogs);
+
+    return redirect()->back()->with('success', 'Backlogs assignés à ' . $user->name . ' avec succès !');
+}
+
+public function teamManagement()
+{
+    $developers = User::where('role', 'developpeur')->get(); // ou 'developer'
+    return view('userstoryetbacklogs.members', compact('developers'));
+}
+
+public function removeBacklogFromDev(User $user, Backlog $backlog)
+{
+    $user->backlogs()->detach($backlog->id);
+    return redirect()->back()->with('success', 'Backlog retiré avec succès.');
+}
+
+
+// 🔹 Formulaire d'assignation des backlogs à un sprint
+public function assignBacklogsForm($sprintId)
+{
+    $backlogs = Backlog::whereNull('sprint_id')->get();
+    return view('sprints.assign_backlog', compact('backlogs', 'sprintId'));
+}
+// 🔹 Assigner les backlogs sélectionnés à un sprint
+public function assignBacklogsToSprint(Request $request, $sprintId)
+{
+    $request->validate([
+        'backlogs' => 'required|array'
+    ]);
+
+    foreach ($request->backlogs as $backlogId) {
+        $backlog = Backlog::find($backlogId);
+        if ($backlog) {
+            $backlog->sprint_id = $sprintId;
+            $backlog->save();
+        }
+    }
+
+    return redirect()->route('sprints.index')->with('success', 'Backlogs assignés avec succès au sprint.');
+}
 
 }

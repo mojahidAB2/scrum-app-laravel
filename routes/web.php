@@ -7,9 +7,9 @@ use App\Http\Controllers\{
     SprintController,
     UserStoryController,
     BacklogController,
-    BurndownChartController,
+    CommentController,
     DashboardController,
-    CommentController
+    Auth\AuthenticatedSessionController
 };
 
 // === ROUTE D'ACCUEIL APRÈS LOGIN ===
@@ -82,6 +82,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::post('/logout', [AuthenticatedSessionController::class, 'destroy'])->name('logout');
 
 require __DIR__.'/auth.php';
 
@@ -117,10 +118,27 @@ Route::get('/backlogs/create', [BacklogController::class, 'create'])->name('back
 Route::post('/backlogs/store', [BacklogController::class, 'store'])->name('backlogs.store');
 Route::get('/backlogs/{id}/edit', [BacklogController::class, 'edit'])->name('backlogs.edit');
 Route::put('/backlogs/{id}', [BacklogController::class, 'update'])->name('backlogs.update');
-Route::post('/backlogs/{id}/delete', [BacklogController::class, 'destroy'])->name('backlogs.destroy');
+Route::delete('/backlogs/{backlog}', [BacklogController::class, 'destroy'])->name('backlogs.destroy');
+
 Route::get('/projects/{project}/backlogs', [BacklogController::class, 'byProject'])->name('backlogs.byProject');
-Route::get('/backlogs/by-project/{projectId}', [BacklogController::class, 'byProject'])
-    ->name('backlogs.byProject');
+Route::get('/backlogs/by-project/{projectId}', [BacklogController::class, 'backlogsByProject'])->name('backlogs.byProject');
+Route::post('/backlogs/{id}/remove-from-sprint', [BacklogController::class, 'removeFromSprint'])->name('backlogs.remove');
+Route::get('/sprints/{id}/assign-backlog', [SprintController::class, 'showAssignBacklogForm'])->name('sprints.assign.backlog.form');
+// ✅ Afficher le formulaire pour assigner les backlogs à un développeur
+Route::get('/assign-backlogs-dev/{user}', [BacklogController::class, 'showBacklogFormForDev'])->name('assign.backlogs.form');
+
+// ✅ Soumettre les backlogs assignés à un développeur
+Route::post('/assign-backlogs-dev/{user}', [BacklogController::class, 'assignBacklogsToDev'])->name('assign.backlogs.to.dev');
+
+// ✅ Voir la liste des développeurs
+Route::get('/scrum-master/team', [BacklogController::class, 'teamManagement'])->name('scrum.team.manage');
+Route::delete('/backlogs/remove-from-dev/{user}/{backlog}', [BacklogController::class, 'removeBacklogFromDev'])->name('backlogs.remove.from.dev');
+// GET → formulaire
+Route::get('/sprints/{sprint}/assign-backlog', [BacklogController::class, 'assignBacklogsForm'])->name('sprints.assign.backlog.form');
+
+// POST → traitement
+Route::post('/sprints/{sprint}/assign-backlog', [BacklogController::class, 'assignBacklogsToSprint'])->name('sprints.assign.backlog.store');
+
 
 // === SPRINTS ===
 Route::get('/sprints', [SprintController::class, 'index'])->name('sprints.index');
@@ -130,6 +148,11 @@ Route::get('/sprints/{sprint}/edit', [SprintController::class, 'edit'])->name('s
 Route::put('/sprints/{sprint}', [SprintController::class, 'update'])->name('sprints.update');
 Route::delete('/sprints/{sprint}', [SprintController::class, 'destroy'])->name('sprints.destroy');
 Route::get('/projects/{project}/sprints', [SprintController::class, 'byProject'])->name('sprints.byProject');
-//
+
 Route::get('/sprints/{id}/assign-backlog', [SprintController::class, 'showAssignBacklogForm'])->name('sprints.assign.form');
 Route::post('/sprints/{id}/assign-backlog', [SprintController::class, 'assignBacklog'])->name('sprints.assign.backlog');
+Route::get('/sprints/po', [SprintController::class, 'poIndex'])->name('sprints.po');
+
+
+
+Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');

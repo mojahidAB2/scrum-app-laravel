@@ -3,31 +3,32 @@
 @section('content')
 <style>
 body {
-    background: linear-gradient(to right, #FFD93D, #FF8400, #E84A5F, #6A0572);
+    background: linear-gradient(to right, #F9FAFB, #E0E7FF);
     min-height: 100vh;
+    color: #111827;
 }
 
 .container {
     max-width: 880px;
     margin: 3rem auto;
     padding: 2.5rem;
-    background: linear-gradient(to bottom right, #fbb1ff, #f18ac5, #ffd6e0);
+    background: linear-gradient(to bottom right, #f3e8ff, #e0e7ff);
     border-radius: 16px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.1);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.05);
     animation: fadeIn 0.5s ease;
 }
 
 h2.title {
     font-size: 2rem;
     font-weight: bold;
-    color: #6A0572;
+    color: #3B82F6;
     margin-bottom: 2rem;
     text-align: center;
 }
 
 .label {
     font-weight: 600;
-    color: #4b5563;
+    color: #6366F1;
     margin-top: 1.2rem;
 }
 
@@ -49,13 +50,13 @@ h2.title {
 }
 
 .member-table th {
-    background-color: #ba3dd1;
+    background-color: #6366F1;
     color: white;
     font-weight: 600;
 }
 
 .member-table tbody tr:hover {
-    background-color: #fef2f8;
+    background-color: #EEF2FF;
 }
 
 .actions {
@@ -67,7 +68,7 @@ h2.title {
 }
 
 .btn-custom {
-    background: linear-gradient(to right, #E84A5F, #6A0572);
+    background: #3B82F6;
     color: white;
     font-weight: bold;
     padding: 10px 22px;
@@ -76,12 +77,11 @@ h2.title {
     text-decoration: none;
     transition: background 0.3s ease;
 }
-
 .btn-custom:hover {
-    background: linear-gradient(to right, #6A0572, #E84A5F);
+    background: #2563eb;
 }
 
-/* Animation d’entrée */
+/* Animation */
 @keyframes fadeIn {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
@@ -138,10 +138,13 @@ h2.title {
         <p class="value">Aucun membre affecté.</p>
     @endif
 
+    @if(Auth::user()->role !== 'scrum_master')
     <div class="actions">
         <a href="{{ route('projects.editMembers', $project->id) }}" class="btn-custom">Gérer les membres</a>
         <a href="{{ route('user_stories.byProject', $project->id) }}" class="btn-custom">User Stories</a>
         <a href="{{ route('backlogs.byProject', $project->id) }}" class="btn-custom">Backlogs</a>
     </div>
+@endif
+
 </div>
 @endsection

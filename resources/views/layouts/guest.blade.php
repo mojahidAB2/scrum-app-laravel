@@ -18,45 +18,47 @@
 
     <style>
         body {
-            background-color: #f9f2e7;
-            padding-top: 90px; /* espace pour la navbar fixe */
-        }
+    background-color: #F9FAFB;
+    padding-top: 90px;
+}
 
-        .navbar-gradient {
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            background: linear-gradient(to right, #B33791, #C562AF, #DB8DD0, #FEC5F6);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
-        }
+.navbar-gradient {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    z-index: 1000;
+    background: linear-gradient(to right, #3B82F6, #6366F1); /* الألوان الحديثة */
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 10px 0;
+}
 
-        .navbar-brand img {
-            height: 45px;
-            margin-right: 8px;
-        }
 
-        .navbar-brand span {
-            font-weight: bold;
-            font-size: 20px;
-            color: #fff;
-        }
+.btn-login {
+    background-color: white;
+    color: #3B82F6;
+    font-weight: bold;
+    padding: 6px 18px;
+    border-radius: 8px;
+    margin-right: 10px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
 
-        .btn-login {
-            background-color: white;
-            color: #B33791;
-            font-weight: bold;
-        }
+.btn-register {
+    background-color: #6366F1;
+    color: white;
+    font-weight: bold;
+    padding: 6px 18px;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    transition: all 0.3s ease;
+}
 
-        .btn-register {
-            background-color: #FFC107;
-            color: black;
-            font-weight: bold;
-        }
+.btn-login:hover, .btn-register:hover {
+    transform: scale(1.05);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+}
 
-        .btn-login:hover, .btn-register:hover {
-            opacity: 0.85;
-        }
     </style>
 </head>
 
