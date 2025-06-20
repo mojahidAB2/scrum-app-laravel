@@ -102,7 +102,6 @@
         to   { opacity: 1; transform: translateY(0); }
     }
 </style>
-
 <div class="form-container">
     <h2>Ajouter des membres au projet : <br><span style="color:#391e99">{{ $project->name }}</span></h2>
 

@@ -3,127 +3,119 @@
 @section('content')
 <style>
     body {
-        background: linear-gradient(to bottom right, #640D5F, #D91656);
-        color: white;
+        background: #f5f6fa;
         font-family: 'Segoe UI', sans-serif;
+        color: #2c3e50;
     }
 
     .container-dev {
         max-width: 1100px;
-        margin: 40px auto;
+        margin: 60px auto;
         padding: 0 20px;
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    .dev-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 30px;
+        border-bottom: 1px solid #eee;
     }
 
     .dev-title {
-        font-size: 30px;
-        color: #FFB200;
-        font-weight: bold;
-        text-align: center;
-        margin-bottom: 30px;
-        animation: fadeIn 0.8s ease-out;
-    }
-
-    .dev-backlog-table {
-        width: 100%;
-        border-collapse: collapse;
-        background: rgba(255,255,255,0.07);
-        border-radius: 12px;
-        overflow: hidden;
-        box-shadow: 0 6px 16px rgba(0,0,0,0.2);
-        animation: slideUp 1s ease-out;
-    }
-
-    .dev-backlog-table th {
-        background: linear-gradient(to right, #D91656, #FB5000);
-        color: white;
-        padding: 14px;
-        font-size: 15px;
-        text-align: left;
-    }
-
-    .dev-backlog-table td {
-        padding: 12px;
-        font-size: 14px;
-        border-bottom: 1px solid rgba(255,255,255,0.1);
-    }
-
-    .dev-backlog-table tr:hover {
-        background-color: rgba(255, 255, 255, 0.1);
-        transition: background 0.3s ease;
-    }
-
-    .no-data {
-        text-align: center;
-        color: #eee;
-        background-color: rgba(0, 0, 0, 0.2);
-        padding: 20px;
-        border-radius: 8px;
-        margin-top: 30px;
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #34495e;
     }
 
     .back-button {
-        display: inline-block;
-        background: linear-gradient(to right, #FB5000, #FFB200);
+        background-color: #3B82F6;
         color: white;
         padding: 10px 20px;
-        border-radius: 8px;
-        font-weight: bold;
+        border-radius: 6px;
+        font-weight: 500;
         text-decoration: none;
-        margin-bottom: 20px;
-        transition: all 0.3s ease;
+        transition: background 0.3s ease;
     }
 
     .back-button:hover {
-        background: linear-gradient(to right, #b86d86, #c5afa5);
-        transform: scale(1.05);
+        background-color: #2563eb;
     }
 
-    /* Animations */
-    @keyframes slideUp {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
+    table.dev-backlog-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 0;
+    }
+
+    table th, table td {
+        padding: 16px 20px;
+        text-align: left;
+        border-bottom: 1px solid #f0f0f0;
+    }
+
+    table th {
+        background-color: #f9fafb;
+        color: #555;
+        font-size: 15px;
+        font-weight: 600;
+    }
+
+    table td {
+        font-size: 14px;
+        color: #333;
+    }
+
+    table tr:hover {
+        background-color: #f5f7ff;
+        transition: 0.3s ease;
+    }
+
+    .no-data {
+        padding: 40px;
+        text-align: center;
+        color: #999;
     }
 
     @keyframes fadeIn {
-        from { opacity: 0; }
-        to { opacity: 1; }
+        from { opacity: 0; transform: translateY(10px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 </style>
 
 <div class="container-dev">
-    <a href="{{ route('dashboard.dev') }}" class="back-button">Retour au Dashboard</a>
-
-    <h2 class="dev-title">Liste des Backlogs</h2>
+    <div class="dev-header">
+        <h2 class="dev-title">Liste des Backlogs assignés</h2>
+        <a href="{{ route('dashboard.dev') }}" class="back-button">⬅ Retour au Dashboard</a>
+    </div>
 
     @if($backlogs->count())
         <table class="dev-backlog-table">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Projet</th>
                     <th>User Story</th>
                     <th>Titre</th>
                     <th>Description</th>
-                    <th>Statut</th>
-                    <th>Priorité</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($backlogs as $backlog)
                     <tr>
-                        <td>{{ $backlog->id }}</td>
-                        <td>{{ optional($backlog->project)->name ?? 'Projet inconnu' }}</td>
-                        <td>{{ optional($backlog->userStory)->title ?? '—' }}</td>
+                        <td>{{ optional($backlog->project)->name ?? '—' }}</td>
+                        <td>{{ optional($backlog->userStory)->titre ?? '—' }}</td>
                         <td>{{ $backlog->titre }}</td>
                         <td>{{ $backlog->description }}</td>
-                        <td>{{ $backlog->statut }}</td>
-                        <td>{{ $backlog->priorite }}</td>
                     </tr>
                 @endforeach
             </tbody>
         </table>
     @else
-        <div class="no-data">Aucun backlog trouvé.</div>
+        <div class="no-data">Aucun backlog assigné pour l’instant.</div>
     @endif
 </div>
 @endsection

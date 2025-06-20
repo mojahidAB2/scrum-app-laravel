@@ -156,3 +156,32 @@ Route::get('/sprints/po', [SprintController::class, 'poIndex'])->name('sprints.p
 
 
 Route::post('/comments/store', [CommentController::class, 'store'])->name('comments.store');
+
+
+
+
+
+
+
+
+
+// Pour afficher le formulaire
+Route::get('/scrum-master/assign/{user}', [BacklogController::class, 'showBacklogFormForDev'])->name('assign.backlogs.form');
+
+// Pour assigner
+Route::post('/scrum-master/assign/{user}', [BacklogController::class, 'assignBacklogsToDev'])->name('assign.backlogs.to.dev');
+
+// Pour retirer un backlog d’un développeur
+Route::delete('/scrum-master/assign/{user}/{backlog}', [BacklogController::class, 'removeBacklogFromDev'])->name('backlogs.remove.from.dev');
+// Pour afficher la liste des développeurs
+Route::get('/scrum-master/team', [BacklogController::class, 'teamManagement'])->name('scrum.team');
+// Pour afficher la liste des développeurs
+Route::get('/scrum-master/team', [BacklogController::class, 'teamManagement'])->name('scrum.team.manage');
+//backlogs assignés à un developpeur
+Route::get('/developer/backlogs-assigned', [ProjectController::class, 'developerAssignedBacklogs'])
+    ->name('developer.backlogs.assigned');
+
+Route::get('/sprints/dev', [App\Http\Controllers\SprintController::class, 'devIndex'])->name('sprints.dev.index');
+//changer statut du backlog assigné par le developpeur
+Route::put('/sprints/{id}/status', [SprintController::class, 'updateStatus'])->name('sprints.updateStatus');
+

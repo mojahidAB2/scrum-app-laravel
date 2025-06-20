@@ -73,10 +73,32 @@
         margin-top: 20px;
         font-size: 16px;
     }
+
+    .status-select {
+        padding: 6px 12px;
+        border-radius: 8px;
+        font-weight: 600;
+        border: none;
+        color: white;
+        font-size: 13px;
+        cursor: pointer;
+    }
+
+    .status-en-cours {
+        background: #4299e1;
+    }
+
+    .status-termine {
+        background: #48bb78;
+    }
+
+    .status-bloque {
+        background: #f56565;
+    }
 </style>
 
 <div class="sprint-container">
-    <a href="{{ route('dashboard.dev') }}" class="btn-retour">⬅ Retour au Dashboard</a>
+    <a href="{{ route('dashboard.dev') }}" class="btn-retour">⬅ Retour</a>
 
     <h2 class="title">Liste des Sprints</h2>
 
@@ -84,25 +106,39 @@
         <table class="sprint-table">
             <thead>
                 <tr>
-                    <th>ID</th>
+                    <th>Projet</th>
                     <th>Titre</th>
-                    <th>Description</th>
                     <th>Date début</th>
                     <th>Date fin</th>
                     <th>Statut</th>
-                    <th>Priorité</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach($sprints as $sprint)
+                    @php
+                        $statusClass = match($sprint->status) {
+                            'en cours' => 'status-select status-en-cours',
+                            'terminé' => 'status-select status-termine',
+                            'bloqué' => 'status-select status-bloque',
+                            default => 'status-select'
+                        };
+                    @endphp
                     <tr>
-                        <td>{{ $sprint->id }}</td>
-                        <td>{{ $sprint->titre }}</td>
-                        <td>{{ $sprint->description }}</td>
-                        <td>{{ $sprint->date_debut }}</td>
-                        <td>{{ $sprint->date_fin }}</td>
-                        <td>{{ $sprint->statut }}</td>
-                        <td>{{ $sprint->priorite }}</td>
+                        <td>{{ $sprint->project->name ?? '—' }}</td>
+                        <td>{{ $sprint->name }}</td>
+                        <td>{{ $sprint->start_date }}</td>
+                        <td>{{ $sprint->end_date }}</td>
+                        <td>
+                            <form action="{{ route('sprints.updateStatus', $sprint->id) }}" method="POST">
+                                @csrf
+                                @method('PUT')
+                                <select name="status" class="{{ $statusClass }}" onchange="this.form.submit()">
+                                    <option value="en cours" {{ $sprint->status == 'en cours' ? 'selected' : '' }}>en cours</option>
+                                    <option value="terminé" {{ $sprint->status == 'terminé' ? 'selected' : '' }}>terminé</option>
+                                    <option value="bloqué" {{ $sprint->status == 'bloqué' ? 'selected' : '' }}>bloqué</option>
+                                </select>
+                            </form>
+                        </td>
                     </tr>
                 @endforeach
             </tbody>

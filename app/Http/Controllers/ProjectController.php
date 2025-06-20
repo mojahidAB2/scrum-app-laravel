@@ -182,4 +182,12 @@ class ProjectController extends Controller
 
         return view('dashboard.developer_details', compact('project'));
     }
+
+  public function developerAssignedBacklogs()
+{
+    $backlogs = auth()->user()->backlogs()->with('sprint')->get();
+    return view('dashboard.Backlogs_assignés_dev', compact('backlogs'));
+}
+
+
 }

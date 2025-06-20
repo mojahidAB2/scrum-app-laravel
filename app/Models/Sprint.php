@@ -9,18 +9,30 @@ class Sprint extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'start_date', 'end_date', 'project_id'];
+    protected $fillable = [
+        'name',
+        'start_date',
+        'end_date',
+        'project_id',
+        'objective',   // ✅ Si tu utilises aussi l'objectif du sprint
+        'status'       // ✅ Si tu veux afficher ou filtrer par statut
+    ];
 
-public function project()
+    // 🔗 Relation : chaque sprint appartient à un projet
+    public function project()
     {
-    return $this->belongsTo(Project::class, 'project_id');
+        return $this->belongsTo(Project::class, 'project_id');
     }
-public function backlogs()
+
+    // 🔗 Relation : un sprint peut avoir plusieurs backlogs
+    public function backlogs()
     {
-    return $this->hasMany(Backlog::class);
+        return $this->hasMany(Backlog::class);
     }
-public function users()
-{
-    return $this->belongsToMany(User::class, 'sprint_user');
-}
+
+    // 🔗 Relation : plusieurs développeurs peuvent être assignés à un sprint
+    public function users()
+    {
+        return $this->belongsToMany(User::class, 'sprint_user');
+    }
 }

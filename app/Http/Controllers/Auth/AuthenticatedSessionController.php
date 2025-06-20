@@ -33,14 +33,14 @@ class AuthenticatedSessionController extends Controller
     if (!$user->role) {
         return redirect()->route('choisir.role');
     }
-      
+
     // ➤ Redirection selon le rôle
     switch ($user->role) {
         case 'product_owner':
             return redirect('/dashboard/po');
         case 'scrum_master':
             return redirect('/dashboard/sm');
-       case 'developpeur': // ✅ correction ici
+       case 'developer':
     return redirect('/dashboard/dev');
         default:
             Auth::logout();

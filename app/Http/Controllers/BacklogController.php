@@ -131,9 +131,10 @@ public function assignBacklogsToDev(Request $request, User $user)
 
 public function teamManagement()
 {
-    $developers = User::where('role', 'developpeur')->get(); // ou 'developer'
+    $developers = User::where('role', 'developer')->get(); // ✅ correct
     return view('userstoryetbacklogs.members', compact('developers'));
 }
+
 
 public function removeBacklogFromDev(User $user, Backlog $backlog)
 {
@@ -165,5 +166,12 @@ public function assignBacklogsToSprint(Request $request, $sprintId)
 
     return redirect()->route('sprints.index')->with('success', 'Backlogs assignés avec succès au sprint.');
 }
+
+ public function developerAssignedBacklogs()
+{
+    $backlogs = auth()->user()->backlogs()->with('sprint')->get();
+    return view('dashboard.Backlogs_assignés_dev', compact('backlogs'));
+}
+
 
 }

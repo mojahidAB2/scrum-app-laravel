@@ -119,12 +119,10 @@ public function assignDeveloperToSprint(Request $request)
 public function devIndex()
 {
     $user = auth()->user();
-
-    // Many-to-Many
-    $sprints = $user->sprints ?? collect(); // si $user->sprints est vide, alors on retourne une collection vide
-
+    $sprints = $user->sprints()->with('project')->get();
     return view('sprints.sprints_dev', compact('sprints'));
 }
+
 
 public function showAssignBacklogForm($id)
 {
@@ -168,6 +166,19 @@ public function poIndex()
 {
     $sprints = Sprint::with('project')->get(); // optionnel : filtrer par projets du PO
     return view('sprints.sprints_po', compact('sprints'));
+}
+
+public function updateStatus(Request $request, $id)
+{
+    $request->validate([
+        'status' => 'required|in:en attente,en cours,terminé',
+    ]);
+
+    $sprint = Sprint::findOrFail($id);
+    $sprint->status = $request->status;
+    $sprint->save();
+
+    return back()->with('success', 'Statut mis à jour avec succès !');
 }
 
 }
