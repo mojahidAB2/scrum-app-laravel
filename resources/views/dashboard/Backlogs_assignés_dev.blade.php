@@ -47,51 +47,71 @@
         color: #6b7280;
         font-style: italic;
     }
-    .btn-retour {
-    display: inline-block;
-    margin-bottom: 20px;
-    padding: 10px 20px;
-    background-color: #3B82F6;
-    color: white;
-    text-decoration: none;
-    border-radius: 8px;
-    font-weight: bold;
-    transition: background 0.3s ease;
-}
-.btn-retour:hover {
-    background-color: #2563EB;
-}
-</style>
- <a href="{{ route('dashboard.dev') }}" class="btn-retour"> Retour au Dashboard</a>
 
+    .btn-retour {
+        display: inline-block;
+        margin-bottom: 20px;
+        padding: 10px 20px;
+        background-color: #3B82F6;
+        color: white;
+        text-decoration: none;
+        border-radius: 8px;
+        font-weight: bold;
+        transition: background 0.3s ease;
+    }
+
+    .btn-retour:hover {
+        background-color: #2563EB;
+    }
+
+    select.status-dropdown {
+        padding: 5px 10px;
+        border-radius: 6px;
+        font-weight: bold;
+        border: 1px solid #ccc;
+    }
+</style>
+
+<a href="{{ route('dashboard.dev') }}" class="btn-retour"> Retour au Dashboard</a>
 
 <div class="container-backlogs">
-    <h2> Backlogs assignés</h2>
+    <h2>Backlogs assignés</h2>
 
     @if ($backlogs->count() > 0)
-    <table>
-        <thead>
-            <tr>
-                <th>Nom du Backlog</th>
-                <th>Projet</th>
-                <th>Sprint</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach ($backlogs as $backlog)
+        <table>
+            <thead>
                 <tr>
-                    <td>{{ $backlog->titre }}</td>
-                    <td>{{ $backlog->project->name ?? 'N/A' }}</td>
-                    <td>{{ $backlog->sprint->name ?? 'Non assigné' }}</td>
+                    <th>Nom du Backlog</th>
+                    <th>Projet</th>
+                    <th>Sprint</th>
+                    <th>Status</th>
                 </tr>
-            @endforeach
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach ($backlogs as $backlog)
+                    <tr>
+                        <td>{{ $backlog->titre }}</td>
+                        <td>{{ $backlog->project->name ?? 'N/A' }}</td>
+                        <td>{{ $backlog->sprint->name ?? 'Non assigné' }}</td>
+                        <td>
+                            <form action="{{ route('developer.backlogs.updateStatus', $backlog->id) }}" method="POST">
+    @csrf
+    <select name="status" onchange="this.form.submit()">
+        <option value="en cours" {{ $backlog->pivot->status == 'en cours' ? 'selected' : '' }}>en cours</option>
+        <option value="terminé" {{ $backlog->pivot->status == 'terminé' ? 'selected' : '' }}>terminé</option>
+        <option value="bloqué" {{ $backlog->pivot->status == 'bloqué' ? 'selected' : '' }}>bloqué</option>
+    </select>
+</form>
+
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
     @else
         <div class="empty-message">
             Aucun backlog assigné pour le moment.
         </div>
     @endif
 </div>
-
 @endsection

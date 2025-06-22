@@ -80,12 +80,10 @@ class BacklogController extends Controller
 
 public function devIndex()
 {
-    $user = auth()->user();
-    // Récupérer tous les backlogs de l'utilisateur
-    $backlogs = $user->backlogs()->with(['project', 'userStory'])->get();
-
+    $backlogs = Backlog::with(['project', 'userStory'])->get(); // ✅ afficher tous les backlogs
     return view('userstoryetbacklogs.dev_index', compact('backlogs'));
 }
+
 
 public function backlogsByProject($projectId)
 {
@@ -171,6 +169,22 @@ public function assignBacklogsToSprint(Request $request, $sprintId)
 {
     $backlogs = auth()->user()->backlogs()->with('sprint')->get();
     return view('dashboard.Backlogs_assignés_dev', compact('backlogs'));
+}
+
+public function updateStatus(Request $request, $id)
+{
+    $request->validate([
+        'status' => 'required|in:en cours,terminé,bloqué',
+    ]);
+
+    $user = auth()->user(); // l'utilisateur connecté (développeur)
+
+    // met à jour le champ "status" dans la table backlog_user
+    $user->backlogs()->updateExistingPivot($id, [
+        'status' => $request->status
+    ]);
+
+    return redirect()->back()->with('success', 'Statut du backlog mis à jour avec succès.');
 }
 
 

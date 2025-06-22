@@ -82,7 +82,6 @@ body {
     transition: background-color 0.2s ease;
 }
 
-/* Bouton Modifier */
 .btn-edit {
     background-color: var(--gold);
     color: #1e293b;
@@ -91,7 +90,6 @@ body {
     background-color: #ffdb70;
 }
 
-/* Bouton Supprimer */
 .btn-delete {
     background-color: rgb(224, 2, 2);
     color: white;
@@ -145,47 +143,45 @@ body {
 }
 </style>
 
-
 <div class="max-w-7xl mx-auto px-4 py-10">
     <h2 class="title">Liste des User Stories</h2>
 
     <div class="table-container">
         <table class="table">
             <thead>
-    <tr>
-        <th>TITRE</th>
-        <th>EN TANT QUE</th>
-        <th>JE VEUX</th>
-        <th>AFIN DE</th>
-        @if(Auth::user()->role !== 'scrum_master')
-            <th>ACTIONS</th>
-        @endif
-    </tr>
-</thead>
-<tbody>
-    @foreach($stories as $story)
-        <tr>
-            <td>{{ $story->titre }}</td>
-            <td>{{ $story->en_tant_que }}</td>
-            <td>{{ $story->je_veux }}</td>
-            <td>{{ $story->afin_de }}</td>
+                <tr>
+                    <th>TITRE</th>
+                    <th>EN TANT QUE</th>
+                    <th>JE VEUX</th>
+                    <th>AFIN DE</th>
+                    @if(Auth::user()->role === 'admin' || Auth::user()->role === 'product_owner')
+                        <th>ACTIONS</th>
+                    @endif
+                </tr>
+            </thead>
+            <tbody>
+                @foreach($stories as $story)
+                    <tr>
+                        <td>{{ $story->titre }}</td>
+                        <td>{{ $story->en_tant_que }}</td>
+                        <td>{{ $story->je_veux }}</td>
+                        <td>{{ $story->afin_de }}</td>
 
-            @if(Auth::user()->role !== 'scrum_master')
-            <td>
-                <div class="action-buttons">
-                    <a href="{{ route('user_stories.edit', $story->id) }}" class="btn-edit">Modifier</a>
-                    <form method="POST" action="{{ route('user_stories.destroy', $story->id) }}" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn-delete">Supprimer</button>
-                    </form>
-                </div>
-            </td>
-            @endif
-        </tr>
-    @endforeach
-</tbody>
-
+                        @if(Auth::user()->role === 'admin' || Auth::user()->role === 'product_owner')
+                        <td>
+                            <div class="actions">
+                                <a href="{{ route('user_stories.edit', $story->id) }}" class="btn-edit">Modifier</a>
+                                <form method="POST" action="{{ route('user_stories.destroy', $story->id) }}" style="display:inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn-delete">Supprimer</button>
+                                </form>
+                            </div>
+                        </td>
+                        @endif
+                    </tr>
+                @endforeach
+            </tbody>
         </table>
     </div>
 
@@ -203,7 +199,6 @@ body {
                     <p class="text-gray-500 text-sm italic">Aucun commentaire pour cette story.</p>
                 @endforelse
 
-                {{-- Formulaire d’ajout --}}
                 <form action="{{ route('comments.store', ['type' => 'userstory', 'id' => $story->id]) }}" method="POST" class="mt-4">
                     @csrf
                     <textarea name="content" rows="2" class="comment-textarea" placeholder="Ajouter un commentaire..." required></textarea>

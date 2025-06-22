@@ -44,7 +44,9 @@ public function project()
 // Backlog.php
 public function users()
 {
-    return $this->belongsToMany(User::class, 'backlog_user', 'backlog_id', 'user_id');
+    return $this->belongsToMany(User::class, 'backlog_user', 'backlog_id', 'user_id')
+                ->withPivot('status')
+                ->withTimestamps();
 }
 
 

@@ -59,7 +59,7 @@ class SprintController extends Controller
     'start_date' => $request->start_date,
     'end_date' => $request->end_date,
     'objective' => $request->objective,
-    'status' => 'en attente',
+    'status' => 'bloqué',
     ]);
     // Associer les backlogs sélectionnés
     if ($request->has('backlog')) {
@@ -168,18 +168,7 @@ public function poIndex()
     return view('sprints.sprints_po', compact('sprints'));
 }
 
-public function updateStatus(Request $request, $id)
-{
-    $request->validate([
-        'status' => 'required|in:en attente,en cours,terminé',
-    ]);
 
-    $sprint = Sprint::findOrFail($id);
-    $sprint->status = $request->status;
-    $sprint->save();
-
-    return back()->with('success', 'Statut mis à jour avec succès !');
-}
 
 }
 

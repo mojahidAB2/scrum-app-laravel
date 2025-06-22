@@ -3,13 +3,13 @@
 @section('content')
 <style>
     body {
-        background: linear-gradient(to right, #fce3f4, #e5d4f7);
+        background: linear-gradient(to right, #3f6bf0,);
     }
 
     .sprint-container {
         max-width: 1000px;
         margin: 40px auto;
-        background: white;
+        background: rgb(222, 222, 227);
         border-radius: 16px;
         padding: 30px;
         box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
@@ -17,7 +17,7 @@
 
     .title {
         text-align: center;
-        color: #a12bbd;
+        color: #000000;
         font-size: 32px;
         font-weight: bold;
         margin-bottom: 30px;
@@ -27,7 +27,7 @@
         display: inline-block;
         margin-bottom: 20px;
         padding: 10px 18px;
-        background: linear-gradient(to right, #7e1891, #ba3dd1);
+        background: linear-gradient(to right, #3a37d7, #2407e6);
         color: white;
         font-weight: bold;
         border-radius: 30px;
@@ -37,7 +37,7 @@
     }
 
     .btn-retour:hover {
-        background: linear-gradient(to right, #5e1271, #a02ac3);
+        background: linear-gradient(to right,  #5313e7);
         transform: translateY(-2px);
     }
 
@@ -49,7 +49,7 @@
     }
 
     .sprint-table th {
-        background: linear-gradient(to right, #ba3dd1, #f18ac5);
+        background: linear-gradient(to right, #2167f3);
         color: white;
         padding: 14px;
         text-align: left;
@@ -60,11 +60,11 @@
         padding: 12px;
         border-bottom: 1px solid #f0f0f0;
         color: #333;
-        background-color: #fff;
+        background-color: #729ded;
     }
 
     .sprint-table tr:hover {
-        background-color: #fdf0fa;
+        background-color: #f285d9;
     }
 
     .no-data {
@@ -74,27 +74,9 @@
         font-size: 16px;
     }
 
-    .status-select {
-        padding: 6px 12px;
-        border-radius: 8px;
-        font-weight: 600;
-        border: none;
-        color: white;
-        font-size: 13px;
-        cursor: pointer;
-    }
 
-    .status-en-cours {
-        background: #4299e1;
-    }
 
-    .status-termine {
-        background: #48bb78;
-    }
 
-    .status-bloque {
-        background: #f56565;
-    }
 </style>
 
 <div class="sprint-container">
@@ -110,7 +92,6 @@
                     <th>Titre</th>
                     <th>Date début</th>
                     <th>Date fin</th>
-                    <th>Statut</th>
                 </tr>
             </thead>
             <tbody>
@@ -128,17 +109,6 @@
                         <td>{{ $sprint->name }}</td>
                         <td>{{ $sprint->start_date }}</td>
                         <td>{{ $sprint->end_date }}</td>
-                        <td>
-                            <form action="{{ route('sprints.updateStatus', $sprint->id) }}" method="POST">
-                                @csrf
-                                @method('PUT')
-                                <select name="status" class="{{ $statusClass }}" onchange="this.form.submit()">
-                                    <option value="en cours" {{ $sprint->status == 'en cours' ? 'selected' : '' }}>en cours</option>
-                                    <option value="terminé" {{ $sprint->status == 'terminé' ? 'selected' : '' }}>terminé</option>
-                                    <option value="bloqué" {{ $sprint->status == 'bloqué' ? 'selected' : '' }}>bloqué</option>
-                                </select>
-                            </form>
-                        </td>
                     </tr>
                 @endforeach
             </tbody>

@@ -89,8 +89,8 @@
 
 <div class="container-dev">
     <div class="dev-header">
-        <h2 class="dev-title">Liste des Backlogs assignés</h2>
-        <a href="{{ route('dashboard.dev') }}" class="back-button">⬅ Retour au Dashboard</a>
+        <a href="{{ route('dashboard.dev') }}" class="back-button"> Retour au Dashboard</a>
+        <h2 class="dev-title">Liste des Backlogs</h2>
     </div>
 
     @if($backlogs->count())
@@ -115,7 +115,7 @@
             </tbody>
         </table>
     @else
-        <div class="no-data">Aucun backlog assigné pour l’instant.</div>
+        <div class="no-data">Aucun backlog trouvé.</div>
     @endif
 </div>
 @endsection

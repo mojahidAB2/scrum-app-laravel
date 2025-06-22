@@ -182,6 +182,9 @@ Route::get('/developer/backlogs-assigned', [ProjectController::class, 'developer
     ->name('developer.backlogs.assigned');
 
 Route::get('/sprints/dev', [App\Http\Controllers\SprintController::class, 'devIndex'])->name('sprints.dev.index');
-//changer statut du backlog assigné par le developpeur
-Route::put('/sprints/{id}/status', [SprintController::class, 'updateStatus'])->name('sprints.updateStatus');
+
+
+//changer statut du backlog  assigné par le developpeur
+Route::put('/backlogs/{id}/update-status', [BacklogController::class, 'updateStatus'])->name('backlogs.updateStatus');
+Route::post('/developer/backlogs/{id}/status', [BacklogController::class, 'updateStatus'])->name('developer.backlogs.updateStatus');
 

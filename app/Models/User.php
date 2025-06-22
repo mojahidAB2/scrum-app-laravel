@@ -36,8 +36,12 @@ public function userStories()
 }
 public function backlogs()
 {
-    return $this->belongsToMany(Backlog::class, 'backlog_user', 'user_id', 'backlog_id');
+    return $this->belongsToMany(Backlog::class, 'backlog_user', 'user_id', 'backlog_id')
+                ->withPivot('status')
+                ->withTimestamps();
 }
+
+
 
 
 public function sprints()

@@ -56,16 +56,6 @@
         gap: 0.5rem;
     }
 
-    .btn-view {
-        background-color: #3B82F6;
-        color: white;
-        padding: 0.4rem 0.9rem;
-        border-radius: 6px;
-        font-weight: 600;
-        font-size: 0.85rem;
-        text-decoration: none;
-    }
-
     .btn-edit {
         background-color: #facc15;
         color: black;
@@ -97,40 +87,39 @@
 
     <table class="table-custom">
         <thead>
-    <tr>
-        <th>PROJET</th>
-        <th>USER STORY</th>
-        <th>TITRE</th>
-        <th>DESCRIPTION</th>
+            <tr>
+                <th>PROJET</th>
+                <th>USER STORY</th>
+                <th>TITRE</th>
+                <th>DESCRIPTION</th>
+                @if(Auth::user()->role === 'admin' || Auth::user()->role === 'product_owner')
+                    <th>ACTIONS</th>
+                @endif
+            </tr>
+        </thead>
+        <tbody>
+            @foreach($backlogs as $backlog)
+                <tr>
+                    <td>{{ $backlog->project->name ?? '-' }}</td>
+                    <td>{{ $backlog->userStory->titre ?? '—' }}</td>
+                    <td>{{ $backlog->titre }}</td>
+                    <td>{{ $backlog->description }}</td>
 
-        @if(Auth::user()->role !== 'scrum_master')
-            <th>ACTIONS</th>
-        @endif
-    </tr>
-</thead>
-<tbody>
-    @foreach($backlogs as $backlog)
-        <tr>
-            <td>{{ $backlog->project->name ?? '-' }}</td>
-            <td>{{ $backlog->userStory->titre ?? '—' }}</td>
-            <td>{{ $backlog->titre }}</td>
-            <td>{{ $backlog->description }}</td>
-
-            @if(Auth::user()->role !== 'scrum_master')
-            <td>
-                <div class="action-buttons">
-                    <a href="{{ route('backlogs.edit', $backlog->id) }}" class="btn-edit">Modifier</a>
-                    <form action="{{ route('backlogs.destroy', $backlog->id) }}" method="POST" onsubmit="return confirm('Confirmer la suppression ?')" style="display:inline;">
-                        @csrf
-                        @method('DELETE')
-                        <button type="submit" class="btn-delete">Supprimer</button>
-                    </form>
-                </div>
-            </td>
-            @endif
-        </tr>
-    @endforeach
-</tbody>
+                    @if(Auth::user()->role === 'admin' || Auth::user()->role === 'product_owner')
+                    <td>
+                        <div class="action-buttons">
+                            <a href="{{ route('backlogs.edit', $backlog->id) }}" class="btn-edit">Modifier</a>
+                            <form action="{{ route('backlogs.destroy', $backlog->id) }}" method="POST" onsubmit="return confirm('Confirmer la suppression ?')" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn-delete">Supprimer</button>
+                            </form>
+                        </div>
+                    </td>
+                    @endif
+                </tr>
+            @endforeach
+        </tbody>
     </table>
 </div>
 @endsection

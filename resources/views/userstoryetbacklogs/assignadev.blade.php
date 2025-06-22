@@ -135,6 +135,7 @@
                     <th>Titre</th>
                     <th>Sprint</th>
                     <th>Action</th>
+                    <th>Status</th>
                 </tr>
             </thead>
             <tbody>
@@ -151,6 +152,17 @@
                                 </button>
                             </form>
                         </td>
+  <td>
+    @if ($backlog->status == 'terminé')
+        <span class="badge bg-success">Terminé</span>
+    @elseif ($backlog->status == 'bloqué')
+        <span class="badge bg-danger">Bloqué</span>
+    @elseif ($backlog->status == 'en cours')
+        <span class="badge bg-warning text-dark">En cours</span>
+    @else
+        <span class="badge bg-secondary">-</span>
+    @endif
+</td>
                     </tr>
                 @endforeach
             </tbody>
